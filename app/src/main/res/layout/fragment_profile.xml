@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    tools:context="com.example.fashionstore.Activities.RegisterActivity">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="20dp">
+
+            <ImageView
+                android:id="@+id/registerLogo"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="20dp"
+                android:contentDescription="@string/logo_fashion_store"
+                app:srcCompat="@mipmap/ic_launcher" />
+
+            <EditText
+                android:id="@+id/etProfileEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/registerLogo"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/edit_text_style"
+                android:drawableStart="@drawable/ic_person_24dp"
+                android:drawableLeft="@drawable/ic_person_24dp"
+                android:ems="10"
+                android:hint="@string/placeholder_email"
+                android:inputType="textEmailAddress"
+                android:padding="10dp"
+                android:textColor="#000"
+                android:textColorHint="#000"
+                android:autofillHints="" />
+
+            <EditText
+                android:id="@+id/etProfileName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/etProfileEmail"
+                android:layout_alignEnd="@+id/etProfileEmail"
+                android:layout_alignRight="@+id/etProfileEmail"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/edit_text_style"
+                android:drawableStart="@drawable/ic_person_24dp"
+                android:drawableLeft="@drawable/ic_person_24dp"
+                android:ems="10"
+                android:hint="@string/placeholder_username"
+                android:inputType="text"
+                android:padding="10dp"
+                android:textColor="#000"
+                android:textColorHint="#000"
+                android:autofillHints="" />
+
+            <EditText
+                android:id="@+id/etProfileAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/etProfileName"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/edit_text_style"
+                android:drawableStart="@drawable/ic_house_black_24dp"
+                android:drawableLeft="@drawable/ic_house_black_24dp"
+                android:ems="10"
+                android:hint="@string/placeholder_address"
+                android:padding="10dp"
+                android:textColor="#000"
+                android:textColorHint="#000"
+                android:autofillHints=""
+                android:inputType="text" />
+
+            <EditText
+                android:id="@+id/etProfilePhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/etProfileAddress"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/edit_text_style"
+                android:drawableStart="@drawable/ic_phone_24dp"
+                android:drawableLeft="@drawable/ic_phone_24dp"
+                android:ems="10"
+                android:hint="@string/placeholder_mobileno"
+                android:padding="10dp"
+                android:textColor="#000"
+                android:textColorHint="#000"
+                android:autofillHints=""
+                android:inputType="phone" />
+            <EditText
+                android:id="@+id/etProfilePassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/etProfilePhone"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/edit_text_style"
+                android:drawableStart="@drawable/ic_lock_24dp"
+                android:drawableLeft="@drawable/ic_lock_24dp"
+                android:ems="10"
+                android:hint="@string/placeholder_password"
+                android:inputType="textPassword"
+                android:padding="10dp"
+                android:textColor="#000"
+                android:textColorHint="#000"
+                android:importantForAutofill="no" />
+
+            <Button
+                android:id="@+id/btnUpdateAccount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/etProfilePassword"
+                android:layout_marginTop="50dp"
+                android:text="@string/update_profile"
+                android:background="@drawable/register_button_style_selector"
+                android:textColor="#FFF"
+                />
+        </RelativeLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</RelativeLayout>

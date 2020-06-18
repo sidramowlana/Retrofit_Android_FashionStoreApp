@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="20dp"
+    tools:context="com.example.fashionstore.Activities.LoginActivity">
+
+    <ImageView
+        android:id="@+id/registerLogo"
+        android:layout_width="203dp"
+        android:layout_height="244dp"
+        android:layout_above="@+id/etUsername"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="31dp"
+        android:contentDescription="@string/logo_fashion_store"
+        app:srcCompat="@mipmap/ic_launcher"        />
+
+    <EditText
+        android:id="@+id/etUsername"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/etPassword"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="32dp"
+        android:ems="10"
+        android:hint="@string/placeholder_username"
+        android:inputType="textPersonName"
+        android:padding="15dp"
+        android:layout_centerHorizontal="true"
+        android:drawableLeft="@drawable/ic_person_24dp"
+        android:drawableStart="@drawable/ic_person_24dp"
+        android:importantForAutofill="no" />
+
+    <EditText
+        android:id="@+id/etPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="277dp"
+        android:hint="@string/placeholder_password"
+        android:inputType="textPassword"
+        android:padding="15dp"
+        android:layout_centerVertical="true"
+        android:layout_alignEnd="@+id/etEmail"
+        android:layout_alignRight="@+id/etEmail"
+        android:ems="10"
+        android:drawableLeft="@drawable/ic_lock_24dp"
+
+        android:drawableStart="@drawable/ic_lock_24dp"
+        android:importantForAutofill="no" />
+
+
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etPassword"
+        android:text="@string/button_login"
+        android:layout_marginTop="-240dp"
+        android:background="@drawable/button_style_selector"
+        android:textColor="#FFF"
+        />
+
+    <Button
+        android:id="@+id/btnRegister"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnLogin"
+        android:layout_marginTop="29dp"
+        android:background="@drawable/button_style_selector"
+        android:text="@string/button_register"
+        android:textColor="#FFF"/>
+
+    <TextView
+        android:id="@+id/btnForgotPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_forgot_password"
+        android:textStyle="bold"
+        android:focusable="true"
+        android:clickable="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="40dp"
+        />
+
+</RelativeLayout>

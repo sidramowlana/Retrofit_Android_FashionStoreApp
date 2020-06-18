@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFF">
+
+    <LinearLayout
+        android:id="@+id/payment_dialog_linear_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:gravity="center_horizontal">
+
+        <ImageButton
+            android:id="@+id/payment_dialog_close_btn_id"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/round_background"
+            android:contentDescription="@string/cancel"
+            android:src="@drawable/ic_close_black_24dp" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/payment_dialog_linear_id"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/payment_dialog_payhere_text_view_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@string/make_your_payments_here"
+            android:textColor="#000"
+            android:textSize="20sp" />
+
+
+        <TextView
+            android:id="@+id/payment_dialog_name_text_view_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/payment_dialog_payhere_text_view_id"
+            android:text="@string/name" />
+
+        <EditText
+            android:id="@+id/payment_dialog_name_edit_view_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/payment_dialog_name_text_view_id"
+            android:inputType="textPersonName"
+            android:text="@string/name" />
+
+        <TextView
+            android:id="@+id/payment_dialog_email_text_view_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/payment_dialog_name_edit_view_id"
+            android:text="@string/placeholder_email" />
+
+        <EditText
+            android:id="@+id/payment_dialog_email_edit_view_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/payment_dialog_email_text_view_id"
+            android:inputType="textEmailAddress"
+            android:text="@string/placeholder_email" />
+
+        <TextView
+            android:id="@+id/payment_dialog_payment_address_text_view_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/payment_dialog_email_edit_view_id"
+            android:text="@string/shipping_address" />
+
+        <EditText
+            android:id="@+id/payment_dialog_address_edit_view_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/payment_dialog_payment_address_text_view_id"
+            android:inputType="text"
+            android:text="@string/shipping_address" />
+
+        <TextView
+            android:id="@+id/payment_dialog_payment_type_text_view_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/payment_dialog_address_edit_view_id"
+            android:text="@string/payment_type" />
+
+        <RadioGroup
+            android:id="@+id/payment_dialog_radio_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/payment_dialog_payment_type_text_view_id"
+            android:checkedButton="@id/payment_dialog_card_radioButton_id">
+
+            <RadioButton
+                android:id="@+id/payment_dialog_card_radioButton_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/payment_dialog_payment_type_text_view_id"
+                android:text="@string/card" />
+
+            <RadioButton
+                android:id="@+id/payment_dialog_cash_radioButton_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/payment_dialog_card_radioButton_id"
+                android:text="@string/cash_on_hand" />
+        </RadioGroup>
+
+        <RelativeLayout
+            android:id="@+id/payment_dialog_relative_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/payment_dialog_radio_group">
+
+            <TextView
+                android:id="@+id/payment_dialog_total_text_view_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:text="@string/total"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/payment_dialog_total_amount_text_view_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/payment_dialog_total_text_view_id"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:text="@string/_00_00"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/payment_dialog_pay_btn_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/payment_dialog_relative_id"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/button_style_selector"
+            android:text="Pay"
+            android:textColor="#FFF" />
+    </RelativeLayout>
+
+</RelativeLayout>

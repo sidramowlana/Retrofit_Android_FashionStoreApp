@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/rate_textrate_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:gravity="center"
+        android:text="@string/did_you_like_our_product"
+        android:textStyle="bold"
+        android:textSize="20sp"/>
+
+    <RatingBar
+        android:id="@+id/rate_product_ratingbar_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rate_textrate_id"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:rating="0"
+        android:stepSize="1" />
+    <TextView
+        android:id="@+id/rate_description_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rate_product_ratingbar_id"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp" />
+
+    <EditText
+        android:id="@+id/rate_etFeedback_id"
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rate_product_ratingbar_id"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:hint="@string/what_is_your_thought"
+        android:inputType="text"
+        android:importantForAutofill="no" />
+
+
+    <Button
+        android:id="@+id/rate_submit_btn_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_style_selector"
+        android:layout_below="@id/rate_etFeedback_id"
+        android:layout_marginTop="130dp"
+        android:textColor="#FFF"
+        android:layout_margin="20dp"
+        android:text="@string/submit"/>
+
+
+</RelativeLayout>

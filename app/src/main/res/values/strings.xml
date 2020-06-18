@@ -1,0 +1,92 @@
+<resources>
+    <string name="app_name">Fashion Store App</string>
+
+    <string name="placeholder_username">Username</string>
+    <string name="placeholder_email">Email</string>
+    <string name="placeholder_password">Password</string>
+    <string name="logo_fashion_store">Fashion Store</string>
+    <string name="button_register">Register</string>
+    <string name="button_login">Login</string>
+    <string name="btn_forgot_password">Forgot Password ?</string>
+    <string name="placeholder_address">Address</string>
+    <string name="placeholder_mobileno">Mobile No.</string>
+    <string name="button_createAccount">CREATE ACCOUNT</string>
+    <string name="button_haveAnAccountLetsShop">Have an account? Lets Shop</string>
+    <string name="home">Home</string>
+    <string name="category">Category</string>
+    <string name="wishlist">Wishlist</string>
+    <string name="cart">Cart</string>
+    <string name="logout">Logout</string>
+    <string name="profile">Profile</string>
+    <string name="user_name">User name</string>
+    <string name="user_email_com">user@email.com</string>
+    <string name="open">open</string>
+    <string name="close">close</string>
+    <string name="new_password">New Password</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="profile_pic">User Profile Pic</string>
+
+
+    <!-- Shared Preferences -->
+    <string name="USER_EMAIL_KEY">com.example.fashionstore.activities.USERNAME_KEY</string>
+    <string name="PASSWORD_KEY">com.example.fashionstore.activities.PASSWORD_KEY</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="unisex">Unisex</string>
+    <string name="heee">heee</string>
+    <string name="item_name">Item Name</string>
+    <string name="item_price">Item Price</string>
+    <string name="add_to_favourite">Add to Favourite</string>
+    <string name="description">Description</string>
+    <string name="price">Price</string>
+    <string name="todo">TODO</string>
+    <string name="name">Name</string>
+    <string name="fashion_store">Fashion Store</string>
+    <string name="fashion">Fashion</string>
+    <string name="opens">Open navigation drawer</string>
+    <string name="closes">Close navigation drawer</string>
+    <string name="small">S</string>
+    <string name="m">M</string>
+    <string name="l">L</string>
+    <string name="quantity">Quantity</string>
+    <string name="available_quantity">Available Quantity:</string>
+    <string name="size">size</string>
+    <string name="please_select_the_size">Please Select the size:</string>
+    <string name="_00_00"> 00.00</string>
+    <string name="total">Total:</string>
+    <string name="update_profile">Update Profile</string>
+    <string name="cart_product_description">Cart Product Description</string>
+    <string name="produc_tsize">"Size: "</string>
+    <string name="add_to_cart">ADD TO CART</string>
+    <string name="submit">SUBMIT</string>
+    <string name="did_you_like_our_product">Did you like our product?</string>
+    <string name="total_usd">Total: </string>
+    <string name="price_usd">Price: USD $</string>
+    <string name="checkout">CHECKOUT</string>
+    <string name="what_is_your_thought">What is your thought?</string>
+    <string name="make_your_payments_here">Make Payments here</string>
+    <string name="cancel">Cancel</string>
+
+    <string name="payment_type">Payment Type</string>
+    <string name="cash_on_hand">Cash on hand</string>
+    <string name="card">Card</string>
+    <string name="search">Search</string>
+    <string name="cancel_order">CANCEL ORDER</string>
+    <string name="order_no">Order No.</string>
+    <string name="date">Date</string>
+    <string name="order_status">Order Status</string>
+    <string name="shipping_address">Shipping Address</string>
+    <string name="shipping_details">Shipping Details</string>
+    <string name="product_name">Product Name</string>
+    <string name="usd_00_00">USD $00.00</string>
+    <string name="re_order">RE-ORDER</string>
+    <string name="customer_reviews">Customer Reviews</string>
+    <string name="rate_my_order">RATE MY ORDER</string>
+    <string name="give_your_rating_here">Rate here</string>
+    <string name="_0_0">0.0</string>
+    <string name="ask_here">Ask here</string>
+    <string name="product_inquiry">Product Inquiry</string>
+    <string name="question">Question:</string>
+    <string name="answer">We will reply to you soon</string>
+</resources>
