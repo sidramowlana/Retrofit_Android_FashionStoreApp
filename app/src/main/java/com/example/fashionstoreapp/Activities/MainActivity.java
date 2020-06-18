@@ -1,4 +1,12 @@
-package com.example.fashionstoreapp;
+package com.example.fashionstoreapp.Activities;
+
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -10,17 +18,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
-
-import com.example.fashionstoreapp.Activities.LoginActivity;
-import com.example.fashionstoreapp.Models.StoresUser;
+import com.example.fashionstoreapp.Fragments.HomeFragment;
 import com.example.fashionstoreapp.Models.User;
+import com.example.fashionstoreapp.R;
+import com.example.fashionstoreapp.Storage.SharedPreferenceManager;
 import com.example.fashionstoreapp.databinding.ActivityMainBinding;
 import com.google.android.material.navigation.NavigationView;
 
@@ -38,7 +39,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(view);
         toolbar = activityMainBinding.appNavBar.tbToolBar;
         setSupportActionBar(toolbar);
-        User user = StoresUser.getCurrentLoggedUser(getApplicationContext());
+        SharedPreferenceManager usershared = new SharedPreferenceManager(this);
+                User user = usershared.getUser();
 
 
         NavigationView navigationView = activityMainBinding.navigationView;
@@ -120,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //fragments are created according to user demand
         if (id == R.id.navHome) {
-//            fragment = new HomeFragment();
+            fragment = new HomeFragment();
         } else if (id == R.id.navWishlist) {
 //            fragment = new WishlistFragment();
         } else if (id == R.id.navCart) {

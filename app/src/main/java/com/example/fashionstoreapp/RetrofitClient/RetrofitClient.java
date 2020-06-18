@@ -1,8 +1,4 @@
-package com.example.fashionstoreapp.APIService;
-
-import com.example.fashionstoreapp.APIInterface.UserJsonApi;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+package com.example.fashionstoreapp.RetrofitClient;
 
 import java.util.concurrent.TimeUnit;
 
@@ -12,17 +8,12 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
-    private static String BASE_URL = "http://192.168.43.239:8080/api/auth/";
+    private static String BASE_URL = "http://192.168.43.239:8080/";
 //    private static String BASE_URL = "http://169.254.236.94:8080/api/auth/";
 
-    private static RetrofitClient retrofitClientInstance;
-    private Retrofit retrofit;
+    private static Retrofit retrofit;
 
     public RetrofitClient() {
-//        Gson gson = new GsonBuilder().serializeNulls()
-//                .setLenient()
-//                .create();
-
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .client(getHttpClient())
@@ -30,15 +21,11 @@ public class RetrofitClient {
                 .build();
     }
 
-    public static RetrofitClient getRetrofitClientInstance() {
-        if (retrofitClientInstance == null) {
-            retrofitClientInstance = new RetrofitClient();
+    public static Retrofit getRetrofitClientInstance() {
+        if (retrofit == null) {
+            new RetrofitClient();
         }
-        return retrofitClientInstance;
-    }
-
-    public UserJsonApi getApi() {
-        return retrofit.create(UserJsonApi.class);
+        return retrofit;
     }
 
     public static OkHttpClient getHttpClient() {

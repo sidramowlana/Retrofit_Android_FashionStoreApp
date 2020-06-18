@@ -1,13 +1,10 @@
-package com.example.fashionstoreapp.Models;
+package com.example.fashionstoreapp.DTO.Requests;
 
-import java.util.Date;
-import java.util.List;
-
-public class LoginResponse {
+public class LoginRequest {
     private String username;
     private String password;
 
-    public LoginResponse(String username, String password) {
+    public LoginRequest(String username, String password) {
         this.username = username;
         this.password = password;
     }
