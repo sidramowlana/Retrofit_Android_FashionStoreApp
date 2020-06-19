@@ -1,9 +1,7 @@
 package com.example.fashionstoreapp.Activities;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -18,8 +16,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.fashionstoreapp.DTO.Responses.LoginResponse;
 import com.example.fashionstoreapp.Fragments.HomeFragment;
-import com.example.fashionstoreapp.Models.User;
 import com.example.fashionstoreapp.R;
 import com.example.fashionstoreapp.Storage.SharedPreferenceManager;
 import com.example.fashionstoreapp.databinding.ActivityMainBinding;
@@ -30,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ActivityMainBinding activityMainBinding;
     Toolbar toolbar;
     ActionBarDrawerToggle toggle;
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,20 +38,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(view);
         toolbar = activityMainBinding.appNavBar.tbToolBar;
         setSupportActionBar(toolbar);
-        SharedPreferenceManager usershared = new SharedPreferenceManager(this);
-                User user = usershared.getUser();
 
-
+        LoginResponse loginResponse = SharedPreferenceManager.getSharedPreferenceInstance(this).getUser();
         NavigationView navigationView = activityMainBinding.navigationView;
         onNavigationItemSelected(navigationView.getMenu().findItem(R.id.navHome));
 
         navigationView.setCheckedItem(R.id.navHome);
         View navHeaderview = navigationView.getHeaderView(0);
         TextView navUserName = navHeaderview.findViewById(R.id.tvUserName);
+        navUserName.setText(loginResponse.getUsername());
 
-        navUserName.setText(user.getUsername());
-        TextView navUsername = navHeaderview.findViewById(R.id.tvUserEmail);
-        navUsername.setText(user.getEmail());
+        TextView navEmail = navHeaderview.findViewById(R.id.tvUserEmail);
+        navEmail.setText(loginResponse.getEmail());
 
         NavigationView navView = activityMainBinding.navigationView;
         DrawerLayout drawerLayout = activityMainBinding.drawerLayout;
@@ -64,16 +61,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navView.setNavigationItemSelectedListener(this);
 
     }
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        if (SharedPreferenceManager.getSharedPreferenceInstance(this).isLoggedIn()) {
+//            System.out.println(!SharedPreferenceManager.getSharedPreferenceInstance(this).isLoggedIn() + " +hertr");
+//            intent = new Intent(this, MainActivity.class);
+//            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//            startActivity(intent);
+//        }
+//    }
     public void onLogout() {
-
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-
-        editor.remove(getString(R.string.PASSWORD_KEY));
-        editor.remove(LoginActivity.USER);
-        editor.remove(LoginActivity.LOGGED_USER);
-        editor.apply();
-
         startActivity(new Intent(getApplicationContext(), LoginActivity.class));
         finish();
     }

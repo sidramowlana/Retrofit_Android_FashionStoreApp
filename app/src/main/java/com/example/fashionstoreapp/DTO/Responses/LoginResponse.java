@@ -3,19 +3,29 @@ package com.example.fashionstoreapp.DTO.Responses;
 public class LoginResponse {
    private  String token;
    private String id;
-   private String username;
-   private String role;
+    private String username;
+    private String email;
+   private String roles;
    private String tokenExpireTime;
 
     public LoginResponse() {
     }
 
-    public LoginResponse(String token, String id, String username, String role, String tokenExpireTime) {
+    public LoginResponse(String token, String id, String username, String email, String roles, String tokenExpireTime) {
         this.token = token;
         this.id = id;
         this.username = username;
-        this.role = role;
+        this.email = email;
+        this.roles = roles;
         this.tokenExpireTime = tokenExpireTime;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getToken() {
@@ -42,12 +52,12 @@ public class LoginResponse {
         this.username = username;
     }
 
-    public String getRole() {
-        return role;
+    public String getRoles() {
+        return roles;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setRoles(String roles) {
+        this.roles = roles;
     }
 
     public String getTokenExpireTime() {

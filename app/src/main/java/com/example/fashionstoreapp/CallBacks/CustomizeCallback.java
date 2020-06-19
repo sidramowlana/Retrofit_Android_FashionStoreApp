@@ -29,6 +29,6 @@ public class CustomizeCallback<T> implements Callback<T> {
     @Override
     public void onFailure(Call<T> call, Throwable t) {
         System.out.println("The failure message: " + t.getMessage());
-        responseCallBackInterface.onError("Network Failure");
+        responseCallBackInterface.onError(t.getMessage());
     }
 }

@@ -1,7 +1,6 @@
 package com.example.fashionstoreapp.Activities;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -12,7 +11,6 @@ import com.example.fashionstoreapp.APIService.AuthenticationService;
 import com.example.fashionstoreapp.DTO.Requests.LoginRequest;
 import com.example.fashionstoreapp.DTO.Responses.LoginResponse;
 import com.example.fashionstoreapp.RetrofitInterface.ResponseCallBackInterface;
-import com.example.fashionstoreapp.RetrofitInterface.UserApi;
 import com.example.fashionstoreapp.Storage.SharedPreferenceManager;
 import com.example.fashionstoreapp.databinding.ActivityLoginBinding;
 import com.shashank.sony.fancytoastlib.FancyToast;
@@ -23,11 +21,9 @@ public class LoginActivity extends AppCompatActivity implements ResponseCallBack
 
     private ActivityLoginBinding binding;
     Intent intent;
-    UserApi userApi;
     public AuthenticationService authenticationService;
 
-
-    private SharedPreferences sharedPreferences;
+    private SharedPreferenceManager sharedPreferences;
     public static String USER = "com.example.fashionsapptore.USER";
     public static String LOGGED_USER = "com.example.fashionsapptore.LOGGED_USER";
     public static String EMAIL_KEY = "com.example.fashionsapptore.activities.USERNAME_KEY";
@@ -53,21 +49,16 @@ public class LoginActivity extends AppCompatActivity implements ResponseCallBack
                 onBtnRegister();
             }
         });
-//        binding.btnForgotPassword.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                onBtnForgotPassword();
-//            }
-//        });
-        //checking in shared preference for the same user data
-//        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-//        String email = sharedPreferences.getString(EMAIL_KEY, "");
-//        String password = sharedPreferences.getString(PASSWORD_KEY, "");
-//
-//        binding.etEmail.setText(email);
-//        binding.etPassword.setText(password);
+        binding.btnForgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBtnForgotPassword();
+            }
+        });
 
-//        if (sharedPreferences.getBoolean(LOGGED_USER, false)) {
+        //checking in shared preference for the same user data
+//
+//        if (sharedPreferences.isLoggedIn()) {
 //            loadMain();
 //        }
     }
@@ -76,12 +67,22 @@ public class LoginActivity extends AppCompatActivity implements ResponseCallBack
     @Override
     protected void onStart() {
         super.onStart();
-        if (SharedPreferenceManager.getSharedPreferenceInstance(getApplicationContext()).isLoggedIn()) {
-            intent = new Intent(getApplicationContext(), MainActivity.class);
+        if (SharedPreferenceManager.getSharedPreferenceInstance(this).isLoggedIn()) {
+            System.out.println(!SharedPreferenceManager.getSharedPreferenceInstance(this).isLoggedIn() + " +hertr");
+            intent = new Intent(this, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         }
     }
+//            User user = SharedPreferenceManager.getSharedPreferenceInstance(this).getUser();
+//            String username = user.getUsername();
+//            String password = user.getPassword();
+//            System.out.println("usernameluffy: " + username);
+//
+//            binding.etUsername.setText(username);
+////            binding.etPassword.setText(password);
+//        }
+//    }
 
     public void loadMain() {
         intent = new Intent(this, MainActivity.class);
@@ -98,9 +99,7 @@ public class LoginActivity extends AppCompatActivity implements ResponseCallBack
         } else {
             LoginRequest loginRequest = new LoginRequest(username, password);
             authenticationService.login(loginRequest, this);
-            intent = new Intent(getApplicationContext(), MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
+
         }
     }
 
@@ -111,29 +110,38 @@ public class LoginActivity extends AppCompatActivity implements ResponseCallBack
 
     @Override
     public void onSuccess(Response response) {
-//store the shared preference
-//        check for the admin
-        //if the role is admin else normal navigation
-//        SharedPreferences.Editor sharedPreferenceEditor = sharedPreferences.edit();
         LoginResponse loginResponse = (LoginResponse) response.body();
-        if(loginResponse!=null) {
+        if (loginResponse != null) {
+            System.out.println("----------------------------------------------------");
+            System.out.println("responsebody: "+response.body());
+            System.out.println("toke: "+loginResponse.getToken());
+            System.out.println("id: "+loginResponse.getId());
+            System.out.println("username: "+loginResponse.getUsername());
+            System.out.println("email: "+loginResponse.getEmail());
+            System.out.println("role: "+loginResponse.getRoles());
+            System.out.println("expiretime: "+loginResponse.getTokenExpireTime());
+            System.out.println("----------------------------------------------------");
+
+            //save the user in sharedpred
             SharedPreferenceManager.getSharedPreferenceInstance(LoginActivity.this).saveUserSharedPref(loginResponse);
-//            StoresUser.getCurrentLoggedUser(this);
-            if (loginResponse.getRole()=="ROLE_ADMIN")
-            {
+
+            intent = new Intent(this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+
+            if (loginResponse.getRoles()== "ROLE_ADMIN") {
                 System.out.println("It is admin here");
-            }
-            else
-            {
+            } else {
                 System.out.println("It is Customer here");
             }
-                FancyToast.makeText(getApplicationContext(), "Successfully Logged In", FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
+            FancyToast.makeText(getApplicationContext(), "Successfully Logged In", FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
         }
     }
 
     @Override
     public void onError(String errorMessage) {
-        FancyToast.makeText(this, errorMessage, FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+        System.out.println("errorMessage: " + errorMessage);
+        FancyToast.makeText(this, "Invalid Credentials  ", FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
     }
 
     public void onBtnForgotPassword() {

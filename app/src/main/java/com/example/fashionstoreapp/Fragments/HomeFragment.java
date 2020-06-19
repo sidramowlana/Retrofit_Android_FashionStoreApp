@@ -53,6 +53,8 @@ public class HomeFragment extends Fragment implements ResponseCallBackInterface 
         View view = fragmentHomeBinding.getRoot();
         getActivity().setTitle("Home");
         productService = new ProductService();
+        productService.getAllProducts(this);
+
         return view;
     }
 
@@ -63,7 +65,6 @@ public class HomeFragment extends Fragment implements ResponseCallBackInterface 
 //        final List<Product> productList = Product.listAll(Product.class);
         System.out.println("w2");
 
-         productService.getAllProducts(this);
 //        homeAdapter = new HomeAdapter(getActivity(), );
         System.out.println("w");
 
