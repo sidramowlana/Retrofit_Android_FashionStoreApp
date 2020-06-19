@@ -1,35 +1,26 @@
 package com.example.fashionstoreapp.Models;
 
-import com.google.gson.annotations.SerializedName;
-import java.util.ArrayList;
+import java.util.List;
 
-public class Product{
-private Integer productId;
-    @SerializedName("Name")
-    private String name;
-    @SerializedName("ShortDescription")
+public class Product {
+    private Integer productId;
+
+    private String productName;
     private String shortDescription;
-    @SerializedName("LongDescription")
     private String longDescription;
-    @SerializedName("Category")
     private String category;
-    @SerializedName("Price")
     private double price;
-    @SerializedName("Quantity")
     private int quantity;
-    @SerializedName("ScaledImage")
     private String scaledImage;
-    @SerializedName("FullImage")
     private String fullImage;
-
-    @SerializedName("Tag")
-    private ArrayList<String> tags;
+    private List<ProductTag> productTag;
 
     public Product() {
     }
 
-    public Product(String name, String shortDescription, String longDescription, String category, double price, int quantity, String scaledImage, String fullImage, ArrayList<String> tags) {
-        this.name = name;
+    public Product(Integer productId, String productName, String shortDescription, String longDescription, String category, double price, int quantity, String scaledImage, String fullImage, List<ProductTag> productTag) {
+        this.productId = productId;
+        this.productName = productName;
         this.shortDescription = shortDescription;
         this.longDescription = longDescription;
         this.category = category;
@@ -37,15 +28,23 @@ private Integer productId;
         this.quantity = quantity;
         this.scaledImage = scaledImage;
         this.fullImage = fullImage;
-        this.tags = tags;
+        this.productTag = productTag;
     }
 
-    public String getName() {
-        return name;
+    public Integer getProductId() {
+        return productId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setProductId(Integer productId) {
+        this.productId = productId;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
     public String getShortDescription() {
@@ -104,19 +103,11 @@ private Integer productId;
         this.fullImage = fullImage;
     }
 
-    public ArrayList<String> getTags() {
-        return tags;
+    public List<ProductTag> getProductTag() {
+        return productTag;
     }
 
-    public void setTags(ArrayList<String> tags) {
-        this.tags = tags;
-    }
-
-    public Integer getProductId() {
-        return productId;
-    }
-
-    public void setProductId(Integer productId) {
-        this.productId = productId;
+    public void setProductTag(List<ProductTag> productTag) {
+        this.productTag = productTag;
     }
 }

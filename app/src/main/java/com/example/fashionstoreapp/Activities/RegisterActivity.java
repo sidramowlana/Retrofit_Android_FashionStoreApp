@@ -7,7 +7,7 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.fashionstoreapp.APIService.AuthenticationService;
+import com.example.fashionstoreapp.RetrofitAPIService.AuthenticationService;
 import com.example.fashionstoreapp.Models.User;
 import com.example.fashionstoreapp.RetrofitInterface.ResponseCallBackInterface;
 import com.example.fashionstoreapp.databinding.ActivityRegisterBinding;

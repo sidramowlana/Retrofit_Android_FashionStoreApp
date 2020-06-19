@@ -2,20 +2,35 @@ package com.example.fashionstoreapp.RetrofitInterface;
 
 
 import com.example.fashionstoreapp.Models.Product;
+import com.example.fashionstoreapp.Models.Wishlist;
 
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public interface ProductApi {
 
+    //get all products list
     @GET("api/products/productAll")
     Call<List<Product>> getAllProduct();
 
-    @GET("products/{productId}")
+    //get a product by id
+    @GET("/api/products/product/{productId}")
     Call<Product> getProductById(@Path("productId") Integer productId);
+
+    //add a product to wishlist
+    @POST("api/wishlist/add-wishlist/{productId}")
+    Call<Wishlist> addWishlistByProductId(@Path("productId") Integer productId, @Header("Authorization") String token);
+
+    //get all wishlist product of a user
+    @GET("api/wishlist/wishlistAll")
+    Call<List<Wishlist>>getAllUserWishListProduct(@Header("Authorization")String token);
+
+    //remove a product from wishlist
 
 
 

@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.fashionstoreapp.APIService.UserService;
+import com.example.fashionstoreapp.RetrofitAPIService.UserService;
 import com.example.fashionstoreapp.DTO.Responses.LoginResponse;
 import com.example.fashionstoreapp.R;
 import com.example.fashionstoreapp.RetrofitInterface.ResponseCallBackInterface;

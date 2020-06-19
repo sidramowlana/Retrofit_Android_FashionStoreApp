@@ -7,7 +7,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.fashionstoreapp.APIService.AuthenticationService;
+import com.example.fashionstoreapp.RetrofitAPIService.AuthenticationService;
 import com.example.fashionstoreapp.DTO.Requests.LoginRequest;
 import com.example.fashionstoreapp.DTO.Responses.LoginResponse;
 import com.example.fashionstoreapp.RetrofitInterface.ResponseCallBackInterface;
@@ -22,12 +22,7 @@ public class LoginActivity extends AppCompatActivity implements ResponseCallBack
     private ActivityLoginBinding binding;
     Intent intent;
     public AuthenticationService authenticationService;
-
-    private SharedPreferenceManager sharedPreferences;
     public static String USER = "com.example.fashionsapptore.USER";
-    public static String LOGGED_USER = "com.example.fashionsapptore.LOGGED_USER";
-    public static String EMAIL_KEY = "com.example.fashionsapptore.activities.USERNAME_KEY";
-    public static String PASSWORD_KEY = "com.example.fashionsapptore.activities.PASSWORD_KEY";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

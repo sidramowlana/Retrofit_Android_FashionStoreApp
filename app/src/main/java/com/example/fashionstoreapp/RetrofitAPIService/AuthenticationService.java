@@ -1,4 +1,4 @@
-package com.example.fashionstoreapp.APIService;
+package com.example.fashionstoreapp.RetrofitAPIService;
 
 import com.example.fashionstoreapp.CallBacks.CustomizeCallback;
 import com.example.fashionstoreapp.DTO.Requests.LoginRequest;
