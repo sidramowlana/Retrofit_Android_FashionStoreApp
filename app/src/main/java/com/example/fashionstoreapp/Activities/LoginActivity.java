@@ -10,14 +10,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.fashionstoreapp.RetrofitAPIService.AuthenticationService;
 import com.example.fashionstoreapp.DTO.Requests.LoginRequest;
 import com.example.fashionstoreapp.DTO.Responses.LoginResponse;
-import com.example.fashionstoreapp.RetrofitInterface.ResponseCallBackInterface;
+import com.example.fashionstoreapp.CallBacks.ResponseCallback;
 import com.example.fashionstoreapp.Storage.SharedPreferenceManager;
 import com.example.fashionstoreapp.databinding.ActivityLoginBinding;
 import com.shashank.sony.fancytoastlib.FancyToast;
 
 import retrofit2.Response;
 
-public class LoginActivity extends AppCompatActivity implements ResponseCallBackInterface {
+public class LoginActivity extends AppCompatActivity implements ResponseCallback {
 
     private ActivityLoginBinding binding;
     Intent intent;

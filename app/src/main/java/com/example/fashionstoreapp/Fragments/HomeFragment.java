@@ -23,7 +23,7 @@ import com.example.fashionstoreapp.Adapters.SlideAdapter;
 import com.example.fashionstoreapp.CallBacks.ItemClickCallback;
 import com.example.fashionstoreapp.Models.Product;
 import com.example.fashionstoreapp.RetrofitAPIService.ProductService;
-import com.example.fashionstoreapp.RetrofitInterface.ResponseCallBackInterface;
+import com.example.fashionstoreapp.CallBacks.ResponseCallback;
 import com.example.fashionstoreapp.databinding.FragmentHomeBinding;
 import com.shashank.sony.fancytoastlib.FancyToast;
 
@@ -32,7 +32,7 @@ import java.util.List;
 
 import retrofit2.Response;
 
-public class HomeFragment extends Fragment implements ResponseCallBackInterface, ItemClickCallback {
+public class HomeFragment extends Fragment implements ResponseCallback, ItemClickCallback {
     HomeAdapter homeAdapter;
     FragmentHomeBinding fragmentHomeBinding;
     RecyclerView recyclerView;
@@ -109,6 +109,7 @@ public class HomeFragment extends Fragment implements ResponseCallBackInterface,
         productList = (List<Product>) response.body();
         homeAdapter.setAllProductData(productList);
         recyclerView.setAdapter(homeAdapter);
+        homeAdapter.notifyDataSetChanged();
     }
 
     @Override

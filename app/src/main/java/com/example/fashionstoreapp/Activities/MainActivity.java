@@ -18,6 +18,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.fashionstoreapp.DTO.Responses.LoginResponse;
 import com.example.fashionstoreapp.Fragments.HomeFragment;
+import com.example.fashionstoreapp.Fragments.ProfileFragment;
+import com.example.fashionstoreapp.Fragments.WishlistFragment;
 import com.example.fashionstoreapp.R;
 import com.example.fashionstoreapp.Storage.SharedPreferenceManager;
 import com.example.fashionstoreapp.databinding.ActivityMainBinding;
@@ -122,11 +124,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (id == R.id.navHome) {
             fragment = new HomeFragment();
         } else if (id == R.id.navWishlist) {
-//            fragment = new WishlistFragment();
+            fragment = new WishlistFragment();
         } else if (id == R.id.navCart) {
 //            fragment = new CartFragment();
         } else if (id == R.id.navProfile) {
-//            fragment = new ProfileFragment();
+            fragment = new ProfileFragment();
         } else if (id == R.id.navOrders) {
 //            fragment = new OrdersFragment();
         } else if (id == R.id.navLogout) {

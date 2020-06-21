@@ -55,15 +55,15 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
         }
     }
 
-    public WishlistAdapter(ItemClickCallback itemClickCallback){
+    public WishlistAdapter(ItemClickCallback itemClickCallback) {
         this.itemClickCallback = itemClickCallback;
     }
 
-    public void setAllWishlistProductData(List<Wishlist> wishlist) {
-        this.wishlists = wishlist;
-        System.out.println("wishlist adapter: " + wishlist);
+    public void setAllWishlistProductData(List<Wishlist> wishlists) {
+        this.wishlists = wishlists;
         notifyDataSetChanged();
     }
+
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -75,7 +75,10 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         final Wishlist wishlist = wishlists.get(position);
-        final Product product = wishlist.getFavouriteProduct();
+        final Product product = wishlist.getProduct();
+        System.out.println("wishlist adapter product name: "+product.getProductName());
+        System.out.println("wishlist adapter product price: "+product.getPrice());
+        System.out.println("wishlist adapter product desc: "+product.getShortDescription());
         Picasso.get()
                 .load(product.getScaledImage())
                 .placeholder(R.drawable.loading)
@@ -88,12 +91,6 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
         holder.deleteFavourite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-//                Wishlist removeProduct = Wishlist.findById(Wishlist.class, wishlist.getId());
-//                removeProduct.delete();
-//                favouriteList.remove(position);
-//                notifyItemRemoved(position);
-//                notifyItemRangeChanged(position, favouriteList.size());
                 Toast.makeText(context, "Should Remove from your wishlist", Toast.LENGTH_LONG).show();
             }
         });

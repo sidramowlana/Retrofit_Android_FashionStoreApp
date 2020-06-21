@@ -1,8 +1,8 @@
-package com.example.fashionstoreapp.RetrofitInterface;
+package com.example.fashionstoreapp.CallBacks;
 
 import retrofit2.Response;
 
-public interface ResponseCallBackInterface {
+public interface ResponseCallback {
     void onSuccess(Response response);
     void onError(String errorMessage);
 }

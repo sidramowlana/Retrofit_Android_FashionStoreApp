@@ -9,13 +9,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.fashionstoreapp.RetrofitAPIService.AuthenticationService;
 import com.example.fashionstoreapp.Models.User;
-import com.example.fashionstoreapp.RetrofitInterface.ResponseCallBackInterface;
+import com.example.fashionstoreapp.CallBacks.ResponseCallback;
 import com.example.fashionstoreapp.databinding.ActivityRegisterBinding;
 import com.shashank.sony.fancytoastlib.FancyToast;
 
 import retrofit2.Response;
 
-public class RegisterActivity extends AppCompatActivity implements ResponseCallBackInterface {
+public class RegisterActivity extends AppCompatActivity implements ResponseCallback {
     private ActivityRegisterBinding binding;
     Intent intent;
     public AuthenticationService authenticationService;

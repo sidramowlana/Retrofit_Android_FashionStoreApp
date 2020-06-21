@@ -11,7 +11,6 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
-
 public interface ProductApi {
 
     //get all products list
@@ -23,13 +22,15 @@ public interface ProductApi {
     Call<Product> getProductById(@Path("productId") Integer productId);
 
     //add a product to wishlist
-    @POST("api/wishlist/add-wishlist/{productId}")
+    @POST("/api/wishlist/add-wishlist/{productId}")
     Call<Wishlist> addWishlistByProductId(@Path("productId") Integer productId, @Header("Authorization") String token);
 
     //get all wishlist product of a user
     @GET("api/wishlist/wishlistAll")
     Call<List<Wishlist>>getAllUserWishListProduct(@Header("Authorization")String token);
 
+    @GET("api/wishlist/product/{productId}")
+    Call<Wishlist>getWishlistProduct(@Path("productId") Integer productId,@Header("Authorization")String token);
     //remove a product from wishlist
 
 

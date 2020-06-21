@@ -6,7 +6,7 @@ import com.example.fashionstoreapp.DTO.Responses.LoginResponse;
 import com.example.fashionstoreapp.Models.User;
 import com.example.fashionstoreapp.RetrofitClient.RetrofitClient;
 import com.example.fashionstoreapp.RetrofitInterface.AuthenticationApi;
-import com.example.fashionstoreapp.RetrofitInterface.ResponseCallBackInterface;
+import com.example.fashionstoreapp.CallBacks.ResponseCallback;
 
 import retrofit2.Call;
 
@@ -17,12 +17,12 @@ public class AuthenticationService {
         this.authenticationApi = retrofitClient.getRetrofitClientInstance().create(AuthenticationApi.class);
     }
 
-    public void login(LoginRequest request, ResponseCallBackInterface callback) {
+    public void login(LoginRequest request, ResponseCallback callback) {
         Call<LoginResponse> loginResponseCall = authenticationApi.loginUser(request);
         loginResponseCall.enqueue(new CustomizeCallback<LoginResponse>(callback));
     }
 
-    public void register(User user, ResponseCallBackInterface callback) {
+    public void register(User user, ResponseCallback callback) {
         Call<User> userCall = authenticationApi.registerUser(user);
         userCall.enqueue(new CustomizeCallback<User>(callback));
     }

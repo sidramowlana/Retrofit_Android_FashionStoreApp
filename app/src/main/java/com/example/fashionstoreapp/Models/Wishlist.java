@@ -1,30 +1,39 @@
 package com.example.fashionstoreapp.Models;
 
 public class Wishlist {
-   private User favouriteUser;
-    private Product favouriteProduct;
+    private User user;
+    private Product product;
+//    private boolean isFavourite;
 
     public Wishlist() {
     }
 
-    public Wishlist(User favouriteUser, Product favouriteProduct) {
-        this.favouriteUser = favouriteUser;
-        this.favouriteProduct = favouriteProduct;
+    public Wishlist(User user, Product product) {
+        this.user = user;
+        this.product = product;
     }
 
-    public User getFavouriteUser() {
-        return favouriteUser;
+    public User getUser() {
+        return user;
     }
 
-    public void setFavouriteUser(User favouriteUser) {
-        this.favouriteUser = favouriteUser;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public Product getFavouriteProduct() {
-        return favouriteProduct;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setFavouriteProduct(Product favouriteProduct) {
-        this.favouriteProduct = favouriteProduct;
+    public void setProduct(Product product) {
+        this.product = product;
     }
+//
+//    public boolean isFavourite() {
+//        return isFavourite;
+//    }
+//
+//    public void setFavourite(boolean favourite) {
+//        isFavourite = favourite;
+//    }
 }

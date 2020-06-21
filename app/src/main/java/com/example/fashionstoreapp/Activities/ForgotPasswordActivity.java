@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.fashionstoreapp.RetrofitAPIService.UserService;
 import com.example.fashionstoreapp.DTO.Responses.LoginResponse;
 import com.example.fashionstoreapp.R;
-import com.example.fashionstoreapp.RetrofitInterface.ResponseCallBackInterface;
+import com.example.fashionstoreapp.CallBacks.ResponseCallback;
 import com.example.fashionstoreapp.Storage.SharedPreferenceManager;
 import com.example.fashionstoreapp.databinding.ActivityForgotPasswordBinding;
 import com.shashank.sony.fancytoastlib.FancyToast;
@@ -16,7 +16,7 @@ import java.security.NoSuchAlgorithmException;
 
 import retrofit2.Response;
 
-public class ForgotPasswordActivity extends AppCompatActivity  implements ResponseCallBackInterface {
+public class ForgotPasswordActivity extends AppCompatActivity  implements ResponseCallback {
 
     ActivityForgotPasswordBinding binding;
     UserService userService;
