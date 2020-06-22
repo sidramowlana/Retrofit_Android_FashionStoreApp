@@ -54,10 +54,8 @@ public class RegisterActivity extends AppCompatActivity implements ResponseCallb
         } else {
             if (password.length() > 6) {
                 User user = new User(email, username, password, address, phone);
-                System.out.println("autheservice: " + authenticationService);
                 authenticationService.register(user, this);
                 onLoadLogin();
-
             } else {
                 FancyToast.makeText(getApplicationContext(), "Password should be atleast 6 character long", FancyToast.LENGTH_LONG, FancyToast.WARNING, false).show();
             }

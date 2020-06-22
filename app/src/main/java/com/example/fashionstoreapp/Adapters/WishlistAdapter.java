@@ -16,20 +16,46 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fashionstoreapp.Activities.ProductDetailActivity;
 import com.example.fashionstoreapp.CallBacks.ItemClickCallback;
+import com.example.fashionstoreapp.CallBacks.ResponseCallback;
+import com.example.fashionstoreapp.DTO.Responses.LoginResponse;
 import com.example.fashionstoreapp.Models.Product;
 import com.example.fashionstoreapp.Models.Wishlist;
 import com.example.fashionstoreapp.R;
+import com.example.fashionstoreapp.RetrofitAPIService.ProductService;
+import com.example.fashionstoreapp.Storage.SharedPreferenceManager;
 import com.example.fashionstoreapp.databinding.WishlistItemBinding;
+import com.shashank.sony.fancytoastlib.FancyToast;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHolder> {
+import retrofit2.Response;
+
+public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHolder> implements ItemClickCallback, ResponseCallback {
 
     WishlistItemBinding wishlistItemBinding;
     Context context;
     List<Wishlist> wishlists;
+    LoginResponse loginResponse;
+    private ProductService productService;
     private ItemClickCallback itemClickCallback;
+
+    @Override
+    public void onItemClickListener(Integer id) {
+        onAddRemoveProductWishlist(id, loginResponse, this);
+    }
+
+    @Override
+    public void onSuccess(Response response) {
+        System.out.println("deleted from yourwishlist");
+        notifyDataSetChanged();
+
+    }
+
+    @Override
+    public void onError(String errorMessage) {
+        System.out.println("error in ur deleting wihshlist product from the list");
+    }
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -76,9 +102,9 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, final int position) {
         final Wishlist wishlist = wishlists.get(position);
         final Product product = wishlist.getProduct();
-        System.out.println("wishlist adapter product name: "+product.getProductName());
-        System.out.println("wishlist adapter product price: "+product.getPrice());
-        System.out.println("wishlist adapter product desc: "+product.getShortDescription());
+        loginResponse = SharedPreferenceManager.getSharedPreferenceInstance(context).getUser();
+        productService = new ProductService();
+
         Picasso.get()
                 .load(product.getScaledImage())
                 .placeholder(R.drawable.loading)
@@ -88,19 +114,6 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
         holder.textViewPrice.setText("USD $ " + String.valueOf(product.getPrice()));
         holder.textViewDescription.setText(product.getShortDescription());
         holder.ratingBar.getNumStars();
-        holder.deleteFavourite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(context, "Should Remove from your wishlist", Toast.LENGTH_LONG).show();
-            }
-        });
-        holder.addToCart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Toast.makeText(context, "Adding to cart work", Toast.LENGTH_LONG).show();
-            }
-        });
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -118,10 +131,31 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
                 context.startActivity(intent);
             }
         });
+        holder.deleteFavourite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                wishlists.remove(position);
+                notifyItemRemoved(position);
+                notifyItemRangeChanged(position, wishlists.size());
+                onItemClickListener(product.getProductId());
+                FancyToast.makeText(context, "Removed from your WishList", Toast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
+            }
+        });
+        holder.addToCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FancyToast.makeText(context, "Add to cart no code still", Toast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return wishlists.size();
     }
+
+    public void onAddRemoveProductWishlist(Integer productId, LoginResponse loginResponse, ResponseCallback productResponseCallback) {
+        productService.onAddRemoveProductFavourite(productId, "Bearer " + loginResponse.getToken(), productResponseCallback);
+    }
 }
+

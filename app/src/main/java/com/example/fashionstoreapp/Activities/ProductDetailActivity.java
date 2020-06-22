@@ -1,9 +1,11 @@
 package com.example.fashionstoreapp.Activities;
 
 import android.content.Intent;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -51,7 +53,7 @@ public class ProductDetailActivity extends AppCompatActivity implements SharedSe
         final ResponseCallback productResponseCallback = new ResponseCallback() {
             @Override
             public void onSuccess(Response response) {
-               product = (Product) response.body();
+                product = (Product) response.body();
                 activityProductDetailBinding.detailProductNameId.setText(product.getProductName());
                 activityProductDetailBinding.detailProductPriceId.setText("USD $ " + String.valueOf(product.getPrice()));
                 activityProductDetailBinding.detailProductDescriptionId.setText(product.getShortDescription());
@@ -60,6 +62,46 @@ public class ProductDetailActivity extends AppCompatActivity implements SharedSe
                         .placeholder(R.drawable.loading)
                         .error(R.drawable.error)
                         .into(activityProductDetailBinding.detailImageViewId);
+                if (product.getQuantity() == 0) {
+                    Toast.makeText(getApplicationContext(), "Out of Stock", Toast.LENGTH_SHORT).show();
+                } else {
+                    activityProductDetailBinding.textviewAvailableQtyId.setText(String.valueOf(product.getQuantity()));
+                }
+                activityProductDetailBinding.detailSmallBtnId.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        activityProductDetailBinding.textviewSelectesSizeId.setText("S");
+                        selectedSize = activityProductDetailBinding.textviewSelectesSizeId.getText().toString();
+//                        GradientDrawable gradientDrawable = new GradientDrawable();
+//                        gradientDrawable.setStroke(2, getResources().getColor(R.color.colorPrimary));
+//                        activityProductDetailBinding.detailSmallBtnId.setBackground(gradientDrawable);
+                        onSelectButton(activityProductDetailBinding.detailSmallBtnId);
+                        removeSelectButton(activityProductDetailBinding.detailMediumBtnId);
+                        removeSelectButton(activityProductDetailBinding.detailLargeBtnId);
+
+                    }
+                });
+
+                activityProductDetailBinding.detailMediumBtnId.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        activityProductDetailBinding.textviewSelectesSizeId.setText("M");
+                        selectedSize = activityProductDetailBinding.textviewSelectesSizeId.getText().toString();
+                        onSelectButton(activityProductDetailBinding.detailMediumBtnId);
+                        removeSelectButton(activityProductDetailBinding.detailSmallBtnId);
+                        removeSelectButton(activityProductDetailBinding.detailLargeBtnId);
+                    }
+                });
+                activityProductDetailBinding.detailLargeBtnId.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        activityProductDetailBinding.textviewSelectesSizeId.setText("L");
+                        selectedSize = activityProductDetailBinding.textviewSelectesSizeId.toString();
+                        onSelectButton(activityProductDetailBinding.detailLargeBtnId);
+                        removeSelectButton(activityProductDetailBinding.detailMediumBtnId);
+                        removeSelectButton(activityProductDetailBinding.detailSmallBtnId);
+                    }
+                });
             }
 
             @Override
@@ -70,10 +112,11 @@ public class ProductDetailActivity extends AppCompatActivity implements SharedSe
                 }
             }
         };
+
         final ResponseCallback productFavouriteResponseCallback = new ResponseCallback() {
             @Override
             public void onSuccess(Response response) {
-                if(response!=null){
+                if (response != null) {
                     activityProductDetailBinding.buttonFavorite.setChecked(true);
                 }
             }
@@ -91,7 +134,7 @@ public class ProductDetailActivity extends AppCompatActivity implements SharedSe
             activityProductDetailBinding.buttonFavorite.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onAddProductWishlist(productId, loginResponse, productResponseCallback);
+                    onAddRemoveProductWishlist(productId, loginResponse, productResponseCallback);
                 }
             });
             activityProductDetailBinding.buttonShare.setOnClickListener(new View.OnClickListener() {
@@ -100,6 +143,7 @@ public class ProductDetailActivity extends AppCompatActivity implements SharedSe
                     onShare(product);
                 }
             });
+
         }
     }
 
@@ -109,12 +153,12 @@ public class ProductDetailActivity extends AppCompatActivity implements SharedSe
         onCalculateRatingAverage();
     }
 
-    public void onAddProductWishlist(Integer productId, LoginResponse loginResponse, ResponseCallback productResponseCallback) {
+    public void onAddRemoveProductWishlist(Integer productId, LoginResponse loginResponse, ResponseCallback productResponseCallback) {
         if (activityProductDetailBinding.buttonFavorite.isChecked()) {
-            productService.addProductFavourite(productId,  "Bearer " + loginResponse.getToken(), productResponseCallback);
+            productService.onAddRemoveProductFavourite(productId, "Bearer " + loginResponse.getToken(), productResponseCallback);
             FancyToast.makeText(getApplicationContext(), "Added to your WishList", Toast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
         } else {
-            productService.addProductFavourite(productId, "Bearer " + loginResponse.getToken(), productResponseCallback);
+            productService.onAddRemoveProductFavourite(productId, "Bearer " + loginResponse.getToken(), productResponseCallback);
             FancyToast.makeText(getApplicationContext(), "Removed from your WishList", Toast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
         }
     }
@@ -157,5 +201,16 @@ public class ProductDetailActivity extends AppCompatActivity implements SharedSe
     @Override
     public void onResume() {
         super.onResume();
+    }
+   public void onSelectButton(Button button)
+    {
+        GradientDrawable gradientDrawable = new GradientDrawable();
+        gradientDrawable.setStroke(2, getResources().getColor(R.color.colorPrimary));
+        button.setBackground(gradientDrawable);
+    }
+    public void removeSelectButton(Button button){
+        GradientDrawable gradientDrawable = new GradientDrawable();
+        gradientDrawable.setStroke(2, getResources().getColor(R.color.darker_gray));
+        button.setBackground(gradientDrawable);
     }
 }

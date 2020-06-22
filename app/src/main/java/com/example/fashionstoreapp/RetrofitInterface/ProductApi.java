@@ -23,7 +23,7 @@ public interface ProductApi {
 
     //add a product to wishlist
     @POST("/api/wishlist/add-wishlist/{productId}")
-    Call<Wishlist> addWishlistByProductId(@Path("productId") Integer productId, @Header("Authorization") String token);
+    Call<Wishlist> onAddRemoveWishlistByProductId(@Path("productId") Integer productId, @Header("Authorization") String token);
 
     //get all wishlist product of a user
     @GET("api/wishlist/wishlistAll")
@@ -32,7 +32,6 @@ public interface ProductApi {
     @GET("api/wishlist/product/{productId}")
     Call<Wishlist>getWishlistProduct(@Path("productId") Integer productId,@Header("Authorization")String token);
     //remove a product from wishlist
-
 
 
 }

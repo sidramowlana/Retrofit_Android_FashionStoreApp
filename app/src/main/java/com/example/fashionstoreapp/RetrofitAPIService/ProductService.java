@@ -29,8 +29,8 @@ public class ProductService {
         productCall.enqueue(new CustomizeCallback<Product>(callback));
     }
 
-    public void addProductFavourite(Integer id, String token, ResponseCallback callback){
-        Call<Wishlist> wishlistCall = productApi.addWishlistByProductId(id,token);
+    public void onAddRemoveProductFavourite(Integer id, String token, ResponseCallback callback){
+        Call<Wishlist> wishlistCall = productApi.onAddRemoveWishlistByProductId(id,token);
         wishlistCall.enqueue(new CustomizeCallback<Wishlist>(callback));
     }
 

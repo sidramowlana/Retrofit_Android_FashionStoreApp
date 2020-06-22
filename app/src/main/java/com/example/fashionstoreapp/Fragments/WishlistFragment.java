@@ -82,7 +82,6 @@ public class WishlistFragment extends Fragment implements ResponseCallback, Item
         wishlistAdapter.setAllWishlistProductData(wishlistList);
         recyclerView.setAdapter(wishlistAdapter);
         wishlistAdapter.notifyDataSetChanged();
-
     }
 
     @Override
@@ -96,7 +95,6 @@ public class WishlistFragment extends Fragment implements ResponseCallback, Item
     public void onItemClickListener(Integer id) {
         Log.e("clicked product detail:", String.valueOf(id));
         startActivity(new Intent(getActivity(), ProductDetailActivity.class).putExtra("productId", id));
-
     }
 
 }
