@@ -40,24 +40,6 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
     private ProductService productService;
     private ItemClickCallback itemClickCallback;
 
-    @Override
-    public void onItemClickListener(Integer id) {
-        onAddRemoveProductWishlist(id, loginResponse, this);
-    }
-
-    @Override
-    public void onSuccess(Response response) {
-        System.out.println("deleted from yourwishlist");
-        notifyDataSetChanged();
-
-    }
-
-    @Override
-    public void onError(String errorMessage) {
-        System.out.println("error in ur deleting wihshlist product from the list");
-    }
-
-
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
         TextView textViewName;
@@ -157,5 +139,22 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
     public void onAddRemoveProductWishlist(Integer productId, LoginResponse loginResponse, ResponseCallback productResponseCallback) {
         productService.onAddRemoveProductFavourite(productId, "Bearer " + loginResponse.getToken(), productResponseCallback);
     }
+    @Override
+    public void onItemClickListener(Integer id) {
+        onAddRemoveProductWishlist(id, loginResponse, this);
+    }
+
+    @Override
+    public void onSuccess(Response response) {
+        System.out.println("deleted from yourwishlist");
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public void onError(String errorMessage) {
+        System.out.println("error in ur deleting wihshlist product from the list");
+    }
+
+
 }
 

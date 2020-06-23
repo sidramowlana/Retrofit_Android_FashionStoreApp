@@ -34,6 +34,7 @@ public class ProductService {
         wishlistCall.enqueue(new CustomizeCallback<Wishlist>(callback));
     }
 
+
     public void getAllUserWishListProduct(String token, ResponseCallback callback){
 
         System.out.println("product service token: "+token);
@@ -44,4 +45,5 @@ public class ProductService {
         Call<Wishlist> wishlistProductCall = productApi.getWishlistProduct(productId,token);
         wishlistProductCall.enqueue(new CustomizeCallback<Wishlist>(callback));
     }
+
 }

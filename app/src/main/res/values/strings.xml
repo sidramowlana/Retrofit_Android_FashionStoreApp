@@ -89,4 +89,6 @@
     <string name="product_inquiry">Product Inquiry</string>
     <string name="question">Question:</string>
     <string name="answer">We will reply to you soon</string>
+    <string name="cart_product_name">Cart Product Name</string>
+    <string name="amount">amount</string>
 </resources>

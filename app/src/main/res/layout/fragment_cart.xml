@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Fragments.WishlistFragment">
+    android:scrollbars="vertical">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/cart_recycleview_id"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="#f2f2f2"
-        android:scrollbars="vertical" />
+        android:background="@color/white"
+        android:scrollbars="vertical"/>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -26,7 +26,6 @@
             android:layout_marginBottom="5dp"
             android:text="@string/total"
             android:textColor="#000"
-            android:textSize="20sp"
             android:textStyle="bold" />
 
         <TextView
@@ -36,24 +35,18 @@
             android:layout_alignBaseline="@+id/cart_text_total_id"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:text="@string/_00_00"
-            android:textColor="#000"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:text="@string/_00_00" />
 
         <Button
             android:id="@+id/cart_checkout_btn_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/cart_text_amount_id"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="20dp"
             android:background="@drawable/button_style_selector"
             android:text="@string/checkout"
-            android:textSize="20sp"
-            android:textColor="#fff"/>
+            android:textColor="#fff" />
 
     </RelativeLayout>
-
 
 </LinearLayout>

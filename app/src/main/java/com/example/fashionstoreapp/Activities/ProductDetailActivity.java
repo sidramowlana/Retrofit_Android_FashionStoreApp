@@ -16,6 +16,7 @@ import com.example.fashionstoreapp.DTO.Responses.LoginResponse;
 import com.example.fashionstoreapp.Interface.SharedService;
 import com.example.fashionstoreapp.Models.Product;
 import com.example.fashionstoreapp.R;
+import com.example.fashionstoreapp.RetrofitAPIService.CartService;
 import com.example.fashionstoreapp.RetrofitAPIService.ProductService;
 import com.example.fashionstoreapp.Storage.SharedPreferenceManager;
 import com.example.fashionstoreapp.databinding.ActivityProductDetailBinding;
@@ -31,6 +32,7 @@ public class ProductDetailActivity extends AppCompatActivity implements SharedSe
     ActivityProductDetailBinding activityProductDetailBinding;
     Product product;
     ProductService productService;
+    CartService cartService;
     String selectedSize;
     LoginResponse loginResponse;
     public static String ORDER_KEY = "com.example.fashionstore.Activities.ORDER_KEY";
@@ -47,6 +49,7 @@ public class ProductDetailActivity extends AppCompatActivity implements SharedSe
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         productService = new ProductService();
+        cartService = new CartService();
         loginResponse = SharedPreferenceManager.getSharedPreferenceInstance(this).getUser();
         Bundle bundle = getIntent().getExtras();
 
@@ -72,16 +75,11 @@ public class ProductDetailActivity extends AppCompatActivity implements SharedSe
                     public void onClick(View v) {
                         activityProductDetailBinding.textviewSelectesSizeId.setText("S");
                         selectedSize = activityProductDetailBinding.textviewSelectesSizeId.getText().toString();
-//                        GradientDrawable gradientDrawable = new GradientDrawable();
-//                        gradientDrawable.setStroke(2, getResources().getColor(R.color.colorPrimary));
-//                        activityProductDetailBinding.detailSmallBtnId.setBackground(gradientDrawable);
                         onSelectButton(activityProductDetailBinding.detailSmallBtnId);
                         removeSelectButton(activityProductDetailBinding.detailMediumBtnId);
                         removeSelectButton(activityProductDetailBinding.detailLargeBtnId);
-
                     }
                 });
-
                 activityProductDetailBinding.detailMediumBtnId.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -144,6 +142,25 @@ public class ProductDetailActivity extends AppCompatActivity implements SharedSe
                 }
             });
 
+            activityProductDetailBinding.detailAddCartBtnId.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int quantity = Integer.parseInt(activityProductDetailBinding.detailQtyId.getNumber());
+                    String size = activityProductDetailBinding.textviewSelectesSizeId.getText().toString();
+                    double total = quantity*product.getPrice();
+                    onAddProductCart(productId, quantity, size,total, loginResponse, productResponseCallback);
+                }
+            });
+
+        }
+    }
+
+    public void onAddProductCart(Integer productId, Integer quantity, String size,Double total, LoginResponse loginResponse, ResponseCallback responseCallback) {
+        if (size.equals("")) {
+            FancyToast.makeText(getApplicationContext(), "Please select a size", Toast.LENGTH_SHORT, FancyToast.WARNING, false).show();
+        } else {
+            cartService.onAddProductCart(productId, quantity, size, total,"Bearer " + loginResponse.getToken(), responseCallback);
+            FancyToast.makeText(getApplicationContext(), "Added to your cart", Toast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
         }
     }
 
@@ -202,13 +219,14 @@ public class ProductDetailActivity extends AppCompatActivity implements SharedSe
     public void onResume() {
         super.onResume();
     }
-   public void onSelectButton(Button button)
-    {
+
+    public void onSelectButton(Button button) {
         GradientDrawable gradientDrawable = new GradientDrawable();
         gradientDrawable.setStroke(2, getResources().getColor(R.color.colorPrimary));
         button.setBackground(gradientDrawable);
     }
-    public void removeSelectButton(Button button){
+
+    public void removeSelectButton(Button button) {
         GradientDrawable gradientDrawable = new GradientDrawable();
         gradientDrawable.setStroke(2, getResources().getColor(R.color.darker_gray));
         button.setBackground(gradientDrawable);

@@ -17,6 +17,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.fashionstoreapp.DTO.Responses.LoginResponse;
+import com.example.fashionstoreapp.Fragments.CartFragment;
 import com.example.fashionstoreapp.Fragments.HomeFragment;
 import com.example.fashionstoreapp.Fragments.ProfileFragment;
 import com.example.fashionstoreapp.Fragments.WishlistFragment;
@@ -126,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.navWishlist) {
             fragment = new WishlistFragment();
         } else if (id == R.id.navCart) {
-//            fragment = new CartFragment();
+            fragment = new CartFragment();
         } else if (id == R.id.navProfile) {
             fragment = new ProfileFragment();
         } else if (id == R.id.navOrders) {
