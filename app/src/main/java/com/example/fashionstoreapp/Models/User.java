@@ -2,13 +2,12 @@ package com.example.fashionstoreapp.Models;
 
 public class User {
     private Integer userId;
-    private String email, username, password, address, phone;
+    private String email, username, password, phone;
 
-    public User(String email, String username, String password, String address, String phone) {
+    public User(String email, String username, String password, String phone) {
         this.email = email;
         this.username = username;
         this.password = password;
-        this.address = address;
         this.phone = phone;
     }
 
@@ -38,14 +37,6 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
     }
 
     public String getPhone() {

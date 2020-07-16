@@ -1,8 +1,10 @@
 package com.example.fashionstoreapp.Models;
 
 public class Wishlist {
+    private Integer wishListId;
     private User user;
     private Product product;
+
 //    private boolean isFavourite;
 
     public Wishlist() {

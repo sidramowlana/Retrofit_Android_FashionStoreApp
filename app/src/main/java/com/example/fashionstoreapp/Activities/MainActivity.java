@@ -19,6 +19,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.fashionstoreapp.DTO.Responses.LoginResponse;
 import com.example.fashionstoreapp.Fragments.CartFragment;
 import com.example.fashionstoreapp.Fragments.HomeFragment;
+import com.example.fashionstoreapp.Fragments.OrdersFragment;
 import com.example.fashionstoreapp.Fragments.ProfileFragment;
 import com.example.fashionstoreapp.Fragments.WishlistFragment;
 import com.example.fashionstoreapp.R;
@@ -64,17 +65,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navView.setNavigationItemSelectedListener(this);
 
     }
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        if (SharedPreferenceManager.getSharedPreferenceInstance(this).isLoggedIn()) {
-//            System.out.println(!SharedPreferenceManager.getSharedPreferenceInstance(this).isLoggedIn() + " +hertr");
-//            intent = new Intent(this, MainActivity.class);
-//            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//            startActivity(intent);
-//        }
-//    }
     public void onLogout() {
+        SharedPreferenceManager.getSharedPreferenceInstance(this).clear();
         startActivity(new Intent(getApplicationContext(), LoginActivity.class));
         finish();
     }
@@ -131,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.navProfile) {
             fragment = new ProfileFragment();
         } else if (id == R.id.navOrders) {
-//            fragment = new OrdersFragment();
+            fragment = new OrdersFragment();
         } else if (id == R.id.navLogout) {
             onLogout();
         }

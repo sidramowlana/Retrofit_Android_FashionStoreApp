@@ -2,6 +2,7 @@ package com.example.fashionstoreapp.Models;
 
 public class Cart {
 
+    private Integer cartId;
     private User user;
     private Product product;
     private int quantity;
@@ -67,5 +68,13 @@ public class Cart {
 
     public void setTotal(double total) {
         this.total = total;
+    }
+
+    public Integer getCartId() {
+        return cartId;
+    }
+
+    public void setCartId(Integer cartId) {
+        this.cartId = cartId;
     }
 }

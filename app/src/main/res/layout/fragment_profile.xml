@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="20dp"
-    tools:context="com.example.fashionstore.Activities.RegisterActivity">
+    tools:context="com.example.fashionstoreapp.Fragments.ProfileFragment">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -67,28 +67,10 @@
                 android:autofillHints="" />
 
             <EditText
-                android:id="@+id/etProfileAddress"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/etProfileName"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/edit_text_style"
-                android:drawableStart="@drawable/ic_house_black_24dp"
-                android:drawableLeft="@drawable/ic_house_black_24dp"
-                android:ems="10"
-                android:hint="@string/placeholder_address"
-                android:padding="10dp"
-                android:textColor="#000"
-                android:textColorHint="#000"
-                android:autofillHints=""
-                android:inputType="text" />
-
-            <EditText
                 android:id="@+id/etProfilePhone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/etProfileAddress"
+                android:layout_below="@+id/etProfileName"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/edit_text_style"
@@ -101,31 +83,25 @@
                 android:textColorHint="#000"
                 android:autofillHints=""
                 android:inputType="phone" />
-            <EditText
-                android:id="@+id/etProfilePassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/etProfilePhone"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/edit_text_style"
-                android:drawableStart="@drawable/ic_lock_24dp"
-                android:drawableLeft="@drawable/ic_lock_24dp"
-                android:ems="10"
-                android:hint="@string/placeholder_password"
-                android:inputType="textPassword"
-                android:padding="10dp"
-                android:textColor="#000"
-                android:textColorHint="#000"
-                android:importantForAutofill="no" />
 
             <Button
                 android:id="@+id/btnUpdateAccount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/etProfilePassword"
+                android:layout_below="@id/etProfilePhone"
                 android:layout_marginTop="50dp"
                 android:text="@string/update_profile"
+                android:background="@drawable/register_button_style_selector"
+                android:textColor="#FFF"
+                />
+
+            <Button
+                android:id="@+id/btnResetPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btnUpdateAccount"
+                android:layout_marginTop="30dp"
+                android:text="Reset Password"
                 android:background="@drawable/register_button_style_selector"
                 android:textColor="#FFF"
                 />

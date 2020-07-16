@@ -35,7 +35,8 @@ import retrofit2.Response;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CartFragment extends Fragment implements CartInterface, ResponseCallback, ItemClickCallback {
+public class CartFragment extends Fragment implements CartInterface,
+        ResponseCallback, ItemClickCallback {
 
     FragmentCartBinding fragmentCartBinding;
     CartAdapter cartAdapter;
@@ -60,7 +61,6 @@ public class CartFragment extends Fragment implements CartInterface, ResponseCal
         loginResponse = SharedPreferenceManager.getSharedPreferenceInstance(getContext()).getUser();
         cartService = new CartService();
         cartService.getAllCartProducts("Bearer " + loginResponse.getToken(), this);
-
         return view;
     }
 
@@ -70,7 +70,7 @@ public class CartFragment extends Fragment implements CartInterface, ResponseCal
         recyclerView = fragmentCartBinding.cartRecycleviewId;
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        cartAdapter = new CartAdapter(this,this);
+        cartAdapter = new CartAdapter(this, this);
     }
 
     @Override
@@ -79,7 +79,33 @@ public class CartFragment extends Fragment implements CartInterface, ResponseCal
     }
 
     @Override
+    public void onSuccess(Response response) {
+        cartList = (List<Cart>) response.body();
+        cartAdapter.setAllCartProductData(cartList);
+        recyclerView.setAdapter(cartAdapter);
+        setUpdateTotal(cartAdapter.calculateTotal());
+        fragmentCartBinding.cartCheckoutBtnId.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (cartList.isEmpty()) {
+                    Toast.makeText(getContext(), "Your cart is empty", Toast.LENGTH_SHORT).show();
+                } else {
+                    onShowCheckoutDialog(cartAdapter.calculateTotal()).show(getChildFragmentManager(), "Payments");
+                }
+            }
+        });
+        cartAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onError(String errorMessage) {
+        FancyToast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT, FancyToast.ERROR, false);
+        System.out.println("error messages hererere" + errorMessage);
+    }
+
+    @Override
     public void setUpdateTotal(double total) {
+        System.out.println("setting the total2: "+total);
         fragmentCartBinding.cartTextAmountId.setText(String.valueOf(total));
     }
 
@@ -89,32 +115,6 @@ public class CartFragment extends Fragment implements CartInterface, ResponseCal
         startActivity(new Intent(getActivity(), ProductDetailActivity.class).putExtra("productId", id));
     }
 
-    @Override
-    public void onSuccess(Response response) {
-        cartList = (List<Cart>) response.body();
-        cartAdapter.setAllCartProductData(cartList);
-        recyclerView.setAdapter(cartAdapter);
-        cartAdapter.notifyDataSetChanged();
-
-        totalPrice = cartAdapter.calculateTotal();
-        setUpdateTotal(totalPrice);
-        fragmentCartBinding.cartCheckoutBtnId.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (cartList.isEmpty()) {
-                    Toast.makeText(getContext(), "Your cart is empty", Toast.LENGTH_SHORT).show();
-                } else {
-                    onShowCheckoutDialog(totalPrice).show(getChildFragmentManager(),"Payments");
-                }
-            }
-        });
-    }
-
-    @Override
-    public void onError(String errorMessage) {
-        FancyToast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT, FancyToast.ERROR, false);
-        System.out.println("error messages hererere" + errorMessage);
-    }
 
     public PaymentDialogFragment onShowCheckoutDialog(double totalPrice) {
         PaymentDialogFragment paymentDialogFragment = new PaymentDialogFragment();

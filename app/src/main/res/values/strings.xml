@@ -91,4 +91,9 @@
     <string name="answer">We will reply to you soon</string>
     <string name="cart_product_name">Cart Product Name</string>
     <string name="amount">amount</string>
+    <string name="remember_address">Remember Address</string>
+    <string name="pay">Pay</string>
+    <string name="address">Address</string>
+    <string name="city">City</string>
+    <string name="postal_code">Postal Code</string>
 </resources>

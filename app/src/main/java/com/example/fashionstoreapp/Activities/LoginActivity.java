@@ -22,8 +22,6 @@ public class LoginActivity extends AppCompatActivity implements ResponseCallback
     private ActivityLoginBinding binding;
     Intent intent;
     public AuthenticationService authenticationService;
-    public static String USER = "com.example.fashionsapptore.USER";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,16 +105,6 @@ public class LoginActivity extends AppCompatActivity implements ResponseCallback
     public void onSuccess(Response response) {
         LoginResponse loginResponse = (LoginResponse) response.body();
         if (loginResponse != null) {
-            System.out.println("----------------------------------------------------");
-            System.out.println("responsebody: "+response.body());
-            System.out.println("toke: "+loginResponse.getToken());
-            System.out.println("id: "+loginResponse.getId());
-            System.out.println("username: "+loginResponse.getUsername());
-            System.out.println("email: "+loginResponse.getEmail());
-            System.out.println("role: "+loginResponse.getRoles());
-            System.out.println("expiretime: "+loginResponse.getTokenExpireTime());
-            System.out.println("----------------------------------------------------");
-
             //save the user in sharedpred
             SharedPreferenceManager.getSharedPreferenceInstance(LoginActivity.this).saveUserSharedPref(loginResponse);
 

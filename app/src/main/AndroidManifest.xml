@@ -41,7 +41,8 @@
         <activity
             android:name=".Activities.ProductDetailActivity"
             android:theme="@style/AppTheme.NoActionBar" /> <!-- <activity android:name=".Activities.ProductRatingActivity" android:theme="@style/AppTheme.NoActionBar"></activity> -->
-<!--        <activity-->
+
+        <!--        <activity-->
 <!--            android:name=".Activities.ProductRatingActivity"-->
 <!--            android:theme="@style/AppTheme.NoActionBar" />-->
 <!--        <activity-->

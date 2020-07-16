@@ -33,7 +33,8 @@ import java.util.List;
 
 import retrofit2.Response;
 
-public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> implements ItemSizeClickCallback, ResponseCallback {
+public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>
+        implements ItemSizeClickCallback, ResponseCallback {
 
     CartItemBinding cartItemBinding;
     Context context;
@@ -42,7 +43,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> im
     private CartService cartService;
     private ItemClickCallback itemClickCallback;
     private CartInterface cartInterface;
-    private ShoppingCartInterface cartListener;
+//    private ItemQuantityClickCallback itemQuantityClickCallback;
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         CardView cardView;
@@ -74,7 +76,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> im
     public CartAdapter(ItemClickCallback itemClickCallback, CartInterface cartInterface) {
         this.itemClickCallback = itemClickCallback;
         this.cartInterface = cartInterface;
+//        this.itemQuantityClickCallback = itemQuantityClickCallback;
     }
+
 
     public void setAllCartProductData(List<Cart> cartList) {
         this.cartList = cartList;
@@ -88,7 +92,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> im
         return new ViewHolder(cartItemBinding);
     }
 
-    String size;
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
@@ -115,13 +118,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> im
             @Override
             public void onClick(View v) {
                 onItemSizeClickListener(product.getProductId(), cart.getSize());
-                System.out.println("the position is: " + position);
-                System.out.println("the product id is: " + product.getProductId());
-                System.out.println("the cart size is: " + cart.getSize());
                 cartList.remove(position);
                 notifyItemRemoved(position);
                 notifyItemRangeChanged(position, cartList.size());
-                System.out.println(product.getProductId());
                 cartInterface.setUpdateTotal(calculateTotal());
                 FancyToast.makeText(context, "Removed from your cart", Toast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
 
@@ -141,19 +140,17 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> im
                 double price = product.getPrice();
                 int quantity = Integer.parseInt(holder.elegantNumberButtonQuantity.getNumber());
                 double total = price * quantity;
-                System.out.println("cart adapter total: " + total);
                 cart.setQuantity(quantity);
                 cart.setTotal(total);
-                onUpdateCart(product.getProductId(), quantity, loginResponse);
+//                onItemQuantityClickListener(cart.getCartId(), quantity, total);
+                onUpdateCart(cart.getCartId(),quantity, total, loginResponse);
                 holder.textViewTotalPrice.setText(String.valueOf(total));
                 cartInterface.setUpdateTotal(calculateTotal());
             }
         });
-
     }
-
-    public void onUpdateCart(Integer productId, Integer quantity, LoginResponse loginResponse) {
-//        cartService.onUpdateCart("Bearer "+loginResponse.getToken());
+    public void onUpdateCart(Integer cartId, int quantity, Double total, LoginResponse loginResponse) {
+        cartService.onUpdateQuantityProductCart(cartId, quantity, total, "Bearer " + loginResponse.getToken(),this);
     }
 
     public double calculateTotal() {
@@ -169,14 +166,16 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> im
     public int getItemCount() {
         return cartList.size();
     }
+
     @Override
     public void onItemSizeClickListener(Integer id, String size) {
         cartService.onDeleteProductCart(id, size, "Bearer " + loginResponse.getToken(), this);
     }
+
     @Override
     public void onSuccess(Response response) {
         notifyDataSetChanged();
-
+        System.out.println("working here");
     }
 
     @Override

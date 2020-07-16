@@ -7,19 +7,25 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.fashionstoreapp.CallBacks.ResponseCallback;
 import com.example.fashionstoreapp.DTO.Responses.LoginResponse;
+import com.example.fashionstoreapp.Models.User;
+import com.example.fashionstoreapp.RetrofitAPIService.UserService;
 import com.example.fashionstoreapp.Storage.SharedPreferenceManager;
 import com.example.fashionstoreapp.databinding.FragmentProfileBinding;
+import com.shashank.sony.fancytoastlib.FancyToast;
+
+import retrofit2.Response;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends Fragment implements ResponseCallback {
 
     FragmentProfileBinding fragmentProfileBinding;
     private LoginResponse loginResponse;
-
+UserService userService;
     public ProfileFragment() {
         // Required empty public constructor
     }
@@ -32,38 +38,38 @@ public class ProfileFragment extends Fragment {
         fragmentProfileBinding = FragmentProfileBinding.inflate(getLayoutInflater());
         View view = fragmentProfileBinding.getRoot();
         getActivity().setTitle("My Profile");
+        userService = new UserService();
         loginResponse = SharedPreferenceManager.getSharedPreferenceInstance(getContext()).getUser();
+        userService.getUserDetail(Integer.parseInt(loginResponse.getId()),"Bearer "+loginResponse.getToken(),this);
 
-//        fragmentProfileBinding.etProfileName.setText(loginResponse.getUsername());
-//        fragmentProfileBinding.etProfileEmail.setText(loginResponse.getEmail());
+        fragmentProfileBinding.etProfileName.setText(loginResponse.getUsername());
+        fragmentProfileBinding.etProfileEmail.setText(loginResponse.getEmail());
 //        fragmentProfileBinding.etProfileAddress.setText(loginResponse.get.getAddress());
-//        fragmentProfileBinding.etProfilePhone.setText(user.getPhone());
 //        fragmentProfileBinding.etProfilePassword.setText(loginResponse.getPassword());
-//        fragmentProfileBinding.btnUpdateAccount.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                onUpdateProfile();
-//            }
-//        });
+        fragmentProfileBinding.btnUpdateAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onUpdateProfile();
+            }
+        });
 
         return view;
     }
 
-//    public void onUpdateProfile() {
-//        User user = StoresUser.getCurrentLoggedUser(getActivity());
-//        String userName = fragmentProfileBinding.etProfileName.getText().toString();
-//        String userEmail = fragmentProfileBinding.etProfileEmail.getText().toString();
-//        String userAddress = fragmentProfileBinding.etProfileAddress.getText().toString();
-//        String userPhone = fragmentProfileBinding.etProfilePhone.getText().toString();
-//        String userPassword = fragmentProfileBinding.etProfilePassword.getText().toString();
-//        try {
-//            //check if any field is empty
-//            if (userEmail.isEmpty() || userName.isEmpty() || userAddress.isEmpty() || userPhone.isEmpty() || userPassword.isEmpty()) {
-//                Toast.makeText(getContext(), "Please fill all fields.", Toast.LENGTH_LONG).show();
-//            } else {
+    public void onUpdateProfile() {
+//        loginResponse =SharedPreferenceManager.getSharedPreferenceInstance(getContext()).saveUserSharedPref().getCurrentLoggedUser(getActivity());
+        String userName = fragmentProfileBinding.etProfileName.getText().toString();
+        String userEmail = fragmentProfileBinding.etProfileEmail.getText().toString();
+        String userPhone = fragmentProfileBinding.etProfilePhone.getText().toString();
+        //check if any field is empty
+        if (userEmail.isEmpty() || userName.isEmpty() || userPhone.isEmpty()) {
+            FancyToast.makeText(getContext(), "Please fill all fields.", FancyToast.LENGTH_LONG,FancyToast.WARNING,false).show();
+        }
+        else {
+        //update the user
+            //get the user for the shared preference
 //                    user.setName(userName);
 //                    user.setEmail(userEmail);
-//                    user.setAddress(userAddress);
 //                    user.setPhone(userPhone);
 //
 //                    if (!userPassword.equals(user.getPassword())) {
@@ -81,15 +87,23 @@ public class ProfileFragment extends Fragment {
 //                    TextView nav_profile_email = (TextView) headerView.findViewById(R.id.tvUserEmail);
 //                    nav_profile_email.setText(user.getEmail());
 //                    Toast.makeText(getContext(), "Updated Successfully.", Toast.LENGTH_LONG).show();
-//            }
-//
-//        } catch (NoSuchAlgorithmException e) {
-//            System.out.println(e.getMessage());
-//        }
-//    }
+        }
+
+    }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+    }
+
+    @Override
+    public void onSuccess(Response response) {
+        User user = (User) response.body();
+        fragmentProfileBinding.etProfilePhone.setText(user.getPhone());
+    }
+
+    @Override
+    public void onError(String errorMessage) {
+
     }
 }

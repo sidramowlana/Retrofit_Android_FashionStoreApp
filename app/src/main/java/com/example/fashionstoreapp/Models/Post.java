@@ -1,5 +1,6 @@
 package com.example.fashionstoreapp.Models;
 import com.google.gson.annotations.SerializedName;
+
 public class Post {
     private int userId;
     private Integer id;

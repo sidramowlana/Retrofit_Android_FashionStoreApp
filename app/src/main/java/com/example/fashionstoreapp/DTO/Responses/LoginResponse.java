@@ -8,10 +8,11 @@ public class LoginResponse {
    private String roles;
    private String tokenExpireTime;
 
+
     public LoginResponse() {
     }
 
-    public LoginResponse(String token, String id, String username, String email, String roles, String tokenExpireTime) {
+    public LoginResponse(String token, String id, String username, String email, String roles, String tokenExpireTime){
         this.token = token;
         this.id = id;
         this.username = username;
@@ -67,4 +68,5 @@ public class LoginResponse {
     public void setTokenExpireTime(String tokenExpireTime) {
         this.tokenExpireTime = tokenExpireTime;
     }
+   
 }

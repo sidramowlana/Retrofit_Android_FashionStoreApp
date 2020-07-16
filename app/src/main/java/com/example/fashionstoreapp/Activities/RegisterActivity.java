@@ -44,18 +44,16 @@ public class RegisterActivity extends AppCompatActivity implements ResponseCallb
     public void onBtnRegister() {
         String email = binding.etRegisterEmail.getText().toString();
         String username = binding.etRegisterName.getText().toString();
-        String address = binding.etRegisterAddress.getText().toString();
         String phone = binding.etRegisterPhone.getText().toString();
         String password = binding.etRegisterPassword.getText().toString();
-        if (email.isEmpty() || username.isEmpty() || address.isEmpty() || phone.isEmpty() || password.isEmpty()) {
+        if (email.isEmpty() || username.isEmpty() || phone.isEmpty() || password.isEmpty()) {
             FancyToast.makeText(getApplicationContext(), "Please fill all fields", FancyToast.LENGTH_LONG, FancyToast.WARNING, false).show();
         } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             FancyToast.makeText(getApplicationContext(), "Please enter valid email address", FancyToast.LENGTH_LONG, FancyToast.WARNING, false).show();
         } else {
             if (password.length() > 6) {
-                User user = new User(email, username, password, address, phone);
+                User user = new User(email, username, password, phone);
                 authenticationService.register(user, this);
-                onLoadLogin();
             } else {
                 FancyToast.makeText(getApplicationContext(), "Password should be atleast 6 character long", FancyToast.LENGTH_LONG, FancyToast.WARNING, false).show();
             }
@@ -70,13 +68,13 @@ public class RegisterActivity extends AppCompatActivity implements ResponseCallb
 
     @Override
     public void onSuccess(Response response) {
-//
-        FancyToast.makeText(getApplicationContext(), "Successfully Registered", FancyToast.LENGTH_LONG, FancyToast.SUCCESS, false).show();
-
+        FancyToast.makeText(this, "Successfully Registered", FancyToast.LENGTH_LONG, FancyToast.SUCCESS, false).show();
+        onLoadLogin();
     }
 
     @Override
     public void onError(String errorMessage) {
-        FancyToast.makeText(this, errorMessage, FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
+        System.out.println(errorMessage);
+        FancyToast.makeText(this, "Network Error", FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
     }
 }

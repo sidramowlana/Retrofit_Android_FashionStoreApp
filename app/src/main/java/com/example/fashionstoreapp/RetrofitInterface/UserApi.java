@@ -1,5 +1,6 @@
 package com.example.fashionstoreapp.RetrofitInterface;
 
+import com.example.fashionstoreapp.DTO.Requests.AddressRequest;
 import com.example.fashionstoreapp.Models.User;
 
 import java.util.List;
@@ -7,6 +8,8 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
+import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
@@ -16,5 +19,11 @@ public interface UserApi {
 
     @PUT("api/users/{userId}")
     Call<User> updateUserPassword(@Path("userId") String userId, @Body String newPassword);
+
+    @POST("/api/users/user/add-address")
+    Call<AddressRequest> getUserAddress(@Body AddressRequest addRequest,@Header("Authorization")String token);
+
+    @GET("api/users/user/{userId}")
+    Call<User> getUserDetail(@Path("userId") Integer userId, @Header("Authorization")String token);
 
 }

@@ -31,7 +31,8 @@ import java.util.List;
 
 import retrofit2.Response;
 
-public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHolder> implements ItemClickCallback, ResponseCallback {
+public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHolder>
+        implements ItemClickCallback, ResponseCallback {
 
     WishlistItemBinding wishlistItemBinding;
     Context context;
@@ -83,6 +84,7 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         final Wishlist wishlist = wishlists.get(position);
+        System.out.println("wishy: "+wishlist);
         final Product product = wishlist.getProduct();
         loginResponse = SharedPreferenceManager.getSharedPreferenceInstance(context).getUser();
         productService = new ProductService();
@@ -146,13 +148,13 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
 
     @Override
     public void onSuccess(Response response) {
-        System.out.println("deleted from yourwishlist");
+        System.out.println("deleted from your wishlist");
         notifyDataSetChanged();
     }
 
     @Override
     public void onError(String errorMessage) {
-        System.out.println("error in ur deleting wihshlist product from the list");
+        System.out.println("error in ur deleting wishlist product from the list");
     }
 
 

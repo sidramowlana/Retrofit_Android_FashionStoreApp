@@ -1,5 +1,8 @@
 package com.example.fashionstoreapp.RetrofitClient;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -9,15 +12,16 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
     private static String BASE_URL = "http://192.168.43.239:8080/";
-//    private static String BASE_URL = "http://169.254.236.94:8080/api/auth/";
-
     private static Retrofit retrofit;
 
     public RetrofitClient() {
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .client(getHttpClient())
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
     }
 
