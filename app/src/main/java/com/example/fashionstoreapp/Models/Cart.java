@@ -9,6 +9,7 @@ public class Cart {
     private String size;
     private double total;
     private boolean isPurchased;
+//    private Orders orders;
 
     public Cart() {
     }

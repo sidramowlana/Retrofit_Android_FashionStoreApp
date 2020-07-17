@@ -44,8 +44,8 @@
         android:inputType="textPassword"
         android:padding="15dp"
         android:layout_centerVertical="true"
-        android:layout_alignEnd="@+id/etEmail"
-        android:layout_alignRight="@+id/etEmail"
+        android:layout_alignEnd="@+id/etUsername"
+        android:layout_alignRight="@+id/etUsername"
         android:ems="10"
         android:drawableLeft="@drawable/ic_lock_24dp"
 

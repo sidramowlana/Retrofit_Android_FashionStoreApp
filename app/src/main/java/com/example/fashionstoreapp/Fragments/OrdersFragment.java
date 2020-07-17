@@ -4,33 +4,39 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.fashionstoreapp.Adapters.TabPageAdapter;
+import com.example.fashionstoreapp.CallBacks.ResponseCallback;
 import com.example.fashionstoreapp.DTO.Responses.LoginResponse;
-import com.example.fashionstoreapp.Models.Orders;
+import com.example.fashionstoreapp.Models.CartOrders;
+import com.example.fashionstoreapp.R;
 import com.example.fashionstoreapp.RetrofitAPIService.OrderService;
 import com.example.fashionstoreapp.Storage.SharedPreferenceManager;
 import com.example.fashionstoreapp.databinding.FragmentOrdersBinding;
 import com.google.android.material.tabs.TabLayout;
+import com.shashank.sony.fancytoastlib.FancyToast;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 //setting p tabs in a fragment
-public class OrdersFragment extends Fragment {
+public class OrdersFragment extends Fragment implements ResponseCallback {
 
-    FragmentOrdersBinding fragmentOrdersBinding;
-    RecyclerView recyclerView;
-    OrderService orderService;
-    LoginResponse loginResponse;
-    List<Orders> ordersList = new ArrayList<>();
+    private FragmentOrdersBinding fragmentOrdersBinding;
+    private OrderService orderService;
+    private LoginResponse loginResponse;
+    private List<CartOrders> cartOrdersList = new ArrayList<>();
+    private ResponseCallback updateOrderResponseCallBack;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,8 +50,23 @@ public class OrdersFragment extends Fragment {
         TabLayout tabLayout = fragmentOrdersBinding.orderTabId;
         tabLayout.setupWithViewPager(viewPager);
         loginResponse = SharedPreferenceManager.getSharedPreferenceInstance(getContext()).getUser();
-//        orderService = new OrderService();
-//        orderService.getAllUserOrders(Integer.parseInt(loginResponse.getId()), "Bearer " + loginResponse.getToken(), this);
+        orderService = new OrderService();
+        final FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        orderService.getAllCartOrdersByUserId(Integer.valueOf(loginResponse.getId()),"Bearer "+loginResponse.getToken(),this);
+        updateOrderResponseCallBack = new ResponseCallback() {
+            @Override
+            public void onSuccess(Response response) {
+                getActivity().setTitle("Completed Order");
+                fragmentManager.beginTransaction().replace(R.id.frameLayout, new CompletedOrderFragment()).commit();
+                FancyToast.makeText(getContext(), "Order made Successfully", Toast.LENGTH_SHORT, FancyToast.SUCCESS, false);
+
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                FancyToast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT, FancyToast.SUCCESS, false);
+            }
+        };
         return view;
     }
 
@@ -62,5 +83,34 @@ public class OrdersFragment extends Fragment {
         super.onDestroyView();
     }
 
+    @Override
+    public void onSuccess(Response response) {
+        if(response!=null){
+            cartOrdersList= (List<CartOrders>) response.body();
+            for (final CartOrders cartOrders : cartOrdersList) {
+                if (cartOrders.getOrders().getStatus().equals("Pending")) {
+                    new java.util.Timer().schedule(
+                            new java.util.TimerTask() {
+                                @Override
+                                public void run() {
+                                    cartOrders.getOrders().setStatus("Completed");
+                                    orderService.updateOrderStatus(cartOrders.getCardOrderId(),cartOrders,"Bearer "+loginResponse.getToken(),updateOrderResponseCallBack);
+                                      }
+                            },
+
+                            120000 //timer for 2 minutes
+//                        300000 //timer for 5 minutes
+//                        86400000 //timer set for one day
+                    );
+                }
+            }
+        }
+
+    }
+
+    @Override
+    public void onError(String errorMessage) {
+
+    }
 }
 

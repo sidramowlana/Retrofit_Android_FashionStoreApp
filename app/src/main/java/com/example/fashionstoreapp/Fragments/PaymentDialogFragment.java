@@ -15,6 +15,7 @@ import com.example.fashionstoreapp.CallBacks.ResponseCallback;
 import com.example.fashionstoreapp.DTO.Requests.AddressRequest;
 import com.example.fashionstoreapp.DTO.Responses.LoginResponse;
 import com.example.fashionstoreapp.Models.Cart;
+import com.example.fashionstoreapp.Models.CartOrders;
 import com.example.fashionstoreapp.Models.Orders;
 import com.example.fashionstoreapp.R;
 import com.example.fashionstoreapp.RetrofitAPIService.CartService;
@@ -49,7 +50,8 @@ public class PaymentDialogFragment extends DialogFragment implements ResponseCal
     List<Cart> cartList = new ArrayList<>();
     double cartTotal;
     ResponseCallback cartListCallback;
-
+    ResponseCallback saveCallback;
+    private Orders savedOrder = new Orders();
 
     public PaymentDialogFragment() {
         // Required empty public constructor
@@ -96,7 +98,6 @@ public class PaymentDialogFragment extends DialogFragment implements ResponseCal
                     NavigationView navigationView = getActivity().findViewById(R.id.navigationView);
                     ((MainActivity) getActivity()).onNavigationItemSelected(navigationView.getMenu().findItem(R.id.navOrders));
                     navigationView.setCheckedItem(R.id.navOrders);
-//                    Toast.makeText(getActivity(), "Checked out successfully.", Toast.LENGTH_SHORT).show();
                     FancyToast.makeText(getContext(), "Checked out successfully.", FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
                 }
             }
@@ -104,6 +105,21 @@ public class PaymentDialogFragment extends DialogFragment implements ResponseCal
             @Override
             public void onError(String errorMessage) {
                 FancyToast.makeText(getActivity(), "Check your internet connection for the interruption.", Toast.LENGTH_SHORT).show();
+            }
+        };
+        saveCallback = new ResponseCallback() {
+            @Override
+            public void onSuccess(Response response) {
+                cartList = (List<Cart>) response.body();
+                for (Cart cart : cartList) {
+                    CartOrders cartOrders = new CartOrders(cart, savedOrder);
+                    orderService.addCartOrders(cartOrders, "Bearer " + loginResponse.getToken(), cartListCallback);
+                }
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                System.out.println("not working save");
             }
         };
         return view;
@@ -148,24 +164,20 @@ public class PaymentDialogFragment extends DialogFragment implements ResponseCal
         if (username.isEmpty() || email.isEmpty() || postalCode.isEmpty() || city.isEmpty() || address.isEmpty()) {
             FancyToast.makeText(getContext(), "Fields cannot be empty", FancyToast.LENGTH_SHORT, FancyToast.WARNING, false).show();
         } else {
-            cartService.getAllCartProducts("Bearer " + loginResponse.getToken(), this);
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+            String date = sdf.format(new Date());
+            Orders order = new Orders(date, "Pending", getArguments().getDouble("TOTAL_AMOUNT_KEY"));
+            orderService.addOrder(order, "Bearer " + loginResponse.getToken(), this);
         }
 
     }
 
     @Override
     public void onSuccess(Response response) {
-        cartList = (List<Cart>) response.body();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-        String date = sdf.format(new Date());
-        Orders order = new Orders(cartList,date, "Pending", getArguments().getDouble("TOTAL_AMOUNT_KEY"));
-        orderService.saveCartOrders(order, "Bearer " + loginResponse.getToken(), cartListCallback);
-        //            orderService.saveCartOrders(cartOrders, "Bearer " + loginResponse.getToken(), cartListCallback);
-//        for (Cart cart : cartList) {
-//            Orders cartOrders = new Orders(cart, order);
-//            orderService.saveCartOrders(cartOrders, "Bearer " + loginResponse.getToken(), cartListCallback);
-//            System.out.println("ko:" + cartOrders);
-//        }
+        savedOrder = (Orders) response.body();
+        if (response.isSuccessful()) {
+            cartService.getAllCartProducts("Bearer " + loginResponse.getToken(), saveCallback);
+        }
     }
 
     @Override

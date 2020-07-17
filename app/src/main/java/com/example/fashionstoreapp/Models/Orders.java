@@ -1,21 +1,20 @@
 package com.example.fashionstoreapp.Models;
 
-import java.util.List;
-
 public class Orders {
     private Integer ordersId;
     private String date;
     private String status;
-    private double total;
     private User user;
-    private String userId;
-    private List<Cart> cartList;
+    private double total;
 
-    public Orders(List<Cart>cartList, String date, String status, double total) {
-        this.cartList = cartList;
+    public Orders(String date, String status, double total) {
         this.date = date;
         this.status = status;
         this.total = total;
+    }
+
+    public Orders() {
+
     }
 
     public String getDate() {

@@ -3,6 +3,7 @@ package com.example.fashionstoreapp.RetrofitAPIService;
 import com.example.fashionstoreapp.CallBacks.CustomizeCallback;
 import com.example.fashionstoreapp.CallBacks.ResponseCallback;
 import com.example.fashionstoreapp.DTO.Responses.MessageResponse;
+import com.example.fashionstoreapp.Models.CartOrders;
 import com.example.fashionstoreapp.Models.Orders;
 import com.example.fashionstoreapp.RetrofitClient.RetrofitClient;
 import com.example.fashionstoreapp.RetrofitInterface.OrderApi;
@@ -18,22 +19,32 @@ public class OrderService {
     public OrderService() {
         this.orderApi = retrofitClient.getRetrofitClientInstance().create(OrderApi.class);
     }
-    public void saveCartOrders(Orders cartOrders, String token, ResponseCallback callback){
-        Call<MessageResponse> cartOrdersCall = orderApi.saveCartOrders(cartOrders,token);
-        cartOrdersCall.enqueue(new CustomizeCallback<MessageResponse>(callback));
-    }
-//    public void saveCartOrders(CartOrders cartOrders,String token, ResponseCallback callback){
-//        Call<MessageResponse> cartOrdersCall = orderApi.saveCartOrders(cartOrders,token);
-//        cartOrdersCall.enqueue(new CustomizeCallback<MessageResponse>(callback));
-//    }
-    public void getAllUserOrders(Integer userId, String status, String token, ResponseCallback callback) {
-        Call<List<Orders>> ordersCall = orderApi.getAllUserOrders(userId, status, token);
-        ordersCall.enqueue(new CustomizeCallback<List<Orders>>(callback));
+
+     public void addCartOrders(CartOrders cartOrders, String token, ResponseCallback callback) {
+        Call<MessageResponse> call = orderApi.addCartOrders(cartOrders, token);
+         call.enqueue(new CustomizeCallback<MessageResponse>(callback));
     }
 
-    public void addUserOrders(Orders orders, Integer userId, String token, ResponseCallback callback) {
-        Call<MessageResponse> ordersCall = orderApi.addUserOrders(orders, userId, token);
-        ordersCall.enqueue(new CustomizeCallback<MessageResponse>(callback));
+    public void addOrder(Orders orders, String token, ResponseCallback callback) {
+        Call<Orders> call = orderApi.addOrder(orders, token);
+        call.enqueue(new CustomizeCallback<Orders>(callback));
     }
 
+    public void getAllUserOrdersByStatus(Integer userId, String status, String token, ResponseCallback callback) {
+        Call<List<Orders>> call = orderApi.getAllUserOrdersByStatus(userId, status, token);
+        call.enqueue(new CustomizeCallback<List<Orders>>(callback));
+    }
+
+    public void getAllCartByOrderId(Integer orderId, String token, ResponseCallback callback) {
+        Call<List<CartOrders>> call = orderApi.getAllCartByOrderId(orderId, token);
+        call.enqueue(new CustomizeCallback<List<CartOrders>>(callback));
+    }
+    public void updateOrderStatus(Integer updateCartOrdersId, CartOrders updateCartOrders,String token,ResponseCallback callback){
+     Call<CartOrders> call = orderApi.updateOrderStatus(updateCartOrdersId,updateCartOrders,token);
+        call.enqueue(new CustomizeCallback<CartOrders>(callback));
+    }
+    public void getAllCartOrdersByUserId(Integer userId, String token, ResponseCallback callback){
+        Call<List<CartOrders>> call = orderApi.getAllCartOrdersByUserId(userId,token);
+        call.enqueue(new CustomizeCallback<List<CartOrders>>(callback));
+    }
 }

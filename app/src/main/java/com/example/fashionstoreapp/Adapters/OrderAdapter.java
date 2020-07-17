@@ -10,11 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.fashionstoreapp.CallBacks.ItemClickCallback;
-import com.example.fashionstoreapp.DTO.Responses.LoginResponse;
 import com.example.fashionstoreapp.Interface.OrderInterface;
 import com.example.fashionstoreapp.Models.Orders;
-import com.example.fashionstoreapp.RetrofitAPIService.OrderService;
 import com.example.fashionstoreapp.databinding.OrderItemBinding;
 
 import java.util.List;
@@ -23,10 +20,7 @@ import java.util.List;
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> {
     private Context context;
     private OrderItemBinding orderItemBinding;
-    private List<Orders> orderList;
-    LoginResponse loginResponse;
-    private OrderService orderService;
-    private ItemClickCallback itemClickCallback;
+    List<Orders> orderList;
     private OrderInterface orderInterface;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -46,7 +40,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
         }
     }
 
-    public OrderAdapter(ItemClickCallback itemClickCallback, OrderInterface orderInterface) {
+    public OrderAdapter(OrderInterface orderInterface) {
         this.orderInterface = orderInterface;
     }
 
@@ -66,20 +60,18 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final Orders order = orderList.get(position);
         System.out.println("orderslist: "+orderList);
+        System.out.println("the orders id itslef: "+order.getOrdersId().toString());
         System.out.println("order:" +order);
-        for (Orders o : orderList) {
-            holder.textViewOrderNo.setText(o.getOrdersId().toString());
-            holder.textViewOrderStatus.setText(o.getStatus());
-            holder.textViewOrderDate.setText(o.getDate());
-            holder.textViewOrderTotal.setText("USD $" + order.getTotal());
-            holder.cardViewOrderItem.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    orderInterface.onDetailsFragment(order);
-                }
-            });
-        }
-//
+        holder.textViewOrderNo.setText(order.getOrdersId().toString());
+        holder.textViewOrderStatus.setText(order.getStatus());
+        holder.textViewOrderDate.setText(order.getDate());
+        holder.textViewOrderTotal.setText("USD $" + order.getTotal());
+        holder.cardViewOrderItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                orderInterface.onDetailsFragment(order);
+            }
+        });
     }
 
     @Override
