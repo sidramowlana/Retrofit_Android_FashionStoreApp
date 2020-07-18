@@ -22,7 +22,7 @@ import com.example.fashionstoreapp.DTO.Responses.LoginResponse;
 import com.example.fashionstoreapp.Interface.OrderInterface;
 import com.example.fashionstoreapp.Models.Orders;
 import com.example.fashionstoreapp.R;
-import com.example.fashionstoreapp.RetrofitAPIService.OrderService;
+import com.example.fashionstoreapp.RetrofitAPIService.CartOrdersService;
 import com.example.fashionstoreapp.Storage.SharedPreferenceManager;
 import com.example.fashionstoreapp.databinding.CommonlistviewBinding;
 import com.shashank.sony.fancytoastlib.FancyToast;
@@ -41,7 +41,7 @@ public class CancelledOrderFragment extends Fragment  implements OrderInterface,
     private CommonlistviewBinding commonlistviewBinding;
     private OrderAdapter orderAdapter;
     private RecyclerView recyclerView;
-    private OrderService orderService;
+    private CartOrdersService cartOrdersService;
     private List<Orders> pendingOrdersList = new ArrayList<>();
     private LoginResponse loginResponse;
 
@@ -56,9 +56,10 @@ public class CancelledOrderFragment extends Fragment  implements OrderInterface,
                              Bundle savedInstanceState) {
         commonlistviewBinding = CommonlistviewBinding.inflate(getLayoutInflater());
         View view = commonlistviewBinding.getRoot();
+//        getActivity().setTitle("Cancelled Order");
         loginResponse = SharedPreferenceManager.getSharedPreferenceInstance(getContext()).getUser();
-        orderService = new OrderService();
-        orderService.getAllUserOrdersByStatus(Integer.valueOf(loginResponse.getId()), "Cancelled", "Bearer " + loginResponse.getToken(), this);
+        cartOrdersService = new CartOrdersService();
+        cartOrdersService.getAllUserOrdersByStatus(Integer.valueOf(loginResponse.getId()), "Cancelled", "Bearer " + loginResponse.getToken(), this);
         return view;
     }
 
@@ -98,6 +99,6 @@ public class CancelledOrderFragment extends Fragment  implements OrderInterface,
 
     @Override
     public void onError(String errorMessage) {
-        FancyToast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT, FancyToast.ERROR, false);
+        FancyToast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT, FancyToast.ERROR, false).show();
     }
 }

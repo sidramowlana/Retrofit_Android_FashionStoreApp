@@ -26,24 +26,18 @@ import com.example.fashionstoreapp.Storage.SharedPreferenceManager;
 import com.example.fashionstoreapp.databinding.CommonlistviewBinding;
 import com.shashank.sony.fancytoastlib.FancyToast;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Response;
 
-
 /**
  * A simple {@link Fragment} subclass.
  */
-public class WishlistFragment extends Fragment implements ResponseCallback,
-        ItemClickCallback {
+public class WishlistFragment extends Fragment implements ResponseCallback, ItemClickCallback {
 
-    CommonlistviewBinding commonlistviewBinding;
-    WishlistAdapter wishlistAdapter;
-    RecyclerView recyclerView;
-    ProductService productService;
-    List<Wishlist> wishlistList = new ArrayList<>();
-    LoginResponse loginResponse;
+    private CommonlistviewBinding commonlistviewBinding;
+    private WishlistAdapter wishlistAdapter;
+    private RecyclerView recyclerView;
 
     public WishlistFragment() {
         // Required empty public constructor
@@ -56,8 +50,8 @@ public class WishlistFragment extends Fragment implements ResponseCallback,
         View view = commonlistviewBinding.getRoot();
         getActivity().setTitle("My Wishlist");
         super.onViewCreated(view, savedInstanceState);
-        loginResponse = SharedPreferenceManager.getSharedPreferenceInstance(getContext()).getUser();
-        productService = new ProductService();
+        LoginResponse loginResponse = SharedPreferenceManager.getSharedPreferenceInstance(getContext()).getUser();
+        ProductService productService = new ProductService();
         productService.getAllUserWishListProduct("Bearer " + loginResponse.getToken(), this);
         return view;
     }
@@ -79,7 +73,7 @@ public class WishlistFragment extends Fragment implements ResponseCallback,
 
     @Override
     public void onSuccess(Response response) {
-        wishlistList = (List<Wishlist>) response.body();
+        List<Wishlist> wishlistList = (List<Wishlist>) response.body();
         wishlistAdapter.setAllWishlistProductData(wishlistList);
         recyclerView.setAdapter(wishlistAdapter);
         wishlistAdapter.notifyDataSetChanged();
@@ -87,7 +81,7 @@ public class WishlistFragment extends Fragment implements ResponseCallback,
 
     @Override
     public void onError(String errorMessage) {
-        FancyToast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT, FancyToast.ERROR, false);
+        FancyToast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT, FancyToast.ERROR, false).show();
         System.out.println("error messages hererere" + errorMessage);
     }
 

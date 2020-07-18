@@ -20,7 +20,7 @@
             <ImageView
                 android:id="@+id/product_rate_imageview_id"
                 android:layout_width="160dp"
-                android:layout_height="180dp"
+                android:layout_height="170dp"
                 android:scaleType="centerCrop"
                 android:src="@mipmap/ic_launcher_round">
 
@@ -33,7 +33,6 @@
                 android:layout_marginStart="5dp"
                 android:layout_marginLeft="5dp"
                 android:orientation="vertical">
-
                 <TextView
                     android:id="@+id/product_rate_name_id"
                     android:layout_width="wrap_content"
@@ -41,6 +40,33 @@
                     android:text="@string/product_name"
                     android:textSize="15sp"
                     android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/product_rate_size_text_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/size"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/product_rate_size_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:text="@string/size"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
 
                 <include
                     android:id="@+id/include_product_rate_item_feedback_id"
@@ -65,16 +91,16 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@id/include_product_rate_item_feedback_id"
-                            android:text="@string/give_your_rating_here"
-                            android:textColor="@color/colorAccent"
-                            tools:ignore="NotSibling"
-
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginEnd="1dp"
+                            android:layout_marginRight="1dp"
                             android:clickable="true"
                             android:focusable="true"
                             android:gravity="end"
-                            android:layout_alignParentRight="true"
-                            android:layout_alignParentBottom="true"
-                            android:layout_alignParentEnd="true"/>
+                            android:text="@string/give_your_rating_here"
+                            android:textColor="@color/colorAccent"
+                            tools:ignore="NotSibling" />
                     </RelativeLayout>
                 </LinearLayout>
             </LinearLayout>

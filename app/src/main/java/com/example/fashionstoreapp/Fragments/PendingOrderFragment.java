@@ -22,12 +22,11 @@ import com.example.fashionstoreapp.DTO.Responses.LoginResponse;
 import com.example.fashionstoreapp.Interface.OrderInterface;
 import com.example.fashionstoreapp.Models.Orders;
 import com.example.fashionstoreapp.R;
-import com.example.fashionstoreapp.RetrofitAPIService.OrderService;
+import com.example.fashionstoreapp.RetrofitAPIService.CartOrdersService;
 import com.example.fashionstoreapp.Storage.SharedPreferenceManager;
 import com.example.fashionstoreapp.databinding.CommonlistviewBinding;
 import com.shashank.sony.fancytoastlib.FancyToast;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Response;
@@ -40,9 +39,6 @@ public class PendingOrderFragment extends Fragment implements OrderInterface, Re
     private CommonlistviewBinding commonlistviewBinding;
     private OrderAdapter orderAdapter;
     private RecyclerView recyclerView;
-    private OrderService orderService;
-    private List<Orders> pendingOrdersList = new ArrayList<>();
-    private LoginResponse loginResponse;
 
     public PendingOrderFragment() {
         // Required empty public constructor
@@ -52,12 +48,11 @@ public class PendingOrderFragment extends Fragment implements OrderInterface, Re
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         commonlistviewBinding = CommonlistviewBinding.inflate(getLayoutInflater());
         View view = commonlistviewBinding.getRoot();
-        loginResponse = SharedPreferenceManager.getSharedPreferenceInstance(getContext()).getUser();
-        orderService = new OrderService();
-        orderService.getAllUserOrdersByStatus(Integer.valueOf(loginResponse.getId()), "Pending", "Bearer " + loginResponse.getToken(), this);
+        LoginResponse loginResponse = SharedPreferenceManager.getSharedPreferenceInstance(getContext()).getUser();
+        CartOrdersService cartOrdersService = new CartOrdersService();
+        cartOrdersService.getAllUserOrdersByStatus(Integer.valueOf(loginResponse.getId()), "Pending", "Bearer " + loginResponse.getToken(), this);
         return view;
     }
 
@@ -90,7 +85,7 @@ public class PendingOrderFragment extends Fragment implements OrderInterface, Re
 
     @Override
     public void onSuccess(Response response) {
-        pendingOrdersList = (List<Orders>) response.body();
+        List<Orders> pendingOrdersList = (List<Orders>) response.body();
         orderAdapter.setAllPendingProductData(pendingOrdersList);
         recyclerView.setAdapter(orderAdapter);
         orderAdapter.notifyDataSetChanged();
@@ -99,6 +94,6 @@ public class PendingOrderFragment extends Fragment implements OrderInterface, Re
 
     @Override
     public void onError(String errorMessage) {
-        FancyToast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT, FancyToast.ERROR, false);
+        FancyToast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT, FancyToast.ERROR, false).show();
     }
 }

@@ -2,36 +2,20 @@ package com.example.fashionstoreapp.Models;
 
 import com.google.gson.annotations.SerializedName;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Comment {
 
-    private int postId;
-
+    private Integer postId;
     private int id;
-
     private String name;
-
     private String email;
-
     @SerializedName("body")
     private String text;
 
-    public int getPostId() {
-        return postId;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getText() {
-        return text;
-    }
 }

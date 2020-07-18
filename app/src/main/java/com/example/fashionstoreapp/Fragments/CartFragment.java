@@ -38,12 +38,10 @@ import retrofit2.Response;
 public class CartFragment extends Fragment implements CartInterface,
         ResponseCallback, ItemClickCallback {
 
-    FragmentCartBinding fragmentCartBinding;
-    CartAdapter cartAdapter;
-    LoginResponse loginResponse;
-    RecyclerView recyclerView;
-    CartService cartService;
-    List<Cart> cartList = new ArrayList<>();
+    private FragmentCartBinding fragmentCartBinding;
+    private CartAdapter cartAdapter;
+    private RecyclerView recyclerView;
+    private List<Cart> cartList = new ArrayList<>();
     double totalPrice = 0.0;
 
     public CartFragment() {
@@ -58,8 +56,8 @@ public class CartFragment extends Fragment implements CartInterface,
         View view = fragmentCartBinding.getRoot();
         getActivity().setTitle("My Cart");
         super.onViewCreated(view, savedInstanceState);
-        loginResponse = SharedPreferenceManager.getSharedPreferenceInstance(getContext()).getUser();
-        cartService = new CartService();
+        LoginResponse loginResponse = SharedPreferenceManager.getSharedPreferenceInstance(getContext()).getUser();
+        CartService cartService = new CartService();
         cartService.getAllCartProducts("Bearer " + loginResponse.getToken(), this);
         return view;
     }
@@ -99,7 +97,7 @@ public class CartFragment extends Fragment implements CartInterface,
 
     @Override
     public void onError(String errorMessage) {
-        FancyToast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT, FancyToast.ERROR, false);
+        FancyToast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT, FancyToast.ERROR, false).show();
         System.out.println("error messages hererere" + errorMessage);
     }
 

@@ -16,7 +16,7 @@ import java.security.NoSuchAlgorithmException;
 
 import retrofit2.Response;
 
-public class ForgotPasswordActivity extends AppCompatActivity  implements ResponseCallback {
+public class ForgotPasswordActivity extends AppCompatActivity implements ResponseCallback {
 
     ActivityForgotPasswordBinding binding;
     UserService userService;
@@ -35,23 +35,22 @@ public class ForgotPasswordActivity extends AppCompatActivity  implements Respon
     public void onUpdateNewPassword() throws NoSuchAlgorithmException {
         String newPassword = binding.etNewPassword.getText().toString();
         String confirmPassword = binding.etConfirmPassword.getText().toString();
-String userId = loginResponse.getId();
-        System.out.println(loginResponse.getUsername());
+        String userId = loginResponse.getId();
         if (newPassword.isEmpty() || confirmPassword.isEmpty()) {
             FancyToast.makeText(getApplicationContext(), "Fields cannot be empty", FancyToast.LENGTH_SHORT, FancyToast.WARNING, false).show();
-        } if(!newPassword.equals(confirmPassword)){
+        }
+        if (!newPassword.equals(confirmPassword)) {
             FancyToast.makeText(getApplicationContext(), "Password isnt the same", FancyToast.LENGTH_SHORT, FancyToast.WARNING, false).show();
-        } else{
+        } else {
             SharedPreferenceManager.getSharedPreferenceInstance(this);
             System.out.println(SharedPreferenceManager.getSharedPreferenceInstance(this));
-           userService.updatePassword(userId,newPassword,this);
+            userService.updatePassword(userId, newPassword, this);
         }
     }
 
     @Override
     public void onSuccess(Response response) {
         FancyToast.makeText(getApplicationContext(), "New Password is updated", FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
-
     }
 
     @Override

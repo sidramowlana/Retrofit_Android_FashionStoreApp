@@ -2,23 +2,16 @@ package com.example.fashionstoreapp.Models;
 
 import com.google.gson.annotations.SerializedName;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Tag{
 
     @SerializedName("Tag")
     private String tag;
 
-    public Tag() {
-    }
-
-    public Tag(String tag) {
-        this.tag = tag;
-    }
-
-    public String getTag() {
-        return tag;
-    }
-
-    public void setTag(String tag) {
-        this.tag = tag;
-    }
 }

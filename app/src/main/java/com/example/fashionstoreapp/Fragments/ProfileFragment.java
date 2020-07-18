@@ -23,9 +23,8 @@ import retrofit2.Response;
  */
 public class ProfileFragment extends Fragment implements ResponseCallback {
 
-    FragmentProfileBinding fragmentProfileBinding;
-    private LoginResponse loginResponse;
-UserService userService;
+    private FragmentProfileBinding fragmentProfileBinding;
+
     public ProfileFragment() {
         // Required empty public constructor
     }
@@ -34,13 +33,12 @@ UserService userService;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         fragmentProfileBinding = FragmentProfileBinding.inflate(getLayoutInflater());
         View view = fragmentProfileBinding.getRoot();
         getActivity().setTitle("My Profile");
-        userService = new UserService();
-        loginResponse = SharedPreferenceManager.getSharedPreferenceInstance(getContext()).getUser();
-        userService.getUserDetail(Integer.parseInt(loginResponse.getId()),"Bearer "+loginResponse.getToken(),this);
+        UserService userService = new UserService();
+        LoginResponse loginResponse = SharedPreferenceManager.getSharedPreferenceInstance(getContext()).getUser();
+        userService.getUserDetail(Integer.parseInt(loginResponse.getId()), "Bearer " + loginResponse.getToken(), this);
 
         fragmentProfileBinding.etProfileName.setText(loginResponse.getUsername());
         fragmentProfileBinding.etProfileEmail.setText(loginResponse.getEmail());
@@ -63,10 +61,9 @@ UserService userService;
         String userPhone = fragmentProfileBinding.etProfilePhone.getText().toString();
         //check if any field is empty
         if (userEmail.isEmpty() || userName.isEmpty() || userPhone.isEmpty()) {
-            FancyToast.makeText(getContext(), "Please fill all fields.", FancyToast.LENGTH_LONG,FancyToast.WARNING,false).show();
-        }
-        else {
-        //update the user
+            FancyToast.makeText(getContext(), "Please fill all fields.", FancyToast.LENGTH_LONG, FancyToast.WARNING, false).show();
+        } else {
+            //update the user
             //get the user for the shared preference
 //                    user.setName(userName);
 //                    user.setEmail(userEmail);

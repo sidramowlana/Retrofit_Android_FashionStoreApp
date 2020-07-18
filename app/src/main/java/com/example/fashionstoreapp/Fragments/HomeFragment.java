@@ -21,24 +21,20 @@ import com.example.fashionstoreapp.Activities.ProductDetailActivity;
 import com.example.fashionstoreapp.Adapters.HomeAdapter;
 import com.example.fashionstoreapp.Adapters.SlideAdapter;
 import com.example.fashionstoreapp.CallBacks.ItemClickCallback;
+import com.example.fashionstoreapp.CallBacks.ResponseCallback;
 import com.example.fashionstoreapp.Models.Product;
 import com.example.fashionstoreapp.RetrofitAPIService.ProductService;
-import com.example.fashionstoreapp.CallBacks.ResponseCallback;
 import com.example.fashionstoreapp.databinding.FragmentHomeBinding;
 import com.shashank.sony.fancytoastlib.FancyToast;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Response;
 
 public class HomeFragment extends Fragment implements ResponseCallback, ItemClickCallback {
-    HomeAdapter homeAdapter;
-    FragmentHomeBinding fragmentHomeBinding;
-    RecyclerView recyclerView;
-    ViewPager viewPager;
-    ProductService productService;
-    List<Product> productList = new ArrayList<>();
+    private HomeAdapter homeAdapter;
+    private FragmentHomeBinding fragmentHomeBinding;
+    private RecyclerView recyclerView;
 
     private String[] imageUrl = new String[]{
             "https://images.indianexpress.com/2018/09/kids-fashion_759_ts.jpg",
@@ -58,16 +54,15 @@ public class HomeFragment extends Fragment implements ResponseCallback, ItemClic
         fragmentHomeBinding = FragmentHomeBinding.inflate(getLayoutInflater());
         View view = fragmentHomeBinding.getRoot();
         getActivity().setTitle("Home");
-        productService = new ProductService();
+        ProductService productService = new ProductService();
         productService.getAllProducts(this);
-
         return view;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        viewPager = fragmentHomeBinding.viewPagerId;
+        ViewPager viewPager = fragmentHomeBinding.viewPagerId;
         SlideAdapter adapter = new SlideAdapter(getActivity(), imageUrl);
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(0);
@@ -106,7 +101,7 @@ public class HomeFragment extends Fragment implements ResponseCallback, ItemClic
 
     @Override
     public void onSuccess(Response response) {
-        productList = (List<Product>) response.body();
+        List<Product> productList = (List<Product>) response.body();
         homeAdapter.setAllProductData(productList);
         recyclerView.setAdapter(homeAdapter);
         homeAdapter.notifyDataSetChanged();
@@ -114,7 +109,7 @@ public class HomeFragment extends Fragment implements ResponseCallback, ItemClic
 
     @Override
     public void onError(String errorMessage) {
-        FancyToast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT, FancyToast.ERROR, false);
+        FancyToast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT, FancyToast.ERROR, false).show();
         System.out.println("error messages hererere" + errorMessage);
     }
 

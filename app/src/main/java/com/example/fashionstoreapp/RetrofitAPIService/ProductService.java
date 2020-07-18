@@ -24,7 +24,6 @@ public class ProductService {
         productCall.enqueue(new CustomizeCallback<List<Product>>(callback));
     }
     public void getProduct(Integer id, ResponseCallback callback){
-        System.out.println("productservice id: "+id);
         Call<Product> productCall = productApi.getProductById(id);
         productCall.enqueue(new CustomizeCallback<Product>(callback));
     }

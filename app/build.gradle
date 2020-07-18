@@ -47,6 +47,8 @@ dependencies {
     implementation 'com.github.Shashank02051997:FancyToast-Android:0.1.6'
     implementation 'com.squareup.retrofit:converter-gson:2.0.0-beta2'
     implementation 'androidx.work:work-runtime:2.3.4'
+    compileOnly 'org.projectlombok:lombok:1.18.12'
+    annotationProcessor 'org.projectlombok:lombok:1.18.12'
 
 
 }

@@ -145,21 +145,26 @@ public class ProductDetailActivity extends AppCompatActivity implements SharedSe
             activityProductDetailBinding.detailAddCartBtnId.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int quantity = Integer.parseInt(activityProductDetailBinding.detailQtyId.getNumber());
-                    String size = activityProductDetailBinding.textviewSelectesSizeId.getText().toString();
-                    double total = quantity*product.getPrice();
-                    onAddProductCart(productId, quantity, size,total, loginResponse, productResponseCallback);
+                    if (product.getQuantity() == 0) {
+                        FancyToast.makeText(getApplicationContext(), "Out of stock", Toast.LENGTH_SHORT, FancyToast.ERROR, false);
+                        activityProductDetailBinding.textviewAvailableQtyId.setText("Out of Stock");
+                    } else {
+                        int quantity = Integer.parseInt(activityProductDetailBinding.detailQtyId.getNumber());
+                        String size = activityProductDetailBinding.textviewSelectesSizeId.getText().toString();
+                        double total = quantity * product.getPrice();
+                        onAddProductCart(productId, quantity, size, total, loginResponse, productResponseCallback);
+                    }
                 }
             });
 
         }
     }
 
-    public void onAddProductCart(Integer productId, Integer quantity, String size,Double total, LoginResponse loginResponse, ResponseCallback responseCallback) {
+    public void onAddProductCart(Integer productId, Integer quantity, String size, Double total, LoginResponse loginResponse, ResponseCallback responseCallback) {
         if (size.equals("")) {
             FancyToast.makeText(getApplicationContext(), "Please select a size", Toast.LENGTH_SHORT, FancyToast.WARNING, false).show();
         } else {
-            cartService.onAddProductCart(productId, quantity, size, total,"Bearer " + loginResponse.getToken(), responseCallback);
+            cartService.onAddProductCart(productId, quantity, size, total, "Bearer " + loginResponse.getToken(), responseCallback);
             FancyToast.makeText(getApplicationContext(), "Added to your cart", Toast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
         }
     }

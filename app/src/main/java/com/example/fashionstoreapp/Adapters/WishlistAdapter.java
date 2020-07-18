@@ -34,10 +34,10 @@ import retrofit2.Response;
 public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHolder>
         implements ItemClickCallback, ResponseCallback {
 
-    WishlistItemBinding wishlistItemBinding;
-    Context context;
-    List<Wishlist> wishlists;
-    LoginResponse loginResponse;
+    private WishlistItemBinding wishlistItemBinding;
+    private Context context;
+    private List<Wishlist> wishlists;
+    private LoginResponse loginResponse;
     private ProductService productService;
     private ItemClickCallback itemClickCallback;
 
@@ -84,7 +84,7 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         final Wishlist wishlist = wishlists.get(position);
-        System.out.println("wishy: "+wishlist);
+        System.out.println("wishy: " + wishlist);
         final Product product = wishlist.getProduct();
         loginResponse = SharedPreferenceManager.getSharedPreferenceInstance(context).getUser();
         productService = new ProductService();
@@ -141,6 +141,7 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
     public void onAddRemoveProductWishlist(Integer productId, LoginResponse loginResponse, ResponseCallback productResponseCallback) {
         productService.onAddRemoveProductFavourite(productId, "Bearer " + loginResponse.getToken(), productResponseCallback);
     }
+
     @Override
     public void onItemClickListener(Integer id) {
         onAddRemoveProductWishlist(id, loginResponse, this);

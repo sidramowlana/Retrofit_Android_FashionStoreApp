@@ -20,7 +20,6 @@ import com.example.fashionstoreapp.Models.Orders;
 import com.example.fashionstoreapp.R;
 import com.example.fashionstoreapp.RetrofitAPIService.CartService;
 import com.example.fashionstoreapp.RetrofitAPIService.OrderService;
-import com.example.fashionstoreapp.RetrofitAPIService.ProductService;
 import com.example.fashionstoreapp.Storage.SharedPreferenceManager;
 import com.example.fashionstoreapp.databinding.FragmentPaymentDialogBinding;
 import com.google.android.material.navigation.NavigationView;
@@ -41,22 +40,18 @@ public class PaymentDialogFragment extends DialogFragment implements ResponseCal
 
     public static String ADDRESS = "com.example.fashionstoreapp.ADDRESS";
     private SharedPreferences sharedPreferences;
-    FragmentPaymentDialogBinding fragmentPaymentDialogBinding;
+    private FragmentPaymentDialogBinding fragmentPaymentDialogBinding;
     private LoginResponse loginResponse;
-    private AddressRequest addressRequest;
     private OrderService orderService;
-    private ProductService productService;
     private CartService cartService;
-    List<Cart> cartList = new ArrayList<>();
-    double cartTotal;
-    ResponseCallback cartListCallback;
-    ResponseCallback saveCallback;
+    private List<Cart> cartList = new ArrayList<>();
+    private ResponseCallback cartListCallback;
+    private ResponseCallback saveCallback;
     private Orders savedOrder = new Orders();
 
     public PaymentDialogFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -69,8 +64,7 @@ public class PaymentDialogFragment extends DialogFragment implements ResponseCal
         orderService = new OrderService();
         cartService = new CartService();
 
-        cartTotal = getArguments().getDouble("TOTAL_AMOUNT_KEY");
-        System.out.println("total is: " + cartTotal);
+        double cartTotal = getArguments().getDouble("TOTAL_AMOUNT_KEY");
         fragmentPaymentDialogBinding.paymentDialogTotalAmountTextViewId.setText(String.valueOf(cartTotal));
         fragmentPaymentDialogBinding.paymentDialogCloseBtnId.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -183,6 +177,6 @@ public class PaymentDialogFragment extends DialogFragment implements ResponseCal
     @Override
     public void onError(String errorMessage) {
         System.out.println("errorMessage: " + errorMessage);
-        FancyToast.makeText(getContext(), "Error: " + errorMessage, Toast.LENGTH_SHORT, FancyToast.ERROR, false);
+        FancyToast.makeText(getContext(), "Error: " + errorMessage, Toast.LENGTH_SHORT, FancyToast.ERROR, false).show();
     }
 }
