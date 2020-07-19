@@ -61,8 +61,8 @@ public class ProductDetailActivity extends AppCompatActivity implements SharedSe
         if (bundle != null) {
             final int productId = bundle.getInt("productId");
             productService.getProduct(productId, productDetailResponseCallback());
-            rateReviewService.getRateReviewByProductId(productId, "Bearer " + loginResponse.getToken(), rateReview());
             productService.getAWishlistProduct(productId, "Bearer " + loginResponse.getToken(), favouriteCallBack());
+            rateReviewService.getRateReviewByProductId(productId, "Bearer " + loginResponse.getToken(), rateReview());
             //add and remove wishlist
             activityProductDetailBinding.buttonFavorite.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -90,6 +90,14 @@ public class ProductDetailActivity extends AppCompatActivity implements SharedSe
                         double total = quantity * product.getPrice();
                         onAddProductCart(productId, quantity, size, total, loginResponse, productDetailResponseCallback());
                     }
+                }
+            });
+            activityProductDetailBinding.detailQACardId.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getApplicationContext(), QuestionAnswerActivity.class);
+                    intent.putExtra("productQAId", product.getProductId());
+                    startActivity(intent);
                 }
             });
         }
