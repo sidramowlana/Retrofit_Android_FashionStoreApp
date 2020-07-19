@@ -68,12 +68,16 @@
                 </LinearLayout>
 
 
+                <LinearLayout
+                    android:id="@+id/linear_layout_include_product_rate_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
                 <include
                     android:id="@+id/include_product_rate_item_feedback_id"
                     layout="@layout/detail_product_feedback_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
-
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"

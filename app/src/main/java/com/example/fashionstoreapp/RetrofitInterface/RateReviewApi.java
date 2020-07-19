@@ -17,7 +17,7 @@ public interface RateReviewApi {
     @POST("/api/rate/product-rate/{productId}")
     Call<MessageResponse> onAddRateReviewByProductId(@Path("productId") Integer productId, @Body RateReview rateReview, @Header("Authorization") String token);
 
-    @GET("api/rate/all/{productId}")
-    Call<List<RateReview>> getAllProductRateByProductId(@Path("productId") Integer productId,@Header("Authorization") String token);
+    @GET("api/rate/product-all/{productId}")
+    Call<List<RateReview>> getRateReviewByProductId(@Path("productId") Integer productId,@Header("Authorization") String token);
 
 }

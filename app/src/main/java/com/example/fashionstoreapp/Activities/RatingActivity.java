@@ -133,10 +133,6 @@ public class RatingActivity extends AppCompatActivity implements ResponseCallbac
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
             String date = sdf.format(new Date());
             RateReview rateReview = new RateReview(product, rating, feedback, date);
-            System.out.println("product : " + product.getProductName());
-            System.out.println("rating : " + rating);
-            System.out.println("feedback : " + feedback);
-            System.out.println("Date : " + date);
             rateReviewService.onAddRateReviewByProductId(product.getProductId(), rateReview, "Bearer " + loginResponse.getToken(), this);
         }
     }

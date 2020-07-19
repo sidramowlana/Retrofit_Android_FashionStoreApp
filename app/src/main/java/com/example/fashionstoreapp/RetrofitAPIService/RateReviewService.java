@@ -7,6 +7,8 @@ import com.example.fashionstoreapp.Models.RateReview;
 import com.example.fashionstoreapp.RetrofitClient.RetrofitClient;
 import com.example.fashionstoreapp.RetrofitInterface.RateReviewApi;
 
+import java.util.List;
+
 import retrofit2.Call;
 
 public class RateReviewService {
@@ -18,7 +20,11 @@ public class RateReviewService {
     }
 
     public void onAddRateReviewByProductId(Integer id, RateReview rateReview, String token, ResponseCallback callback) {
-        Call<MessageResponse> cartCall = rateReviewApi.onAddRateReviewByProductId(id, rateReview, token);
-        cartCall.enqueue(new CustomizeCallback<MessageResponse>(callback));
+        Call<MessageResponse> call = rateReviewApi.onAddRateReviewByProductId(id, rateReview, token);
+        call.enqueue(new CustomizeCallback<MessageResponse>(callback));
+    }
+    public void getRateReviewByProductId(Integer id,String token, ResponseCallback callback){
+        Call <List<RateReview>> call = rateReviewApi.getRateReviewByProductId(id,token);
+        call.enqueue(new CustomizeCallback<List<RateReview>>(callback));
     }
 }

@@ -7,37 +7,48 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.fashionstoreapp.Activities.ProductFeedbackActivity;
 import com.example.fashionstoreapp.Activities.RatingActivity;
+import com.example.fashionstoreapp.CallBacks.ResponseCallback;
 import com.example.fashionstoreapp.DTO.Responses.LoginResponse;
 import com.example.fashionstoreapp.Interface.SharedService;
 import com.example.fashionstoreapp.Models.CartOrders;
-import com.example.fashionstoreapp.Models.Product;
 import com.example.fashionstoreapp.Models.RateReview;
 import com.example.fashionstoreapp.R;
 import com.example.fashionstoreapp.RetrofitAPIService.CartOrdersService;
+import com.example.fashionstoreapp.RetrofitAPIService.RateReviewService;
+import com.example.fashionstoreapp.Storage.SharedPreferenceManager;
+import com.example.fashionstoreapp.databinding.DetailProductFeedbackLayoutBinding;
 import com.example.fashionstoreapp.databinding.ProductRateItemBinding;
+import com.shashank.sony.fancytoastlib.FancyToast;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Response;
+
 public class ProductRatingAdapter extends RecyclerView.Adapter<ProductRatingAdapter.ViewHolder> implements SharedService {
 
     private ProductRateItemBinding productRateItemBinding;
     private Context context;
     private List<CartOrders> cartOrdersList = new ArrayList<>();
-    private List<RateReview> rateList = new ArrayList<>();
+    private List<RateReview> rateReviewList = new ArrayList<>();
     private CartOrders cartOrders;
     private LoginResponse loginResponse;
     private CartOrdersService cartOrdersService;
-    Product product;
+    int reviewCount;
+    private RateReviewService rateReviewService;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
@@ -45,6 +56,11 @@ public class ProductRatingAdapter extends RecyclerView.Adapter<ProductRatingAdap
         TextView textViewProductSize;
         TextView textViewRateHere;
         CardView cardView;
+        LinearLayout linearLayout;
+        DetailProductFeedbackLayoutBinding detailProductFeedbackLayoutBinding;
+        TextView textViewRateValue;
+        RatingBar ratingBar;
+
 
         public ViewHolder(ProductRateItemBinding itemBinding) {
             super(itemBinding.getRoot());
@@ -53,6 +69,9 @@ public class ProductRatingAdapter extends RecyclerView.Adapter<ProductRatingAdap
             textViewProductSize = itemBinding.productRateSizeId;
             textViewRateHere = itemBinding.productsRateHereRating;
             cardView = itemBinding.productRateCardviewId;
+            detailProductFeedbackLayoutBinding = itemBinding.includeProductRateItemFeedbackId;
+            linearLayout = itemBinding.linearLayoutIncludeProductRateId;
+//            ratingBar = itemBinding.includeProductRateItemFeedbackId.feedbackRatingbarId;
         }
 
     }
@@ -73,6 +92,10 @@ public class ProductRatingAdapter extends RecyclerView.Adapter<ProductRatingAdap
     @Override
     public void onBindViewHolder(@NonNull ProductRatingAdapter.ViewHolder holder, int position) {
         cartOrders = cartOrdersList.get(position);
+        rateReviewService = new RateReviewService();
+        loginResponse = SharedPreferenceManager.getSharedPreferenceInstance(context).getUser();
+        onViewRates(holder,cartOrders.getCart().getProduct().getProductId(),loginResponse);
+//        reviewCount = rateReviewList.size();
         Picasso.get()
                 .load(cartOrders.getCart().getProduct().getScaledImage())
                 .placeholder(R.drawable.loading)
@@ -80,7 +103,7 @@ public class ProductRatingAdapter extends RecyclerView.Adapter<ProductRatingAdap
                 .into(holder.imageView);
         holder.textViewProductName.setText(cartOrders.getCart().getProduct().getProductName());
         holder.textViewProductSize.setText(cartOrders.getCart().getSize());
-        holder.textViewRateHere.setOnClickListener(new View.OnClickListener() {
+                holder.textViewRateHere.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, RatingActivity.class);
@@ -89,20 +112,51 @@ public class ProductRatingAdapter extends RecyclerView.Adapter<ProductRatingAdap
                 context.startActivity(intent);
             }
         });
-
-        onCalculateRatingAverage();
-
     }
+
+    public void onViewRates(ViewHolder holder,Integer productId,LoginResponse loginResponse) {
+        rateReviewService.getRateReviewByProductId(productId, "Bearer " + loginResponse.getToken(), rateReview(holder,productId));
+    }
+    public ResponseCallback rateReview(final ViewHolder holder, final Integer productId) {
+        ResponseCallback rateReviewProductCallback = new ResponseCallback() {
+            @Override
+            public void onSuccess(Response response) {
+                rateReviewList = (List<RateReview>) response.body();
+                reviewCount = rateReviewList.size();
+                holder.detailProductFeedbackLayoutBinding.feedbackReviewCountId.setText("( " + reviewCount + " )");
+                onCalculateRatingAverage();
+                holder.linearLayout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (rateReviewList.isEmpty()) {
+                            FancyToast.makeText(context, "No Reviews available", Toast.LENGTH_SHORT, FancyToast.INFO, false);
+                        } else {
+                            Intent intent = new Intent(context, ProductFeedbackActivity.class);
+                            intent.putExtra("productFeedbackId", productId);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            context.startActivity(intent);
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                System.out.println("error");
+            }
+        };
+        return rateReviewProductCallback;
+    }
+
 
     @Override
     public void onCalculateRatingAverage() {
         DecimalFormat df2 = new DecimalFormat("0.0");
         double totalRate = 0;
         double average = 0;
-//        List<RateReview> rateList = RateReview.find(RateReview.class, "product=?", product.getId().toString());
-        for (RateReview rateReview : rateList) {
+        for (RateReview rateReview : rateReviewList) {
             totalRate += rateReview.getRate();
-            average = totalRate / rateList.size();
+            average = totalRate / rateReviewList.size();
         }
         productRateItemBinding.includeProductRateItemFeedbackId.feedbackRatingbarId.setRating((float) average);
         productRateItemBinding.includeProductRateItemFeedbackId.feedbackRateValueId.setText(df2.format(average));

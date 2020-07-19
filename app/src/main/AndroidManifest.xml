@@ -45,9 +45,9 @@
                 <activity
             android:name=".Activities.ProductRatingActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-<!--        <activity-->
-<!--            android:name=".Activities.ProductFeedbackActivity"-->
-<!--            android:theme="@style/AppTheme.NoActionBar" />-->
+        <activity
+            android:name=".Activities.ProductFeedbackActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activities.RatingActivity"
             android:theme="@style/AppTheme.NoActionBar" />

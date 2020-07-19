@@ -43,8 +43,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>
     private CartService cartService;
     private ItemClickCallback itemClickCallback;
     private CartInterface cartInterface;
-//    private ItemQuantityClickCallback itemQuantityClickCallback;
-
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         CardView cardView;
@@ -142,13 +140,13 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>
                 double total = price * quantity;
                 cart.setQuantity(quantity);
                 cart.setTotal(total);
-//                onItemQuantityClickListener(cart.getCartId(), quantity, total);
                 onUpdateCart(cart.getCartId(),quantity, total, loginResponse);
                 holder.textViewTotalPrice.setText(String.valueOf(total));
                 cartInterface.setUpdateTotal(calculateTotal());
             }
         });
     }
+
     public void onUpdateCart(Integer cartId, int quantity, Double total, LoginResponse loginResponse) {
         cartService.onUpdateQuantityProductCart(cartId, quantity, total, "Bearer " + loginResponse.getToken(),this);
     }

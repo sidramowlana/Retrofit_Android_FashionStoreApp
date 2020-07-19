@@ -15,15 +15,19 @@ import com.example.fashionstoreapp.CallBacks.ResponseCallback;
 import com.example.fashionstoreapp.DTO.Responses.LoginResponse;
 import com.example.fashionstoreapp.Interface.SharedService;
 import com.example.fashionstoreapp.Models.Product;
+import com.example.fashionstoreapp.Models.RateReview;
 import com.example.fashionstoreapp.R;
 import com.example.fashionstoreapp.RetrofitAPIService.CartService;
 import com.example.fashionstoreapp.RetrofitAPIService.ProductService;
+import com.example.fashionstoreapp.RetrofitAPIService.RateReviewService;
 import com.example.fashionstoreapp.Storage.SharedPreferenceManager;
 import com.example.fashionstoreapp.databinding.ActivityProductDetailBinding;
 import com.shashank.sony.fancytoastlib.FancyToast;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Response;
 
@@ -32,10 +36,11 @@ public class ProductDetailActivity extends AppCompatActivity implements SharedSe
     ActivityProductDetailBinding activityProductDetailBinding;
     Product product;
     ProductService productService;
+    RateReviewService rateReviewService;
     CartService cartService;
     String selectedSize;
     LoginResponse loginResponse;
-    public static String ORDER_KEY = "com.example.fashionstore.Activities.ORDER_KEY";
+    List<RateReview> rateReviewList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,10 +54,87 @@ public class ProductDetailActivity extends AppCompatActivity implements SharedSe
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         productService = new ProductService();
+        rateReviewService = new RateReviewService();
         cartService = new CartService();
         loginResponse = SharedPreferenceManager.getSharedPreferenceInstance(this).getUser();
         Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            final int productId = bundle.getInt("productId");
+            productService.getProduct(productId, productDetailResponseCallback());
+            rateReviewService.getRateReviewByProductId(productId, "Bearer " + loginResponse.getToken(), rateReview());
+            productService.getAWishlistProduct(productId, "Bearer " + loginResponse.getToken(), favouriteCallBack());
+            //add and remove wishlist
+            activityProductDetailBinding.buttonFavorite.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onAddRemoveProductWishlist(productId, loginResponse, productDetailResponseCallback());
+                }
+            });
+            //share
+            activityProductDetailBinding.buttonShare.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onShare(product);
+                }
+            });
+            //add to cart
+            activityProductDetailBinding.detailAddCartBtnId.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (product.getQuantity() == 0) {
+                        FancyToast.makeText(getApplicationContext(), "Out of stock", Toast.LENGTH_SHORT, FancyToast.ERROR, false);
+                        activityProductDetailBinding.textviewAvailableQtyId.setText("Out of Stock");
+                    } else {
+                        int quantity = Integer.parseInt(activityProductDetailBinding.detailQtyId.getNumber());
+                        String size = activityProductDetailBinding.textviewSelectesSizeId.getText().toString();
+                        double total = quantity * product.getPrice();
+                        onAddProductCart(productId, quantity, size, total, loginResponse, productDetailResponseCallback());
+                    }
+                }
+            });
+        }
+    }
 
+    public void onAddProductCart(Integer productId, Integer quantity, String size, Double total, LoginResponse loginResponse, ResponseCallback responseCallback) {
+        if (size.equals("")) {
+            FancyToast.makeText(getApplicationContext(), "Please select a size", Toast.LENGTH_SHORT, FancyToast.WARNING, false).show();
+        } else {
+            cartService.onAddProductCart(productId, quantity, size, total, "Bearer " + loginResponse.getToken(), responseCallback);
+            FancyToast.makeText(getApplicationContext(), "Added to your cart", Toast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
+        }
+    }
+
+    public ResponseCallback rateReview() {
+        ResponseCallback rateReviewProductCallback = new ResponseCallback() {
+            @Override
+            public void onSuccess(Response response) {
+                rateReviewList = (List<RateReview>) response.body();
+                int reviewCount = rateReviewList.size();
+                activityProductDetailBinding.includeFeedbackId.feedbackReviewCountId.setText("( " + reviewCount + " )");
+                onCalculateRatingAverage();
+                activityProductDetailBinding.detailFeedbackCardId.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (rateReviewList.isEmpty()) {
+                            FancyToast.makeText(getApplicationContext(), "No Reviews available", Toast.LENGTH_SHORT, FancyToast.INFO, false).show();
+                        } else {
+                            Intent intent = new Intent(getApplicationContext(), ProductFeedbackActivity.class);
+                            intent.putExtra("productFeedbackId", product.getProductId());
+                            startActivity(intent);
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                System.out.println("error");
+            }
+        };
+        return rateReviewProductCallback;
+    }
+
+    public ResponseCallback productDetailResponseCallback() {
         final ResponseCallback productResponseCallback = new ResponseCallback() {
             @Override
             public void onSuccess(Response response) {
@@ -106,11 +188,13 @@ public class ProductDetailActivity extends AppCompatActivity implements SharedSe
             public void onError(String errorMessage) {
                 if (errorMessage != null) {
                     FancyToast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT, FancyToast.ERROR, false);
-                    System.out.println("error here is:" + errorMessage);
                 }
             }
         };
+        return productResponseCallback;
+    }
 
+    public ResponseCallback favouriteCallBack() {
         final ResponseCallback productFavouriteResponseCallback = new ResponseCallback() {
             @Override
             public void onSuccess(Response response) {
@@ -124,49 +208,7 @@ public class ProductDetailActivity extends AppCompatActivity implements SharedSe
                 System.out.println("productFavouriteResponseCallback error: " + errorMessage);
             }
         };
-
-        if (bundle != null) {
-            final int productId = bundle.getInt("productId");
-            productService.getProduct(productId, productResponseCallback);
-            productService.getAWishlistProduct(productId, "Bearer " + loginResponse.getToken(), productFavouriteResponseCallback);
-            activityProductDetailBinding.buttonFavorite.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onAddRemoveProductWishlist(productId, loginResponse, productResponseCallback);
-                }
-            });
-            activityProductDetailBinding.buttonShare.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onShare(product);
-                }
-            });
-
-            activityProductDetailBinding.detailAddCartBtnId.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (product.getQuantity() == 0) {
-                        FancyToast.makeText(getApplicationContext(), "Out of stock", Toast.LENGTH_SHORT, FancyToast.ERROR, false);
-                        activityProductDetailBinding.textviewAvailableQtyId.setText("Out of Stock");
-                    } else {
-                        int quantity = Integer.parseInt(activityProductDetailBinding.detailQtyId.getNumber());
-                        String size = activityProductDetailBinding.textviewSelectesSizeId.getText().toString();
-                        double total = quantity * product.getPrice();
-                        onAddProductCart(productId, quantity, size, total, loginResponse, productResponseCallback);
-                    }
-                }
-            });
-
-        }
-    }
-
-    public void onAddProductCart(Integer productId, Integer quantity, String size, Double total, LoginResponse loginResponse, ResponseCallback responseCallback) {
-        if (size.equals("")) {
-            FancyToast.makeText(getApplicationContext(), "Please select a size", Toast.LENGTH_SHORT, FancyToast.WARNING, false).show();
-        } else {
-            cartService.onAddProductCart(productId, quantity, size, total, "Bearer " + loginResponse.getToken(), responseCallback);
-            FancyToast.makeText(getApplicationContext(), "Added to your cart", Toast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
-        }
+        return productFavouriteResponseCallback;
     }
 
     @Override
@@ -200,13 +242,12 @@ public class ProductDetailActivity extends AppCompatActivity implements SharedSe
         DecimalFormat df2 = new DecimalFormat("0.0");
         double totalRate = 0;
         double average = 0;
-//        List<RateReview> rateList = RateReview.find(RateReview.class, "product=?", product.getId().toString());
-//        for (RateReview rateReview : rateList) {
-//            totalRate += rateReview.getRate();
-//            average = totalRate / rateList.size();
-//        }
-//        activityProductDetailBinding.includeFeedbackId.feedbackRatingbarId.setRating((float) average);
-//        activityProductDetailBinding.includeFeedbackId.feedbackRateValueId.setText(df2.format(average));
+        for (RateReview rateReview : rateReviewList) {
+            totalRate += rateReview.getRate();
+            average = totalRate / rateReviewList.size();
+        }
+        activityProductDetailBinding.includeFeedbackId.feedbackRatingbarId.setRating((float) average);
+        activityProductDetailBinding.includeFeedbackId.feedbackRateValueId.setText(df2.format(average));
     }
 
     @Override

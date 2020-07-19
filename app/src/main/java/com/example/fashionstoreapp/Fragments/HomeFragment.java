@@ -3,7 +3,6 @@ package com.example.fashionstoreapp.Fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -115,7 +114,6 @@ public class HomeFragment extends Fragment implements ResponseCallback, ItemClic
 
     @Override
     public void onItemClickListener(Integer id) {
-        Log.e("clicked product detail:" , String.valueOf(id));
         startActivity(new Intent(getActivity(), ProductDetailActivity.class).putExtra("productId",id));
     }
 

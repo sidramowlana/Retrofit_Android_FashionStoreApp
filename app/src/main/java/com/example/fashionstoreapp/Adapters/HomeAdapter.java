@@ -80,15 +80,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
                 itemClickCallback.onItemClickListener(product.getProductId());
             }
         });
-//
-//        holder.imageView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(context, ProductDetailActivity.class);
-//                intent.putExtra("productId",product.getId());
-//                context.startActivity(intent);
-//         }
-//        });
     }
 
     @Override

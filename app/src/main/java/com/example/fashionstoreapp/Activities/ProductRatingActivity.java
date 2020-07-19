@@ -77,7 +77,6 @@ public class ProductRatingActivity extends AppCompatActivity implements Response
     @Override
     public void onSuccess(Response response) {
         List<CartOrders> cartOrdersList = (List<CartOrders>) response.body();
-        System.out.println("cartOrdersList.size(): "+cartOrdersList.size());
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
