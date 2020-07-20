@@ -2,7 +2,6 @@ package com.example.fashionstoreapp.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,10 +21,12 @@ import com.example.fashionstoreapp.CallBacks.ResponseCallback;
 import com.example.fashionstoreapp.DTO.Responses.LoginResponse;
 import com.example.fashionstoreapp.Interface.CartInterface;
 import com.example.fashionstoreapp.Models.Cart;
+import com.example.fashionstoreapp.R;
 import com.example.fashionstoreapp.RetrofitAPIService.CartService;
 import com.example.fashionstoreapp.Storage.SharedPreferenceManager;
 import com.example.fashionstoreapp.databinding.FragmentCartBinding;
 import com.shashank.sony.fancytoastlib.FancyToast;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,37 +80,48 @@ public class CartFragment extends Fragment implements CartInterface,
     @Override
     public void onSuccess(Response response) {
         cartList = (List<Cart>) response.body();
-        cartAdapter.setAllCartProductData(cartList);
-        recyclerView.setAdapter(cartAdapter);
-        setUpdateTotal(cartAdapter.calculateTotal());
-        fragmentCartBinding.cartCheckoutBtnId.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (cartList.isEmpty()) {
-                    Toast.makeText(getContext(), "Your cart is empty", Toast.LENGTH_SHORT).show();
-                } else {
-                    onShowCheckoutDialog(cartAdapter.calculateTotal()).show(getChildFragmentManager(), "Payments");
+        if(cartList.isEmpty()){
+            recyclerView.setVisibility(View.GONE);
+            fragmentCartBinding.emptyView.setVisibility(View.VISIBLE);
+            Picasso.get()
+                    .load(R.drawable.cart_empty)
+                    .placeholder(R.drawable.loading)
+                    .error(R.drawable.error)
+                    .into(fragmentCartBinding.emptyView);
+
+        }
+        else {
+            recyclerView.setVisibility(View.VISIBLE);
+            fragmentCartBinding.emptyView.setVisibility(View.GONE);
+            cartAdapter.setAllCartProductData(cartList);
+            recyclerView.setAdapter(cartAdapter);
+            setUpdateTotal(cartAdapter.calculateTotal());
+            fragmentCartBinding.cartCheckoutBtnId.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (cartList.isEmpty()) {
+                        Toast.makeText(getContext(), "Your cart is empty", Toast.LENGTH_SHORT).show();
+                    } else {
+                        onShowCheckoutDialog(cartAdapter.calculateTotal()).show(getChildFragmentManager(), "Payments");
+                    }
                 }
-            }
-        });
+            });
+        }
         cartAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onError(String errorMessage) {
         FancyToast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT, FancyToast.ERROR, false).show();
-        System.out.println("error messages hererere" + errorMessage);
     }
 
     @Override
     public void setUpdateTotal(double total) {
-        System.out.println("setting the total2: "+total);
         fragmentCartBinding.cartTextAmountId.setText(String.valueOf(total));
     }
 
     @Override
     public void onItemClickListener(Integer id) {
-        Log.e("clicked product detail:", String.valueOf(id));
         startActivity(new Intent(getActivity(), ProductDetailActivity.class).putExtra("productId", id));
     }
 

@@ -21,10 +21,12 @@ import com.example.fashionstoreapp.CallBacks.ItemClickCallback;
 import com.example.fashionstoreapp.CallBacks.ResponseCallback;
 import com.example.fashionstoreapp.DTO.Responses.LoginResponse;
 import com.example.fashionstoreapp.Models.Wishlist;
+import com.example.fashionstoreapp.R;
 import com.example.fashionstoreapp.RetrofitAPIService.ProductService;
 import com.example.fashionstoreapp.Storage.SharedPreferenceManager;
 import com.example.fashionstoreapp.databinding.CommonlistviewBinding;
 import com.shashank.sony.fancytoastlib.FancyToast;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -74,9 +76,21 @@ public class WishlistFragment extends Fragment implements ResponseCallback, Item
     @Override
     public void onSuccess(Response response) {
         List<Wishlist> wishlistList = (List<Wishlist>) response.body();
-        wishlistAdapter.setAllWishlistProductData(wishlistList);
-        recyclerView.setAdapter(wishlistAdapter);
-        wishlistAdapter.notifyDataSetChanged();
+        if (wishlistList.isEmpty()) {
+            recyclerView.setVisibility(View.GONE);
+            commonlistviewBinding.emptyView.setVisibility(View.VISIBLE);
+            Picasso.get()
+                    .load(R.drawable.wishlist_empty)
+                    .placeholder(R.drawable.loading)
+                    .error(R.drawable.error)
+                    .into(commonlistviewBinding.emptyView);
+        } else {
+            recyclerView.setVisibility(View.VISIBLE);
+            commonlistviewBinding.emptyView.setVisibility(View.GONE);
+            wishlistAdapter.setAllWishlistProductData(wishlistList);
+            recyclerView.setAdapter(wishlistAdapter);
+            wishlistAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override

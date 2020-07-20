@@ -7,10 +7,10 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.fashionstoreapp.RetrofitAPIService.AuthenticationService;
+import com.example.fashionstoreapp.CallBacks.ResponseCallback;
 import com.example.fashionstoreapp.DTO.Requests.LoginRequest;
 import com.example.fashionstoreapp.DTO.Responses.LoginResponse;
-import com.example.fashionstoreapp.CallBacks.ResponseCallback;
+import com.example.fashionstoreapp.RetrofitAPIService.AuthenticationService;
 import com.example.fashionstoreapp.Storage.SharedPreferenceManager;
 import com.example.fashionstoreapp.databinding.ActivityLoginBinding;
 import com.shashank.sony.fancytoastlib.FancyToast;
@@ -67,15 +67,6 @@ public class LoginActivity extends AppCompatActivity implements ResponseCallback
             startActivity(intent);
         }
     }
-//            User user = SharedPreferenceManager.getSharedPreferenceInstance(this).getUser();
-//            String username = user.getUsername();
-//            String password = user.getPassword();
-//            System.out.println("usernameluffy: " + username);
-//
-//            binding.etUsername.setText(username);
-////            binding.etPassword.setText(password);
-//        }
-//    }
 
     public void loadMain() {
         intent = new Intent(this, MainActivity.class);
@@ -108,14 +99,18 @@ public class LoginActivity extends AppCompatActivity implements ResponseCallback
             //save the user in sharedpred
             SharedPreferenceManager.getSharedPreferenceInstance(LoginActivity.this).saveUserSharedPref(loginResponse);
 
-            intent = new Intent(this, MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-
-            if (loginResponse.getRoles()== "ROLE_ADMIN") {
+            if (loginResponse.getRoles().equals("ROLE_ADMIN")) {
                 System.out.println("It is admin here");
-            } else {
+                intent = new Intent(this, AdminMainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+
+            } else if(loginResponse.getRoles().equals("ROLE_USER")) {
                 System.out.println("It is Customer here");
+                intent = new Intent(this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+
             }
             FancyToast.makeText(getApplicationContext(), "Successfully Logged In", FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
         }

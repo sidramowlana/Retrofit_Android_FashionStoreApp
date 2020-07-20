@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/navAdminHome"
+            android:icon="@drawable/ic_home_color_24dp"
+            android:title="@string/home" />
+        <item
+            android:id="@+id/navAdminCategory"
+            android:icon="@drawable/ic_category_color_24dp"
+            android:title="@string/category" />
+        <item
+            android:id="@+id/navAdminInquiry"
+            android:icon="@drawable/ic_question_answer_black_24dp"
+            android:title="Inquiries" />
+        <item
+            android:id="@+id/navAdminOrders"
+            android:icon="@drawable/ic_shopping_cart_color_24dp"
+            android:title="Orders" />
+        <item
+            android:id="@+id/navAdminProfile"
+            android:icon="@drawable/ic_person_color_24dp"
+            android:title="@string/profile" />
+        <item
+            android:id="@+id/navAdminLogout"
+            android:icon="@drawable/ic_exit_to_app_color_24dp"
+            android:title="@string/logout" />
+    </group>
+</menu>

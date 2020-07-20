@@ -96,4 +96,8 @@
     <string name="address">Address</string>
     <string name="city">City</string>
     <string name="postal_code">Postal Code</string>
+    <string name="update">Update</string>
+    <string name="edit">Edit</string>
+    <string name="image_preview">Image Preview</string>
+    <string name="image_url">Image URL</string>
 </resources>

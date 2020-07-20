@@ -17,36 +17,36 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.fashionstoreapp.DTO.Responses.LoginResponse;
-import com.example.fashionstoreapp.Fragments.CartFragment;
 import com.example.fashionstoreapp.Fragments.HomeFragment;
-import com.example.fashionstoreapp.Fragments.OrdersFragment;
-import com.example.fashionstoreapp.Fragments.ProfileFragment;
-import com.example.fashionstoreapp.Fragments.WishlistFragment;
 import com.example.fashionstoreapp.R;
 import com.example.fashionstoreapp.Storage.SharedPreferenceManager;
-import com.example.fashionstoreapp.databinding.ActivityMainBinding;
+import com.example.fashionstoreapp.databinding.ActivityAdminMainBinding;
 import com.google.android.material.navigation.NavigationView;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    ActivityMainBinding activityMainBinding;
+
+
+
+public class AdminMainActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
+
+    ActivityAdminMainBinding activityAdminMainBinding;
     Toolbar toolbar;
     ActionBarDrawerToggle toggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
-        View view = activityMainBinding.getRoot();
+        activityAdminMainBinding = ActivityAdminMainBinding.inflate(getLayoutInflater());
+        View view = activityAdminMainBinding.getRoot();
         setContentView(view);
-        toolbar = activityMainBinding.appNavBar.tbToolBar;
+        toolbar = activityAdminMainBinding.appNavBar.tbToolBar;
         setSupportActionBar(toolbar);
 
         LoginResponse loginResponse = SharedPreferenceManager.getSharedPreferenceInstance(this).getUser();
-        NavigationView navigationView = activityMainBinding.navigationView;
-        onNavigationItemSelected(navigationView.getMenu().findItem(R.id.navHome));
+        NavigationView navigationView = activityAdminMainBinding.navigationView;
+        onNavigationItemSelected(navigationView.getMenu().findItem(R.id.navAdminHome));
 
-        navigationView.setCheckedItem(R.id.navHome);
+        navigationView.setCheckedItem(R.id.navAdminHome);
         View navHeaderview = navigationView.getHeaderView(0);
         TextView navUserName = navHeaderview.findViewById(R.id.tvUserName);
         navUserName.setText(loginResponse.getUsername());
@@ -54,8 +54,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         TextView navEmail = navHeaderview.findViewById(R.id.tvUserEmail);
         navEmail.setText(loginResponse.getEmail());
 
-        NavigationView navView = activityMainBinding.navigationView;
-        DrawerLayout drawerLayout = activityMainBinding.drawerLayout;
+        NavigationView navView = activityAdminMainBinding.navigationView;
+        DrawerLayout drawerLayout = activityAdminMainBinding.drawerLayout;
         toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.opens, R.string.closes);
 
         drawerLayout.addDrawerListener(toggle);
@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navView.setNavigationItemSelectedListener(this);
 
     }
+
     public void onLogout() {
         SharedPreferenceManager.getSharedPreferenceInstance(this).clear();
         startActivity(new Intent(getApplicationContext(), LoginActivity.class));
@@ -72,20 +73,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         NavigationView navigationView = findViewById(R.id.navigationView);
-        DrawerLayout drawerLayout = activityMainBinding.drawerLayout;
+        DrawerLayout drawerLayout = activityAdminMainBinding.drawerLayout;
         toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.opens, R.string.closes);
 
         if (toggle.isDrawerIndicatorEnabled()
                 && toggle.onOptionsItemSelected(item))
             return true;
         switch (item.getItemId()) {
-            case android.R.id.home:
+            case R.id.navAdminHome:
                 onBackPressed();
                 return true;
-            case R.id.navCart:
-                onNavigationItemSelected(navigationView.getMenu().findItem(R.id.navCart));
-                navigationView.setCheckedItem(R.id.navCart);
-                return true;
+//            case R.id.navCart:
+//                onNavigationItemSelected(navigationView.getMenu().findItem(R.id.navCart));
+//                navigationView.setCheckedItem(R.id.navCart);
+//                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -94,16 +95,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onBackPressed() {
         Fragment current_fragment = getSupportFragmentManager().findFragmentById(R.id.frameLayout);
-        if (activityMainBinding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            activityMainBinding.drawerLayout.closeDrawer(GravityCompat.START);
+        if (activityAdminMainBinding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            activityAdminMainBinding.drawerLayout.closeDrawer(GravityCompat.START);
         }
         else if (current_fragment instanceof HomeFragment) {
             super.onBackPressed();
+//            finish();
         }
         else {
             NavigationView navigationView = findViewById(R.id.navigationView);
-            onNavigationItemSelected(navigationView.getMenu().findItem(R.id.navHome));
-            navigationView.setCheckedItem(R.id.navHome);
+            onNavigationItemSelected(navigationView.getMenu().findItem(R.id.navAdminHome));
+            navigationView.setCheckedItem(R.id.navAdminHome);
+
         }
     }
 
@@ -113,17 +116,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Fragment fragment = new Fragment();
 
         //fragments are created according to user demand
-        if (id == R.id.navHome) {
+        if (id == R.id.navAdminHome) {
             fragment = new HomeFragment();
-        } else if (id == R.id.navWishlist) {
-            fragment = new WishlistFragment();
-        } else if (id == R.id.navCart) {
-            fragment = new CartFragment();
-        } else if (id == R.id.navProfile) {
-            fragment = new ProfileFragment();
-        } else if (id == R.id.navOrders) {
-            fragment = new OrdersFragment();
-        } else if (id == R.id.navLogout) {
+//        } else if (id == R.id.navAdminCategory) {
+//            fragment = new WishlistFragment();
+//        } else if (id == R.id.navAdminInquiry) {
+//            fragment = new CartFragment();
+//        } else if (id == R.id.navAdminOrders) {
+//            fragment = new ProfileFragment();
+//        } else if (id == R.id.navAdminOrders) {
+//            fragment = new OrdersFragment();
+        } else if (id == R.id.navAdminLogout) {
             onLogout();
         }
 
@@ -135,7 +138,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fragmentTransaction.commit();
         }
 
-        activityMainBinding.drawerLayout.closeDrawer(GravityCompat.START);
+        activityAdminMainBinding.drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
 

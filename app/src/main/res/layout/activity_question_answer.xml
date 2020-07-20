@@ -8,6 +8,16 @@
     android:orientation="vertical"
     tools:context=".Activities.QuestionAnswerActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/qa_toolbar_id"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:layout_collapseMode="pin"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        tools:ignore="MissingConstraints" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/question_answer_recyclerview_id"
             android:layout_width="match_parent"

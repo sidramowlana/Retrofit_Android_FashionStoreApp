@@ -4,88 +4,75 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.preference.PreferenceManager;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.fashionstoreapp.DTO.Responses.LoginResponse;
 import com.example.fashionstoreapp.R;
+import com.example.fashionstoreapp.Storage.SharedPreferenceManager;
+import com.shashank.sony.fancytoastlib.FancyToast;
 
 public class SplashActivity extends AppCompatActivity {
     private static int SPLASH_TIME_OUT = 1000;
     private SharedPreferences sharedPreferences;
+    LoginResponse loginResponse;
+boolean isLogged;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
-                startActivity(intent);
-                finish();
+
+
+
+
+        loginResponse = SharedPreferenceManager.getSharedPreferenceInstance(getApplicationContext()).getUser();
+        isLogged=SharedPreferenceManager.getSharedPreferenceInstance(getApplicationContext()).isLoggedIn();
+        if (isLogged==true) {
+            System.out.println("user is logged in");
+            if (loginResponse.getRoles().equals("ROLE_ADMIN")) {
+                System.out.println("It is admin here");
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent = new Intent(SplashActivity.this, AdminMainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                }, SPLASH_TIME_OUT);
+
+            } else if (loginResponse.getRoles().equals("ROLE_USER")) {
+                System.out.println("It is Customer here");
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                }, SPLASH_TIME_OUT);
+            } else {
+                System.out.println("no user still loggedin");
             }
-        }, SPLASH_TIME_OUT);
-
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-//        if (!sharedPreferences.getBoolean("seeded", false))
-//            readJSON();
+            if (loginResponse != null) {
+                System.out.println("loooooopo: " + loginResponse.getId());
+                System.out.println("loooooopo: " + loginResponse.getRoles());
+                System.out.println("loooooopo: " + loginResponse.getToken());
+                System.out.println("loooooopo: " + loginResponse.getEmail());
+                System.out.println("loooooopo: " + loginResponse.getUsername());
+//
+                FancyToast.makeText(getApplicationContext(), "Successfully Logged In", FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
+            }
+        }
+        else if (isLogged==false){
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            }, SPLASH_TIME_OUT);
+        }
     }
-//
-//    private void readJSON() {
-//        String product;
-//        String tag;
-//        //seeding Tag table
-//        try {
-//            InputStream tagInputStream = getAssets().open("Tags");
-//            int tagSize = tagInputStream.available();
-//            byte[] bufferingTag = new byte[tagSize];
-//            tagInputStream.read(bufferingTag);
-//            tagInputStream.close();
-//
-//            tag = new String(bufferingTag, "UTF-8");
-//            Type tagListType = new TypeToken<List<Tag>>() {
-//            }.getType();
-//            List<Tag> tagList = new Gson().fromJson(tag, tagListType);
-//
-//            if (Tag.count(Tag.class) == 0) {
-//                for (Tag t : tagList) {
-//                    t.save();
-//                }
-//            }
-//
-//            //seeding Product and ProductTag table
-//            InputStream productInputStream = getAssets().open("Product");
-//            int size = productInputStream.available();
-//            byte[] bufferingProduct = new byte[size];
-//            productInputStream.read(bufferingProduct);
-//            productInputStream.close();
-//
-//            product = new String(bufferingProduct, "UTF-8");
-//            Type productListType = new TypeToken<List<Product>>() {
-//            }.getType();
-//
-//            List<Product> productList = new Gson().fromJson(product, productListType);
-//            if (Product.count(Product.class) == 0) {
-//                for (Product selected_product : productList) {
-//                    selected_product.save();
-//                    for (String tagId : selected_product.getTags()) {
-//                        Tag selectedTag = Tag.findById(Tag.class, Long.parseLong(tagId));
-//                        ProductTag productTag = new ProductTag(selected_product, selectedTag);
-//                        productTag.save();
-//                    }
-//                }
-//                List<Product> p = Product.listAll(Product.class);
-//                //for debugging purpose
-//                //List<ProductTag> productTagTableTest = ProductTag.listAll(ProductTag.class);
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        SharedPreferences.Editor editor = sharedPreferences.edit();
-//        editor.putBoolean("seeded", true).apply();
-//        System.out.println("Seeding completed.");
-//    }
-
 }

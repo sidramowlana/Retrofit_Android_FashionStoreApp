@@ -16,13 +16,16 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.fashionstoreapp.Activities.AdminProductDetailActivity;
 import com.example.fashionstoreapp.Activities.ProductDetailActivity;
 import com.example.fashionstoreapp.Adapters.HomeAdapter;
 import com.example.fashionstoreapp.Adapters.SlideAdapter;
 import com.example.fashionstoreapp.CallBacks.ItemClickCallback;
 import com.example.fashionstoreapp.CallBacks.ResponseCallback;
+import com.example.fashionstoreapp.DTO.Responses.LoginResponse;
 import com.example.fashionstoreapp.Models.Product;
 import com.example.fashionstoreapp.RetrofitAPIService.ProductService;
+import com.example.fashionstoreapp.Storage.SharedPreferenceManager;
 import com.example.fashionstoreapp.databinding.FragmentHomeBinding;
 import com.shashank.sony.fancytoastlib.FancyToast;
 
@@ -34,6 +37,7 @@ public class HomeFragment extends Fragment implements ResponseCallback, ItemClic
     private HomeAdapter homeAdapter;
     private FragmentHomeBinding fragmentHomeBinding;
     private RecyclerView recyclerView;
+    private LoginResponse loginResponse;
 
     private String[] imageUrl = new String[]{
             "https://images.indianexpress.com/2018/09/kids-fashion_759_ts.jpg",
@@ -53,6 +57,7 @@ public class HomeFragment extends Fragment implements ResponseCallback, ItemClic
         fragmentHomeBinding = FragmentHomeBinding.inflate(getLayoutInflater());
         View view = fragmentHomeBinding.getRoot();
         getActivity().setTitle("Home");
+        loginResponse = SharedPreferenceManager.getSharedPreferenceInstance(getContext()).getUser();
         ProductService productService = new ProductService();
         productService.getAllProducts(this);
         return view;
@@ -114,7 +119,11 @@ public class HomeFragment extends Fragment implements ResponseCallback, ItemClic
 
     @Override
     public void onItemClickListener(Integer id) {
-        startActivity(new Intent(getActivity(), ProductDetailActivity.class).putExtra("productId",id));
+        if (loginResponse.getRoles().equals("ROLE_ADMIN")) {
+            startActivity(new Intent(getActivity(), AdminProductDetailActivity.class).putExtra("productId", id));
+        } else if (loginResponse.getRoles().equals("ROLE_USER")) {
+            startActivity(new Intent(getActivity(), ProductDetailActivity.class).putExtra("productId", id));
+        }
     }
 
 }

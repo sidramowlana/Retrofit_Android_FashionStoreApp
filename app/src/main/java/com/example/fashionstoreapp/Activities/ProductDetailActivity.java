@@ -156,7 +156,7 @@ public class ProductDetailActivity extends AppCompatActivity implements SharedSe
                         .error(R.drawable.error)
                         .into(activityProductDetailBinding.detailImageViewId);
                 if (product.getQuantity() == 0) {
-                    Toast.makeText(getApplicationContext(), "Out of Stock", Toast.LENGTH_SHORT).show();
+                    FancyToast.makeText(getApplicationContext(), "Out of Stock", Toast.LENGTH_SHORT, FancyToast.INFO, false);
                 } else {
                     activityProductDetailBinding.textviewAvailableQtyId.setText(String.valueOf(product.getQuantity()));
                 }
@@ -236,7 +236,7 @@ public class ProductDetailActivity extends AppCompatActivity implements SharedSe
     }
 
     public void onShare(Product shareProduct) {
-        String share = "Look what I found!!!" + "\n" + "\n" + shareProduct.getProductName() + "\n" + "USD $ " + shareProduct.getPrice() + "\n" + shareProduct.getLongDescription() + "\n" + shareProduct.getScaledImage();
+        String share = "Look what I found!!!" + "\n" + "\n" + shareProduct.getProductName() + "\n" + "USD $ " + shareProduct.getPrice() + "\n" + shareProduct.getShortDescription() + "\n" + shareProduct.getScaledImage();
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
         sendIntent.putExtra(Intent.EXTRA_TEXT, share);

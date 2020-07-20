@@ -13,8 +13,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-
-
         <activity
             android:name=".Activities.SplashActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -41,8 +39,7 @@
         <activity
             android:name=".Activities.ProductDetailActivity"
             android:theme="@style/AppTheme.NoActionBar" /> <!-- <activity android:name=".Activities.ProductRatingActivity" android:theme="@style/AppTheme.NoActionBar"></activity> -->
-
-                <activity
+        <activity
             android:name=".Activities.ProductRatingActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -50,6 +47,17 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activities.RatingActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activities.QuestionAnswerActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+<!--Admin views-->
+        <activity
+            android:name=".Activities.AdminProductDetailActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activities.AdminMainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>
 

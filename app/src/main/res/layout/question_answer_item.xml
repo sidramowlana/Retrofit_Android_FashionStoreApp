@@ -20,9 +20,7 @@
                 android:layout_height="wrap_content"
                 android:padding="3dp"
                 android:text="@string/user_name"
-                android:textColor="#000"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/question_answer_item_date"
@@ -31,7 +29,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:text="@string/date"
-                android:textSize="20sp" />
+                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/question_answer_item_question"
@@ -41,7 +39,8 @@
                 android:layout_marginTop="5dp"
                 android:padding="3dp"
                 android:text="@string/question"
-                android:textColor="#000" />
+                android:textColor="#000"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/question_answer_item_answer"
@@ -49,10 +48,11 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/question_answer_item_question"
                 android:layout_marginTop="5dp"
-                android:padding="5dp"
+                android:background="#fafafa"
                 android:hint="@string/answer"
+                android:padding="5dp"
                 android:textColor="#000"
-                android:background="#fafafa" />
+                android:textSize="18sp" />
 
         </RelativeLayout>
 

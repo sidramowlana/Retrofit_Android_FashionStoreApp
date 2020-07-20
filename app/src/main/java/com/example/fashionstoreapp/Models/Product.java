@@ -14,12 +14,16 @@ public class Product {
 
     private String productName;
     private String shortDescription;
-    private String longDescription;
     private String category;
     private double price;
     private int quantity;
     private String scaledImage;
-    private String fullImage;
     private List<ProductTag> productTag;
 
+    public Product(String productName, String description, int quantity, double price) {
+        this.productName = productName;
+        this.shortDescription = description;
+        this.quantity = quantity;
+        this.price = price;
+    }
 }
