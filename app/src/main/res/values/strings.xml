@@ -106,4 +106,7 @@
     <string name="an_email_will_be_sent_to_you_to_reset_your_password">An email will be sent to you to reset your password</string>
     <string name="please_give_your_email">Please give your email!</string>
     <string name="product_amp_category"><![CDATA[Product & Category]]></string>
+    <string name="_0">0</string>
+    <string name="new_category">New Category</string>
+    <string name="list_of_catergories">list of catergories...</string>
 </resources>

@@ -55,7 +55,7 @@
             android:drawableStart="@drawable/ic_lock_24dp"
             android:drawableLeft="@drawable/ic_lock_24dp"
             android:ems="10"
-            android:hint="@string/placeholder_username"
+            android:hint="@string/placeholder_password"
             android:importantForAutofill="no"
             android:inputType="textPassword"
             android:padding="15dp" />

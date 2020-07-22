@@ -12,4 +12,7 @@ public class Tag{
     private Integer tagId;
     private String tag;
 
+    public Tag(String tag) {
+        this.tag = tag;
+    }
 }
