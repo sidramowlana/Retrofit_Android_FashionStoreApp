@@ -26,4 +26,12 @@ public class Product {
         this.quantity = quantity;
         this.price = price;
     }
+
+    public Product(String productName, String shortDescription, double price, int quantity, String scaledImage) {
+        this.productName = productName;
+        this.shortDescription = shortDescription;
+        this.price = price;
+        this.quantity = quantity;
+        this.scaledImage = scaledImage;
+    }
 }

@@ -100,4 +100,10 @@
     <string name="edit">Edit</string>
     <string name="image_preview">Image Preview</string>
     <string name="image_url">Image URL</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="cancel_edit">Cancel Edit</string>
+    <string name="an_email_will_be_sent_to_you_to_reset_your_password">An email will be sent to you to reset your password</string>
+    <string name="please_give_your_email">Please give your email!</string>
+    <string name="product_amp_category"><![CDATA[Product & Category]]></string>
 </resources>

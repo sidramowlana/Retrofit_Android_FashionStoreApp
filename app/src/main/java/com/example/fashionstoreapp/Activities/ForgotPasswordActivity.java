@@ -35,7 +35,6 @@ public class ForgotPasswordActivity extends AppCompatActivity implements Respons
     public void onUpdateNewPassword() throws NoSuchAlgorithmException {
         String newPassword = binding.etNewPassword.getText().toString();
         String confirmPassword = binding.etConfirmPassword.getText().toString();
-        String userId = loginResponse.getId();
         if (newPassword.isEmpty() || confirmPassword.isEmpty()) {
             FancyToast.makeText(getApplicationContext(), "Fields cannot be empty", FancyToast.LENGTH_SHORT, FancyToast.WARNING, false).show();
         }
@@ -44,7 +43,7 @@ public class ForgotPasswordActivity extends AppCompatActivity implements Respons
         } else {
             SharedPreferenceManager.getSharedPreferenceInstance(this);
             System.out.println(SharedPreferenceManager.getSharedPreferenceInstance(this));
-            userService.updatePassword(userId, newPassword, this);
+            userService.updatePassword(Integer.valueOf(loginResponse.getId()), newPassword, "Bearer "+loginResponse.getToken(),this);
         }
     }
 

@@ -6,9 +6,9 @@
             android:icon="@drawable/ic_home_color_24dp"
             android:title="@string/home" />
         <item
-            android:id="@+id/navAdminCategory"
+            android:id="@+id/navAdminProductCategory"
             android:icon="@drawable/ic_category_color_24dp"
-            android:title="@string/category" />
+            android:title="@string/product_amp_category" />
         <item
             android:id="@+id/navAdminInquiry"
             android:icon="@drawable/ic_question_answer_black_24dp"

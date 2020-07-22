@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -36,16 +35,18 @@
                 android:layout_below="@+id/registerLogo"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="25dp"
-                android:background="@drawable/edit_text_style"
+                android:autofillHints=""
+                android:background="@drawable/border"
                 android:drawableStart="@drawable/ic_person_24dp"
                 android:drawableLeft="@drawable/ic_person_24dp"
                 android:ems="10"
+                android:enabled="false"
                 android:hint="@string/placeholder_email"
                 android:inputType="textEmailAddress"
                 android:padding="10dp"
                 android:textColor="#000"
-                android:textColorHint="#000"
-                android:autofillHints="" />
+
+                android:textColorHint="#000" />
 
             <EditText
                 android:id="@+id/etProfileName"
@@ -55,16 +56,17 @@
                 android:layout_alignEnd="@+id/etProfileEmail"
                 android:layout_alignRight="@+id/etProfileEmail"
                 android:layout_marginTop="5dp"
-                android:background="@drawable/edit_text_style"
+                android:autofillHints=""
+                android:background="@drawable/border"
                 android:drawableStart="@drawable/ic_person_24dp"
                 android:drawableLeft="@drawable/ic_person_24dp"
                 android:ems="10"
+                android:enabled="false"
                 android:hint="@string/placeholder_username"
                 android:inputType="text"
                 android:padding="10dp"
                 android:textColor="#000"
-                android:textColorHint="#000"
-                android:autofillHints="" />
+                android:textColorHint="#000" />
 
             <EditText
                 android:id="@+id/etProfilePhone"
@@ -73,38 +75,38 @@
                 android:layout_below="@+id/etProfileName"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="5dp"
-                android:background="@drawable/edit_text_style"
+                android:autofillHints=""
+                android:background="@drawable/border"
                 android:drawableStart="@drawable/ic_phone_24dp"
                 android:drawableLeft="@drawable/ic_phone_24dp"
                 android:ems="10"
+                android:enabled="false"
                 android:hint="@string/placeholder_mobileno"
+                android:inputType="phone"
                 android:padding="10dp"
                 android:textColor="#000"
-                android:textColorHint="#000"
-                android:autofillHints=""
-                android:inputType="phone" />
+                android:textColorHint="#000" />
 
             <Button
-                android:id="@+id/btnUpdateAccount"
+                android:id="@+id/btnEditAccount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/etProfilePhone"
-                android:layout_marginTop="50dp"
-                android:text="@string/update_profile"
+                android:layout_marginTop="20dp"
                 android:background="@drawable/register_button_style_selector"
-                android:textColor="#FFF"
-                />
+                android:text="Change Password"
+                android:textColor="#FFF" />
 
             <Button
-                android:id="@+id/btnResetPassword"
+                android:id="@+id/btnLogoutPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/btnUpdateAccount"
-                android:layout_marginTop="30dp"
-                android:text="Reset Password"
+                android:layout_below="@id/btnEditAccount"
+                android:layout_marginTop="5dp"
                 android:background="@drawable/register_button_style_selector"
-                android:textColor="#FFF"
-                />
+                android:text="Logout"
+                android:textColor="#FFF" />
+
         </RelativeLayout>
 
     </androidx.core.widget.NestedScrollView>

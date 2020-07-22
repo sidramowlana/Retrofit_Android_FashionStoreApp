@@ -18,6 +18,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.fashionstoreapp.DTO.Responses.LoginResponse;
 import com.example.fashionstoreapp.Fragments.CartFragment;
+import com.example.fashionstoreapp.Fragments.CategoryFragment;
 import com.example.fashionstoreapp.Fragments.HomeFragment;
 import com.example.fashionstoreapp.Fragments.OrdersFragment;
 import com.example.fashionstoreapp.Fragments.ProfileFragment;
@@ -117,6 +118,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fragment = new HomeFragment();
         } else if (id == R.id.navWishlist) {
             fragment = new WishlistFragment();
+        } else if(id==R.id.navCategory){
+            fragment = new CategoryFragment();
         } else if (id == R.id.navCart) {
             fragment = new CartFragment();
         } else if (id == R.id.navProfile) {

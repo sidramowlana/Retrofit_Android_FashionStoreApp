@@ -113,8 +113,13 @@ public class HomeFragment extends Fragment implements ResponseCallback, ItemClic
 
     @Override
     public void onError(String errorMessage) {
-        FancyToast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT, FancyToast.ERROR, false).show();
-        System.out.println("error messages hererere" + errorMessage);
+        if(errorMessage==null){
+            FancyToast.makeText(getContext(), "Server down. Please try again later", Toast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+
+        }else {
+            FancyToast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+            System.out.println("error messages hererere" + errorMessage);
+        }
     }
 
     @Override

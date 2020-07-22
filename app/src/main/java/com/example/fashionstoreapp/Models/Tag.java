@@ -1,7 +1,5 @@
 package com.example.fashionstoreapp.Models;
 
-import com.google.gson.annotations.SerializedName;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Tag{
 
-    @SerializedName("Tag")
+    private Integer tagId;
     private String tag;
 
 }

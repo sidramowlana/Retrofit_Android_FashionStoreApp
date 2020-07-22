@@ -7,7 +7,12 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.fashionstoreapp.Adapters.FeedbackAdapter;
 import com.example.fashionstoreapp.CallBacks.ResponseCallback;
 import com.example.fashionstoreapp.DTO.Responses.LoginResponse;
 import com.example.fashionstoreapp.Models.Product;
@@ -33,7 +38,7 @@ public class AdminProductDetailActivity extends AppCompatActivity implements Res
     ProductService productService;
     RateReviewService rateReviewService;
     CartService cartService;
-    String productName;
+    RecyclerView recyclerView;
     String description;
     int quantity;
     double price;
@@ -61,6 +66,8 @@ public class AdminProductDetailActivity extends AppCompatActivity implements Res
         if (bundle != null) {
             productId = bundle.getInt("productId");
             productService.getProduct(productId, this);
+            rateReviewService.getRateReviewByProductId(productId,"Bearer "+loginResponse.getToken(),rateResponseCallback());
+            recyclerView = activityAdminProductDetailBinding.adminReviewRecycleviewId;
             activityAdminProductDetailBinding.adminButtonEdit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -74,6 +81,29 @@ public class AdminProductDetailActivity extends AppCompatActivity implements Res
                 }
             });
         }
+    }
+public ResponseCallback rateResponseCallback(){
+        ResponseCallback rateResponseCallback = new ResponseCallback() {
+            @Override
+            public void onSuccess(Response response) {
+                rateReviewList = (List<RateReview>) response.body();
+                onDisplayProductFeedbacks(rateReviewList);
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+
+            }
+        };
+        return rateResponseCallback;
+}
+    public void onDisplayProductFeedbacks(List<RateReview> rateReviewList) {
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        FeedbackAdapter feedbackAdapter = new FeedbackAdapter(getApplicationContext(), rateReviewList);
+        System.out.println("the product feedbacks are: " + rateReviewList);
+        recyclerView.setAdapter(feedbackAdapter);
     }
 
     public ResponseCallback productDetailResponseCallback() {

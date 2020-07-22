@@ -17,13 +17,13 @@ public interface UserApi {
     @GET("users")
     Call<List<User>> getAllUser();
 
-    @PUT("api/users/{userId}")
-    Call<User> updateUserPassword(@Path("userId") String userId, @Body String newPassword);
+    @PUT("api/users/reset-password/{userId}")
+    Call<User> updateUserPassword(@Path("userId") Integer userId, @Body String newPassword, @Header("Authorization") String token);
 
     @POST("/api/users/user/add-address")
-    Call<AddressRequest> getUserAddress(@Body AddressRequest addRequest,@Header("Authorization")String token);
+    Call<AddressRequest> getUserAddress(@Body AddressRequest addRequest, @Header("Authorization") String token);
 
     @GET("api/users/user/{userId}")
-    Call<User> getUserDetail(@Path("userId") Integer userId, @Header("Authorization")String token);
+    Call<User> getUserDetail(@Path("userId") Integer userId, @Header("Authorization") String token);
 
 }

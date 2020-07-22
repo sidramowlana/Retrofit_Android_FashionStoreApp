@@ -80,8 +80,8 @@
                             android:layout_height="wrap_content"
                             android:background="@drawable/border"
                             android:enabled="false"
-                            android:hint="@string/name"
                             android:inputType="none"
+                            android:hint="@string/name"
                             android:padding="5dp"
                             android:textColor="#000"
                             android:textSize="20sp" />

@@ -1,11 +1,13 @@
 package com.example.fashionstoreapp.RetrofitAPIService;
 
 import com.example.fashionstoreapp.CallBacks.CustomizeCallback;
+import com.example.fashionstoreapp.CallBacks.ResponseCallback;
+import com.example.fashionstoreapp.DTO.Responses.MessageResponse;
 import com.example.fashionstoreapp.Models.Product;
+import com.example.fashionstoreapp.Models.ProductTag;
 import com.example.fashionstoreapp.Models.Wishlist;
 import com.example.fashionstoreapp.RetrofitClient.RetrofitClient;
 import com.example.fashionstoreapp.RetrofitInterface.ProductApi;
-import com.example.fashionstoreapp.CallBacks.ResponseCallback;
 
 import java.util.List;
 
@@ -50,4 +52,17 @@ public class ProductService {
         call.enqueue(new CustomizeCallback<Wishlist>(callback));
     }
 
+    public void getProductByTagName(String category, String token, ResponseCallback callback){
+        Call<List<Product>> call = productApi.getProductByTagName(category, token);
+        call.enqueue(new CustomizeCallback<List<Product>>(callback));
+    }
+    public void getProductByTagId(Integer tagId, String token, ResponseCallback callback){
+        Call<List<ProductTag>> call = productApi.getProductByTagId(tagId, token);
+        call.enqueue(new CustomizeCallback<List<ProductTag>>(callback));
+    }
+
+    public void addProduct(Product product, String token, ResponseCallback callback){
+        Call<MessageResponse> call = productApi.addProduct(product,token);
+        call.enqueue(new CustomizeCallback<MessageResponse>(callback));
+    }
 }

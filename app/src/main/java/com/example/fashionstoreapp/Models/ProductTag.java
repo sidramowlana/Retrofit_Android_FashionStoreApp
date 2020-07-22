@@ -8,7 +8,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductTag {
-private Product product;
-private Tag tag;
+    private Integer productTagId;
+    private Product product;
+    private Tag tag;
 
 }
