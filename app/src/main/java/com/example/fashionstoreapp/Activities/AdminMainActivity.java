@@ -18,7 +18,9 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.fashionstoreapp.DTO.Responses.LoginResponse;
 import com.example.fashionstoreapp.Fragments.AddProductCategoryFragment;
+import com.example.fashionstoreapp.Fragments.AdminProductInquiryFragment;
 import com.example.fashionstoreapp.Fragments.HomeFragment;
+import com.example.fashionstoreapp.Fragments.OrdersFragment;
 import com.example.fashionstoreapp.Fragments.ProfileFragment;
 import com.example.fashionstoreapp.R;
 import com.example.fashionstoreapp.Storage.SharedPreferenceManager;
@@ -122,12 +124,12 @@ public class AdminMainActivity extends AppCompatActivity  implements NavigationV
             fragment = new HomeFragment();
         } else if (id == R.id.navAdminProductCategory) {
             fragment = new AddProductCategoryFragment();
-//        } else if (id == R.id.navAdminInquiry) {
-//            fragment = new CartFragment();
+        } else if (id == R.id.navAdminInquiry) {
+            fragment = new AdminProductInquiryFragment();
         } else if (id == R.id.navAdminProfile) {
             fragment = new ProfileFragment();
-//        } else if (id == R.id.navAdminOrders) {
-//            fragment = new OrdersFragment();
+        } else if (id == R.id.navAdminOrders) {
+            fragment = new OrdersFragment();
         } else if (id == R.id.navAdminLogout) {
             onLogout();
         }

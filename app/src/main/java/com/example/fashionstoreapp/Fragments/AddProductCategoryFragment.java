@@ -50,8 +50,8 @@ public class AddProductCategoryFragment extends Fragment {
 
     public void setViewPager(ViewPager viewPager) {
         TabPageAdapter tabPageAdapter = new TabPageAdapter(this.getChildFragmentManager());
-        tabPageAdapter.onAddFragment(new AddProductFragment(), "Product");
-        tabPageAdapter.onAddFragment(new AddCategoryFragment(), "Category");
+        tabPageAdapter.onAddFragment(new AddProductFragment(), "Add Product");
+        tabPageAdapter.onAddFragment(new AddCategoryFragment(), "Add Category");
         viewPager.setAdapter(tabPageAdapter);
     }
     @Override

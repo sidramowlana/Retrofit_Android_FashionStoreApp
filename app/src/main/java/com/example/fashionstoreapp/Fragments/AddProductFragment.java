@@ -46,6 +46,7 @@ public class AddProductFragment extends Fragment implements ResponseCallback {
         // Required empty public constructor
     }
 
+    String imageUrl;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -83,30 +84,38 @@ public class AddProductFragment extends Fragment implements ResponseCallback {
                 getViewCatergoriesList();
             }
         });
+        fragmentAddProductBinding.addProductLoadButtonId.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imageUrl = fragmentAddProductBinding.addProductImageURLEditTextId.getText().toString();
+                if (imageUrl.isEmpty()) {
+                    FancyToast.makeText(getContext(), "Please give a valid image url", Toast.LENGTH_SHORT, FancyToast.WARNING, false).show();
+
+                } else {
+                    Picasso.get()
+                            .load(imageUrl)
+                            .placeholder(R.drawable.loading)
+                            .error(R.drawable.error)
+                            .into(fragmentAddProductBinding.addProductImageViewId);
+
+                }
+            }
+        });
         return view;
     }
 
     public void saveProduct() {
         String productName = fragmentAddProductBinding.addProductNameEditTextId.getText().toString();
         String description = fragmentAddProductBinding.addProductDescriptionEditTextId.getText().toString();
-        String imageUrl = fragmentAddProductBinding.addProductImageURLEditTextId.getText().toString();
         String categories = fragmentAddProductBinding.addProductListItemCategoriesTextViewId.getText().toString();
         if (productName.isEmpty() || imageUrl.isEmpty() || categories.isEmpty() || description.isEmpty()
                 || (fragmentAddProductBinding.addProductQuantityValueEditTextId.getText().toString().trim().length() == 0)
-                || (fragmentAddProductBinding.addProductPriceValueEditTextId.getText().toString().trim().length()==0)) {
+                || (fragmentAddProductBinding.addProductPriceValueEditTextId.getText().toString().trim().length() == 0)) {
             FancyToast.makeText(getContext(), "Fill the empty fields", Toast.LENGTH_SHORT, FancyToast.WARNING, false).show();
-        }else{
+        } else {
             Integer quantity = Integer.parseInt(fragmentAddProductBinding.addProductQuantityValueEditTextId.getText().toString());
-        Double price = Double.parseDouble(fragmentAddProductBinding.addProductPriceValueEditTextId.getText().toString());
+            Double price = Double.parseDouble(fragmentAddProductBinding.addProductPriceValueEditTextId.getText().toString());
             String[] catergoryArray = categories.split(",");
-            Picasso.get()
-                    .load(imageUrl)
-                    .placeholder(R.drawable.loading)
-                    .error(R.drawable.error)
-                    .into(fragmentAddProductBinding.addProductImageViewId);
-
-            System.out.println(catergoryArray);
-
             Product product = new Product(productName, description, price, quantity, imageUrl, catergoryArray);
             productService.addProduct(product, "Bearer " + loginResponse.getToken(), this);
         }
@@ -193,6 +202,11 @@ public class AddProductFragment extends Fragment implements ResponseCallback {
             fragmentAddProductBinding.addProductPriceValueEditTextId.setText(" ");
             fragmentAddProductBinding.addProductImageURLEditTextId.setText(" ");
             fragmentAddProductBinding.addProductListItemCategoriesTextViewId.setText(" ");
+            Picasso.get()
+                    .load(R.drawable.ic_launcher_background)
+                    .placeholder(R.drawable.loading)
+                    .error(R.drawable.error)
+                    .into(fragmentAddProductBinding.addProductImageViewId);
 
             FancyToast.makeText(getContext(), messageResponse.getMessageResponse(), Toast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
 

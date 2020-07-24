@@ -59,7 +59,12 @@ public class CancelledOrderFragment extends Fragment  implements OrderInterface,
 //        getActivity().setTitle("Cancelled Order");
         loginResponse = SharedPreferenceManager.getSharedPreferenceInstance(getContext()).getUser();
         cartOrdersService = new CartOrdersService();
-        cartOrdersService.getAllUserOrdersByStatus(Integer.valueOf(loginResponse.getId()), "Cancelled", "Bearer " + loginResponse.getToken(), this);
+        if (loginResponse.getRoles().equals("ROLE_ADMIN")) {
+            cartOrdersService.getAllPendingOrdersByStatus("Cancelled", "Bearer " + loginResponse.getToken(), this);
+
+        } else if (loginResponse.getRoles().equals("ROLE_USER")) {
+            cartOrdersService.getAllUserOrdersByStatus(Integer.valueOf(loginResponse.getId()), "Cancelled", "Bearer " + loginResponse.getToken(), this);
+        }
         return view;
     }
 

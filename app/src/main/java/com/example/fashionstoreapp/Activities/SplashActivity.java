@@ -23,9 +23,6 @@ boolean isLogged;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-
-
-
         loginResponse = SharedPreferenceManager.getSharedPreferenceInstance(getApplicationContext()).getUser();
         isLogged=SharedPreferenceManager.getSharedPreferenceInstance(getApplicationContext()).isLoggedIn();
         if (isLogged==true) {

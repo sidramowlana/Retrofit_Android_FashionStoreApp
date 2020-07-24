@@ -277,7 +277,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="10dp"
-                        android:background="@drawable/button_style_selector"
+                        android:layout_margin="5dp"
+                        android:background="@drawable/register_button_style_selector"
                         android:text="@string/add_to_cart"
                         android:textColor="@color/white" />
 

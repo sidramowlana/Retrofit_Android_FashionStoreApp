@@ -52,7 +52,12 @@ public class PendingOrderFragment extends Fragment implements OrderInterface, Re
         View view = commonlistviewBinding.getRoot();
         LoginResponse loginResponse = SharedPreferenceManager.getSharedPreferenceInstance(getContext()).getUser();
         CartOrdersService cartOrdersService = new CartOrdersService();
-        cartOrdersService.getAllUserOrdersByStatus(Integer.valueOf(loginResponse.getId()), "Pending", "Bearer " + loginResponse.getToken(), this);
+        if (loginResponse.getRoles().equals("ROLE_ADMIN")) {
+            cartOrdersService.getAllPendingOrdersByStatus("Pending", "Bearer " + loginResponse.getToken(), this);
+
+        } else if (loginResponse.getRoles().equals("ROLE_USER")) {
+            cartOrdersService.getAllUserOrdersByStatus(Integer.valueOf(loginResponse.getId()), "Pending", "Bearer " + loginResponse.getToken(), this);
+        }
         return view;
     }
 

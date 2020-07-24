@@ -84,7 +84,6 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         final Wishlist wishlist = wishlists.get(position);
-        System.out.println("wishy: " + wishlist);
         final Product product = wishlist.getProduct();
         loginResponse = SharedPreferenceManager.getSharedPreferenceInstance(context).getUser();
         productService = new ProductService();

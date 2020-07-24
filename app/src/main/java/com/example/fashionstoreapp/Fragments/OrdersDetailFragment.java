@@ -111,20 +111,38 @@ public class OrdersDetailFragment extends Fragment implements ResponseCallback {
             if (cartOrders.getOrders().getStatus().equals("Pending")) {
                 fragmentOrderDetailBinding.orderDetailOrderBtnId.setText(R.string.cancel_order);
             } else if (cartOrders.getOrders().getStatus().equals("Cancelled")) {
-                fragmentOrderDetailBinding.orderDetailOrderBtnId.setText(R.string.re_order);
+                if (loginResponse.getRoles().equals("ROLE_ADMIN")) {
+                    showAdmin(cartOrders);
+                } else {
+                    fragmentOrderDetailBinding.orderDetailOrderBtnId.setText(R.string.re_order);
+                }
             } else if (cartOrders.getOrders().getStatus().equals("Completed")) {
-                fragmentOrderDetailBinding.orderDetailOrderBtnId.setText(R.string.rate_my_order);
+                if (loginResponse.getRoles().equals("ROLE_ADMIN")) {
+                    showAdmin(cartOrders);
+                } else {
+                    fragmentOrderDetailBinding.orderDetailOrderBtnId.setText(R.string.rate_my_order);
+                }
             }
         }
         OrdersDetailsAdapter ordersDetailsAdapter = new OrdersDetailsAdapter(getActivity(), cartOrdersList);
         recyclerView.setAdapter(ordersDetailsAdapter);
     }
 
+    public void showAdmin(CartOrders cartOrders) {
+        fragmentOrderDetailBinding.orderDetailOrderBtnId.setVisibility(View.GONE);
+        fragmentOrderDetailBinding.orderDetailssUsernameTextViewId.setVisibility(View.VISIBLE);
+        fragmentOrderDetailBinding.orderDetailssEmailTextViewId.setVisibility(View.VISIBLE);
+        fragmentOrderDetailBinding.orderDetailssPhoneTextViewId.setVisibility(View.VISIBLE);
+
+        fragmentOrderDetailBinding.orderDetailssUsernameTextViewId.setText(cartOrders.getCart().getUser().getUsername());
+        fragmentOrderDetailBinding.orderDetailssEmailTextViewId.setText(cartOrders.getCart().getUser().getEmail());
+        fragmentOrderDetailBinding.orderDetailssPhoneTextViewId.setText(cartOrders.getCart().getUser().getPhone());
+    }
+
     @Override
     public void onError(String errorMessage) {
         FancyToast.makeText(getContext(), errorMessage, FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
     }
-
 
     public void onCancelPendingCompleteOrder() {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");

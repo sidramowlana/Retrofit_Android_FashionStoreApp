@@ -43,15 +43,13 @@
                 android:textSize="20sp" />
 
             <TextView
-                android:id="@+id/question_answer_item_answer"
+                android:id="@+id/question_answer_item_text_view_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/question_answer_item_question"
                 android:layout_marginTop="5dp"
                 android:background="#fafafa"
-                android:hint="@string/answer"
                 android:padding="5dp"
-                android:textColor="#000"
                 android:textSize="18sp" />
 
         </RelativeLayout>

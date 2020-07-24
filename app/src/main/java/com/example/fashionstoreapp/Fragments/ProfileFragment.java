@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.fashionstoreapp.Activities.LoginActivity;
+import com.example.fashionstoreapp.Activities.SplashActivity;
 import com.example.fashionstoreapp.CallBacks.ResponseCallback;
 import com.example.fashionstoreapp.DTO.Responses.LoginResponse;
 import com.example.fashionstoreapp.Models.User;
@@ -57,7 +57,8 @@ public class ProfileFragment extends Fragment implements ResponseCallback {
             @Override
             public void onClick(View v) {
                 SharedPreferenceManager.getSharedPreferenceInstance(getContext()).clear();
-                startActivity(new Intent(getContext(), LoginActivity.class));
+                startActivity(new Intent(getContext(), SplashActivity.class));
+                getActivity().finish();
             }
         });
         return view;

@@ -29,8 +29,11 @@ public interface OrderApi {
     Call<List<CartOrders>> getAllCartByOrderId(@Path("ordersId") Integer ordersId, @Header("Authorization") String token);
 
     @PUT("api/orders/order-update/{cartOrdersId}")
-    Call<CartOrders> updateOrderStatus(@Path("cartOrdersId") Integer cartOrdersId,@Body CartOrders cartOrders, @Header("Authorization") String token);
+    Call<CartOrders> updateOrderStatus(@Path("cartOrdersId") Integer cartOrdersId, @Body CartOrders cartOrders, @Header("Authorization") String token);
 
     @GET("api/orders/cart-orders/{userId}")
-    Call <List<CartOrders>> getAllCartOrdersByUserId(@Path("userId") Integer userId, @Header("Authorization") String token);
+    Call<List<CartOrders>> getAllCartOrdersByUserId(@Path("userId") Integer userId, @Header("Authorization") String token);
+
+    @GET("api/orders/all/{status}")
+    Call<List<Orders>> getAllPendingOrdersByStatus(@Path("status") String status, @Header("Authorization") String token);
 }

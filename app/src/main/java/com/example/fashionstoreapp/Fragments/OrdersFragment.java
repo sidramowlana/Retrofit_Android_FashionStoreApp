@@ -42,12 +42,17 @@ public class OrdersFragment extends Fragment implements ResponseCallback {
         // Inflate the layout for this fragment
         fragmentOrdersBinding = FragmentOrdersBinding.inflate(getLayoutInflater());
         View view = fragmentOrdersBinding.getRoot();
-        getActivity().setTitle("My Orders");
+
         ViewPager viewPager = fragmentOrdersBinding.orderViewpagerId;
         setViewPager(viewPager);
         TabLayout tabLayout = fragmentOrdersBinding.orderTabId;
         tabLayout.setupWithViewPager(viewPager);
-        loginResponse = SharedPreferenceManager.getSharedPreferenceInstance(getContext()).getUser();
+        loginResponse = SharedPreferenceManager.getSharedPreferenceInstance(getContext()).getUser(); if(loginResponse.getRoles().equals("ROLE_ADMIN")){
+            getActivity().setTitle("Orders");
+
+        }else {
+            getActivity().setTitle("My Orders");
+        }
         cartOrdersService = new CartOrdersService();
         final FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         cartOrdersService.getAllCartOrdersByUserId(Integer.valueOf(loginResponse.getId()),"Bearer "+loginResponse.getToken(),this);
@@ -95,9 +100,9 @@ public class OrdersFragment extends Fragment implements ResponseCallback {
                                     cartOrdersService.updateOrderStatus(cartOrders.getCardOrderId(),cartOrders,"Bearer "+loginResponse.getToken(),updateOrderResponseCallBack);
                                       }
                             },
-                            120000 //timer for 2 minutes
+//                            120000 //timer for 2 minutes
 //                        300000 //timer for 5 minutes
-//                        86400000 //timer set for one day
+                        86400000 //timer set for one day
                     );
                 }
             }

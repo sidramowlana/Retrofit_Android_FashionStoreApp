@@ -109,4 +109,7 @@
     <string name="_0">0</string>
     <string name="new_category">New Category</string>
     <string name="list_of_catergories">list of catergories...</string>
+    <string name="my_reply">My reply</string>
+    <string name="load_image">Load Image</string>
+    <string name="add_product">Add Product</string>
 </resources>

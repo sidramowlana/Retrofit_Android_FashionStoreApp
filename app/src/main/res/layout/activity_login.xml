@@ -13,7 +13,6 @@
         android:layout_height="244dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="31dp"
         android:contentDescription="@string/logo_fashion_store"
         app:srcCompat="@mipmap/ic_launcher" />
 
@@ -22,7 +21,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/registerLogo"
-        android:layout_marginTop="5dp"
         app:errorEnabled="true">
 
         <EditText

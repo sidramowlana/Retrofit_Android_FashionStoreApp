@@ -28,10 +28,10 @@ public class CartOrdersService {
         Call<List<CartOrders>> call = orderApi.getAllCartByOrderId(orderId, token);
         call.enqueue(new CustomizeCallback<List<CartOrders>>(callback));
     }
-//    public void getAllCartByOrderId(Integer orderId, String token, ResponseCallback callback) {
-//        Call<List<CartOrders>> call = orderApi.getAllCartByOrderId(orderId, token);
-//        call.enqueue(new CustomizeCallback<List<CartOrders>>(callback));
-//    }
+    public void getAllPendingOrdersByStatus(String status, String token, ResponseCallback callback) {
+        Call<List<Orders>> call = orderApi.getAllPendingOrdersByStatus(status, token);
+        call.enqueue(new CustomizeCallback<List<Orders>>(callback));
+    }
     public void updateOrderStatus(Integer updateCartOrdersId, CartOrders updateCartOrders,String token,ResponseCallback callback){
         Call<CartOrders> call = orderApi.updateOrderStatus(updateCartOrdersId,updateCartOrders,token);
         call.enqueue(new CustomizeCallback<CartOrders>(callback));

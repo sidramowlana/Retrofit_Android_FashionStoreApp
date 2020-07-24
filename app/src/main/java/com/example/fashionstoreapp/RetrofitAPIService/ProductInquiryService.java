@@ -19,13 +19,25 @@ public class ProductInquiryService {
         this.productInquiryApi = retrofitClient.getRetrofitClientInstance().create(ProductInquiryApi.class);
     }
 
+    //user
     public void onAddProductInquiryByProductId(Integer id, ProductInquiry productInquiry, String token, ResponseCallback callback) {
         Call<List<ProductInquiry>> call = productInquiryApi.onAddProductInquiryByProductId(id, productInquiry, token);
         call.enqueue(new CustomizeCallback<List<ProductInquiry>>(callback));
     }
 
-    public void onGetAllProductInquiry(Integer id, String token, ResponseCallback callback) {
-        Call<List<ProductInquiry>> call = productInquiryApi.onGetAllProductInquiry(id, token);
+    public void onGetAllProductInquiryByProductId(Integer id, String token, ResponseCallback callback) {
+        Call<List<ProductInquiry>> call = productInquiryApi.onGetAllProductInquiryByProductId(id, token);
         call.enqueue(new CustomizeCallback<List<ProductInquiry>>(callback));
+    }
+
+    //admin
+    public void onGetAllProductInquiryAnswered(boolean isAnswered,String token, ResponseCallback callback){
+        Call<List<ProductInquiry>> call=productInquiryApi.onGetAllProductInquiryAnswered(isAnswered,token);
+        call.enqueue(new CustomizeCallback<List<ProductInquiry>>(callback));
+    }
+
+    public void onAddAnswerByProductInquiryId(Integer productInquiryId, ProductInquiry productInquiry,String token, ResponseCallback callback){
+        Call<MessageResponse> call=productInquiryApi.onAddAnswerByProductInquiryId(productInquiryId,productInquiry,token);
+        call.enqueue(new CustomizeCallback<MessageResponse>(callback));
     }
 }
