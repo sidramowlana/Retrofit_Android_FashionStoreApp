@@ -112,4 +112,5 @@
     <string name="my_reply">My reply</string>
     <string name="load_image">Load Image</string>
     <string name="add_product">Add Product</string>
+    <string name="send_email">Send Email</string>
 </resources>

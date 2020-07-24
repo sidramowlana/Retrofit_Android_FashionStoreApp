@@ -51,9 +51,12 @@
         <activity
             android:name=".Activities.QuestionAnswerActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Activities.CategoryProductActivity"
-            android:theme="@style/AppTheme.NoActionBar" ></activity>
-        <!-- Admin views -->
+        <activity android:name=".Activities.ResetPasswordActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <activity
+            android:name=".Activities.CategoryProductActivity"
+            android:theme="@style/AppTheme.NoActionBar" /> <!-- Admin views -->
         <activity
             android:name=".Activities.AdminProductDetailActivity"
             android:theme="@style/AppTheme.NoActionBar" />

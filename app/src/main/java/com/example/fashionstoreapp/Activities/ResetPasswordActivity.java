@@ -1,6 +1,5 @@
 package com.example.fashionstoreapp.Activities;
 
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -13,28 +12,22 @@ import androidx.core.content.ContextCompat;
 
 import com.example.fashionstoreapp.DTO.Responses.LoginResponse;
 import com.example.fashionstoreapp.R;
-import com.example.fashionstoreapp.RetrofitAPIService.UserService;
 import com.example.fashionstoreapp.Storage.SharedPreferenceManager;
-import com.example.fashionstoreapp.databinding.ActivityForgotPasswordBinding;
-import com.shashank.sony.fancytoastlib.FancyToast;
+import com.example.fashionstoreapp.databinding.ActivityResetPasswordBinding;
 
-public class ForgotPasswordActivity extends AppCompatActivity {
+public class ResetPasswordActivity extends AppCompatActivity {
 
-    ActivityForgotPasswordBinding activityForgotPasswordBinding;
-    UserService userService;
+    ActivityResetPasswordBinding activityResetPasswordBinding;
     LoginResponse loginResponse;
-
-
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activityForgotPasswordBinding = ActivityForgotPasswordBinding.inflate(getLayoutInflater());
-        View view = activityForgotPasswordBinding.getRoot();
-        setContentView(view);
-        setSupportActionBar(activityForgotPasswordBinding.forgotPasswordToolbarId);
 
-        userService = new UserService();
+        activityResetPasswordBinding = ActivityResetPasswordBinding.inflate(getLayoutInflater());
+        View view = activityResetPasswordBinding.getRoot();
+        setContentView(view);
+
         loginResponse = new LoginResponse();
         loginResponse = SharedPreferenceManager.getSharedPreferenceInstance(getApplicationContext()).getUser();
         if (getSupportActionBar() != null) {
@@ -48,30 +41,5 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             // finally change the color
             window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
         }
-
-        activityForgotPasswordBinding.sendEmailButtonId.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onSendEmail();
-            }
-        });
-    }
-
-    public void onSendEmail() {
-        String email = activityForgotPasswordBinding.forgotPasswordEmail.getText().toString();
-
-        if (email.equals(null)) {
-            FancyToast.makeText(getApplicationContext(), "Email is empty", FancyToast.LENGTH_SHORT, FancyToast.WARNING, false).show();
-        } else {
-            //if the email is sent successfully go to the reset password activity
-            startActivity(new Intent(getApplicationContext(), ResetPasswordActivity.class));
-        }
-
-    }
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        onBackPressed();
-        return true;
     }
 }

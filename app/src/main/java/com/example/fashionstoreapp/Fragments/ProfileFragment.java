@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.fashionstoreapp.Activities.ForgotPasswordActivity;
 import com.example.fashionstoreapp.Activities.SplashActivity;
 import com.example.fashionstoreapp.CallBacks.ResponseCallback;
 import com.example.fashionstoreapp.DTO.Responses.LoginResponse;
@@ -49,7 +50,9 @@ public class ProfileFragment extends Fragment implements ResponseCallback {
         fragmentProfileBinding.btnEditAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onShowResetDialog().show(getChildFragmentManager(), "Reset");;
+//                onShowResetDialog().show(getChildFragmentManager(), "Reset");;
+                startActivity(new Intent(getActivity(), ForgotPasswordActivity.class));
+
             }
         });
 

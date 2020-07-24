@@ -108,6 +108,7 @@ public class QuestionAnswerActivity extends AppCompatActivity {
         };
         return askInquiryResponseCallback;
     }
+
     public ResponseCallback askInquiry() {
         ResponseCallback askInquiryResponseCallback = new ResponseCallback() {
             @Override
