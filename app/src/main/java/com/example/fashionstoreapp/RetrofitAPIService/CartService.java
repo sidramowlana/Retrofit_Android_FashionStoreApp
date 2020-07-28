@@ -3,6 +3,7 @@ package com.example.fashionstoreapp.RetrofitAPIService;
 import com.example.fashionstoreapp.CallBacks.CustomizeCallback;
 import com.example.fashionstoreapp.CallBacks.ResponseCallback;
 import com.example.fashionstoreapp.Models.Cart;
+import com.example.fashionstoreapp.Models.Product;
 import com.example.fashionstoreapp.RetrofitClient.RetrofitClient;
 import com.example.fashionstoreapp.RetrofitInterface.CartApi;
 
@@ -19,8 +20,8 @@ public class CartService {
     }
 
     public void onAddProductCart(Integer id, Integer quantity, String size, Double total, String token, ResponseCallback callback) {
-        Call<Cart> cartCall = cartApi.onAddProductCart(id, quantity, size, total, token);
-        cartCall.enqueue(new CustomizeCallback<Cart>(callback));
+        Call<Product> cartCall = cartApi.onAddProductCart(id, quantity, size, total, token);
+        cartCall.enqueue(new CustomizeCallback<Product>(callback));
     }
 
     public void onUpdateQuantityProductCart(Integer cartId, int quantity, Double total, String token, ResponseCallback callback) {

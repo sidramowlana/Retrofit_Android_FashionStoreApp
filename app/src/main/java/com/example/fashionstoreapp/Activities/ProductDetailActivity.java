@@ -141,6 +141,28 @@ public class ProductDetailActivity extends AppCompatActivity implements SharedSe
         };
         return rateReviewProductCallback;
     }
+    public ResponseCallback productAddCartResponseCallback() {
+        final ResponseCallback productAddCartResponseCallback = new ResponseCallback() {
+            @Override
+            public void onSuccess(Response response) {
+               if(response!=null)
+               {
+                   FancyToast.makeText(getApplicationContext(), "Successfully Added to cart", Toast.LENGTH_SHORT, FancyToast.SUCCESS, false);
+               }else{
+                   FancyToast.makeText(getApplicationContext(), "Sorry couldnt add now", Toast.LENGTH_SHORT, FancyToast.ERROR, false);
+
+               }
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                if (errorMessage != null) {
+                    FancyToast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT, FancyToast.ERROR, false);
+                }
+            }
+        };
+        return productAddCartResponseCallback;
+    }
 
     public ResponseCallback productDetailResponseCallback() {
         final ResponseCallback productResponseCallback = new ResponseCallback() {

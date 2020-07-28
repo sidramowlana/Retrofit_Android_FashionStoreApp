@@ -1,6 +1,7 @@
 package com.example.fashionstoreapp.RetrofitInterface;
 
 import com.example.fashionstoreapp.Models.Cart;
+import com.example.fashionstoreapp.Models.Product;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ import retrofit2.http.Query;
 public interface CartApi {
 
     @POST("/api/cart/add-cart/{productId}")
-    Call<Cart> onAddProductCart(@Path("productId") Integer productId, @Query("quantity") Integer quantity, @Query("size") String size, @Query("total") Double total, @Header("Authorization") String token);
+    Call<Product> onAddProductCart(@Path("productId") Integer productId, @Query("quantity") Integer quantity, @Query("size") String size, @Query("total") Double total, @Header("Authorization") String token);
 
     @GET("api/cart/cartAll")
     Call<List<Cart>> getAllUserCartProduct(@Header("Authorization") String token);

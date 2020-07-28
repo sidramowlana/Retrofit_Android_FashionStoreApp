@@ -111,7 +111,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>
         double total = price * quantity;
         holder.textViewTotalPrice.setText(String.valueOf(total));
         holder.elegantNumberButtonQuantity.setNumber(String.valueOf(cart.getQuantity()));
-
+        System.out.println("when clicking delte product from cart the product id and cart size is: "+product.getProductId()+" : "+cart.getSize());
         holder.imageButtonDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
