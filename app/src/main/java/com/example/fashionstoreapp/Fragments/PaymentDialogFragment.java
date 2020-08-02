@@ -160,7 +160,7 @@ public class PaymentDialogFragment extends DialogFragment implements ResponseCal
         } else {
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
             String date = sdf.format(new Date());
-            Orders order = new Orders(date, "Pending", getArguments().getDouble("TOTAL_AMOUNT_KEY"));
+            Orders order = new Orders(postalCode,city,address,date, "Pending", getArguments().getDouble("TOTAL_AMOUNT_KEY"));
             orderService.addOrder(order, "Bearer " + loginResponse.getToken(), this);
         }
 

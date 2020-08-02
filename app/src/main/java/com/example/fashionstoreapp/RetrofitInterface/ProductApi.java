@@ -31,7 +31,7 @@ public interface ProductApi {
 
     //add a product to wishlist
     @POST("/api/wishlist/add-wishlist/{productId}")
-    Call<Wishlist> onAddRemoveWishlistByProductId(@Path("productId") Integer productId, @Header("Authorization") String token);
+    Call<Product> onAddRemoveWishlistByProductId(@Path("productId") Integer productId, @Header("Authorization") String token);
 
     //get all wishlist product of a user
     @GET("api/wishlist/wishlistAll")

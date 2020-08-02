@@ -115,7 +115,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>
         holder.imageButtonDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onItemSizeClickListener(product.getProductId(), cart.getSize());
+//                onItemSizeClickListener(product.getProductId(), cart.getSize());
+                onItemRemoveClickListener(cart.getCartId());
                 cartList.remove(position);
                 notifyItemRemoved(position);
                 notifyItemRangeChanged(position, cartList.size());
@@ -167,7 +168,14 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>
 
     @Override
     public void onItemSizeClickListener(Integer id, String size) {
-        cartService.onDeleteProductCart(id, size, "Bearer " + loginResponse.getToken(), this);
+//        cartService.onDeleteProductCart(id, size, "Bearer " + loginResponse.getToken(), this);
+    }
+
+    @Override
+    public void onItemRemoveClickListener(Integer id) {
+        System.out.println("ver look " +id);
+        cartService.onDeleteProductCart(id, "Bearer " + loginResponse.getToken(), this);
+
     }
 
     @Override

@@ -37,8 +37,8 @@ public class ProductService {
     }
 
     public void onAddRemoveProductFavourite(Integer id, String token, ResponseCallback callback) {
-        Call<Wishlist> call = productApi.onAddRemoveWishlistByProductId(id, token);
-        call.enqueue(new CustomizeCallback<Wishlist>(callback));
+        Call<Product> call = productApi.onAddRemoveWishlistByProductId(id, token);
+        call.enqueue(new CustomizeCallback<Product>(callback));
     }
 
 

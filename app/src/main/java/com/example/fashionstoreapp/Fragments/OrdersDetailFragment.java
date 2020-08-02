@@ -106,7 +106,7 @@ public class OrdersDetailFragment extends Fragment implements ResponseCallback {
             fragmentOrderDetailBinding.orderDetailOrdernoId.setText(cartOrders.getCardOrderId().toString());
             fragmentOrderDetailBinding.orderDetailDateId.setText(cartOrders.getOrders().getDate());
             fragmentOrderDetailBinding.orderDetailStatusId.setText(cartOrders.getOrders().getStatus());
-//            fragmentOrderDetailBinding.orderDetailShippingAddressId.setText(cartOrders.getCart().getUser().getAddress());
+            fragmentOrderDetailBinding.orderDetailShippingAddressId.setText(cartOrders.getOrders().getAddress());
             fragmentOrderDetailBinding.orderDetailAmountId.setText("USD $" + cartOrders.getOrders().getTotal());
             if (cartOrders.getOrders().getStatus().equals("Pending")) {
                 fragmentOrderDetailBinding.orderDetailOrderBtnId.setText(R.string.cancel_order);
@@ -149,14 +149,18 @@ public class OrdersDetailFragment extends Fragment implements ResponseCallback {
         String date = sdf.format(new Date());
         if (getArguments() != null) {
             CartOrders cartOrders = cartOrdersList.get(0);
+            String postalCode = cartOrders.getOrders().getPostalCode();
+            String city = cartOrders.getOrders().getCity();
+            String address = cartOrders.getOrders().getAddress();
+
             if (cartOrders.getOrders().getStatus().equals("Pending")) {
-                Orders updateOrders = new Orders(date, "Cancelled", cartOrders.getOrders().getTotal());
+                Orders updateOrders = new Orders(postalCode,city,address,date, "Cancelled", cartOrders.getOrders().getTotal());
                 CartOrders updateCartOrders = new CartOrders(cartOrders.getCart(), updateOrders);
                 cartOrdersService.updateOrderStatus(cartOrders.getCardOrderId(), updateCartOrders, "Bearer " + loginResponse.getToken(), updateOrderResponseCallBack);
                 getActivity().setTitle("Cancelled Orders");
                 FancyToast.makeText(getActivity(), "Your Order is cancelled Successfully", Toast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
             } else if (cartOrders.getOrders().getStatus().equals("Cancelled")) {
-                Orders updateOrders = new Orders(date, "Pending", cartOrders.getOrders().getTotal());
+                Orders updateOrders = new Orders(postalCode,city,address,date, "Pending", cartOrders.getOrders().getTotal());
                 CartOrders updateCartOrders = new CartOrders(cartOrders.getCart(), updateOrders);
                 cartOrdersService.updateOrderStatus(cartOrders.getCardOrderId(), updateCartOrders, "Bearer " + loginResponse.getToken(), updateOrderResponseCallBack);
                 getActivity().setTitle("Pending Orders");

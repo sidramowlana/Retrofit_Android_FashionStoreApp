@@ -39,9 +39,13 @@ public class CartService {
         cartCall.enqueue(new CustomizeCallback<List<Cart>>(callback));
     }
 
-    public void onDeleteProductCart(Integer productId, String size, String token, ResponseCallback callback) {
-        Call<List<Cart>> cartCall = cartApi.onDeleteProductCart(productId, size, token);
+//    public void onDeleteProductCart(Integer productId, String size, String token, ResponseCallback callback) {
+//        Call<List<Cart>> cartCall = cartApi.onDeleteProductCart(productId, size, token);
+//        cartCall.enqueue(new CustomizeCallback<List<Cart>>(callback));
+//    }
+    public void onDeleteProductCart(Integer cartId, String token, ResponseCallback callback) {
+        System.out.println("ver2: "+cartId);
+        Call<List<Cart>> cartCall = cartApi.onDeleteProductCart(cartId, token);
         cartCall.enqueue(new CustomizeCallback<List<Cart>>(callback));
     }
-
 }

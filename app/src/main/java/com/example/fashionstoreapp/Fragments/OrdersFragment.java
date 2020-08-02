@@ -100,9 +100,10 @@ public class OrdersFragment extends Fragment implements ResponseCallback {
                                     cartOrdersService.updateOrderStatus(cartOrders.getCardOrderId(),cartOrders,"Bearer "+loginResponse.getToken(),updateOrderResponseCallBack);
                                       }
                             },
-//                            120000 //timer for 2 minutes
+//                            60000
+                            120000 //timer for 2 minutes
 //                        300000 //timer for 5 minutes
-                        86400000 //timer set for one day
+//                        86400000 //timer set for one day
                     );
                 }
             }

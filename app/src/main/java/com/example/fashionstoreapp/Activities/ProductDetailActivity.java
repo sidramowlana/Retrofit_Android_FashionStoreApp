@@ -67,7 +67,7 @@ public class ProductDetailActivity extends AppCompatActivity implements SharedSe
             activityProductDetailBinding.buttonFavorite.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onAddRemoveProductWishlist(productId, loginResponse, productDetailResponseCallback());
+                    onAddRemoveProductWishlist(productId, loginResponse);
                 }
             });
             //share
@@ -83,12 +83,12 @@ public class ProductDetailActivity extends AppCompatActivity implements SharedSe
                 public void onClick(View v) {
                     if (product.getQuantity() == 0) {
                         FancyToast.makeText(getApplicationContext(), "Out of stock", Toast.LENGTH_SHORT, FancyToast.ERROR, false);
-                        activityProductDetailBinding.textviewAvailableQtyId.setText("Out of Stock");
+                        activityProductDetailBinding.textviewAvailableQtyId.setText(R.string.out_of_stock);
                     } else {
                         int quantity = Integer.parseInt(activityProductDetailBinding.detailQtyId.getNumber());
                         String size = activityProductDetailBinding.textviewSelectesSizeId.getText().toString();
                         double total = quantity * product.getPrice();
-                        onAddProductCart(productId, quantity, size, total, loginResponse, productDetailResponseCallback());
+                        onAddProductCart(productId, quantity, size, total, loginResponse, productAddCartResponseCallback());
                     }
                 }
             });
@@ -240,6 +240,22 @@ public class ProductDetailActivity extends AppCompatActivity implements SharedSe
         };
         return productFavouriteResponseCallback;
     }
+    public ResponseCallback removeFavouriteCallBack() {
+        final ResponseCallback removeFavouriteCallBack = new ResponseCallback() {
+            @Override
+            public void onSuccess(Response response) {
+                if (response != null) {
+                    activityProductDetailBinding.buttonFavorite.setChecked(false);
+                }
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                System.out.println("productFavouriteResponseCallback error: " + errorMessage);
+            }
+        };
+        return removeFavouriteCallBack;
+    }
 
     @Override
     protected void onPostResume() {
@@ -247,12 +263,12 @@ public class ProductDetailActivity extends AppCompatActivity implements SharedSe
         onCalculateRatingAverage();
     }
 
-    public void onAddRemoveProductWishlist(Integer productId, LoginResponse loginResponse, ResponseCallback productResponseCallback) {
+    public void onAddRemoveProductWishlist(Integer productId, LoginResponse loginResponse) {
         if (activityProductDetailBinding.buttonFavorite.isChecked()) {
-            productService.onAddRemoveProductFavourite(productId, "Bearer " + loginResponse.getToken(), productResponseCallback);
+            productService.onAddRemoveProductFavourite(productId, "Bearer " + loginResponse.getToken(), productDetailResponseCallback());
             FancyToast.makeText(getApplicationContext(), "Added to your WishList", Toast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
         } else {
-            productService.onAddRemoveProductFavourite(productId, "Bearer " + loginResponse.getToken(), productResponseCallback);
+            productService.onAddRemoveProductFavourite(productId, "Bearer " + loginResponse.getToken(), removeFavouriteCallBack());
             FancyToast.makeText(getApplicationContext(), "Removed from your WishList", Toast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
         }
     }

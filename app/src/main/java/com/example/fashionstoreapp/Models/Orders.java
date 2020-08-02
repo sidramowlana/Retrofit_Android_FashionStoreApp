@@ -14,7 +14,14 @@ public class Orders {
     private User user;
     private double total;
 
-    public Orders(String date, String status, double total) {
+    private String postalCode;
+    private String city;
+    private String address;
+
+    public Orders(String postalCode,String city,String address,String date, String status, double total) {
+        this.postalCode=postalCode;
+        this.city=city;
+        this.address=address;
         this.date = date;
         this.status = status;
         this.total = total;
