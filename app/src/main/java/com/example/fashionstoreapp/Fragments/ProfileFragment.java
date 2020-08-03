@@ -50,7 +50,6 @@ public class ProfileFragment extends Fragment implements ResponseCallback {
         fragmentProfileBinding.btnEditAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                onShowResetDialog().show(getChildFragmentManager(), "Reset");;
                 startActivity(new Intent(getActivity(), ForgotPasswordActivity.class));
 
             }

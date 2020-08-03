@@ -13,7 +13,7 @@ import retrofit2.http.POST;
 
 public interface TagApi {
 
-    @GET("api/tags/admin/all")
+    @GET("api/tags/all")
     Call<List<Tag>> getAllTags(@Header("Authorization") String token);
 
     @POST("api/tags/admin/createTag")

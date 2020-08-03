@@ -13,8 +13,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fashionstoreapp.DTO.Responses.LoginResponse;
 import com.example.fashionstoreapp.Models.RateReview;
+import com.example.fashionstoreapp.R;
 import com.example.fashionstoreapp.Storage.SharedPreferenceManager;
 import com.example.fashionstoreapp.databinding.FeedbackItemBinding;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -59,17 +61,24 @@ public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         RateReview rateReview = rateReviewsList.get(position);
-        if (loginResponse.getRoles() == "ROLE_ADMIN") {
+        if (loginResponse.getRoles().equals("ROLE_ADMIN")) {
             holder.imageButtonRemove.setEnabled(true);
             holder.textViewUsername.setText(rateReview.getUser().getUsername());
             holder.textViewFeedback.setText(rateReview.getFeedback());
-            System.out.println(rateReview.getDate());
-            holder.textViewDate.setText(rateReview.getDate());
+            Picasso.get()
+                    .load("https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/User_font_awesome.svg/1200px-User_font_awesome.svg.png")
+                    .placeholder(R.drawable.loading)
+                    .error(R.drawable.error)
+                    .into(holder.imageViewUser);            holder.textViewDate.setText(rateReview.getDate());
             holder.ratingBarValue.setRating(rateReview.getRate());
-        } else if (loginResponse.getRoles() == "ROLE_USER") {
+        } else if (loginResponse.getRoles().equals("ROLE_USER")) {
+            Picasso.get()
+                    .load("https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/User_font_awesome.svg/1200px-User_font_awesome.svg.png")
+                    .placeholder(R.drawable.loading)
+                    .error(R.drawable.error)
+                    .into(holder.imageViewUser);
             holder.textViewUsername.setText(rateReview.getUser().getUsername());
             holder.textViewFeedback.setText(rateReview.getFeedback());
-            System.out.println(rateReview.getDate());
             holder.textViewDate.setText(rateReview.getDate());
             holder.ratingBarValue.setRating(rateReview.getRate());
         }

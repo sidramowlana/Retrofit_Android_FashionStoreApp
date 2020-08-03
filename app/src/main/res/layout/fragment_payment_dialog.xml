@@ -115,16 +115,6 @@
           android:layout_below="@id/payment_dialog_address_edit_view_id"
           android:layout_height="wrap_content"
           android:orientation="horizontal">
-          <CheckBox
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:checked="false"
-              android:id="@+id/payment_dialog_remember_address_checkbox_id"
-              />
-          <TextView
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:text="@string/remember_address"/>
       </LinearLayout>
 
         <RelativeLayout

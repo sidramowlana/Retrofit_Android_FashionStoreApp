@@ -114,4 +114,8 @@
     <string name="add_product">Add Product</string>
     <string name="send_email">Send Email</string>
     <string name="out_of_stock">Out of Stock</string>
+    <string name="validate">Validate</string>
+    <string name="resend">Resend</string>
+    <string name="please_enter_your_otp_click_resend_if_it_is_not_recieved">Please enter your OTP.
+        Click Resend if it is not recieved or the OTP is expired</string>
 </resources>

@@ -7,7 +7,7 @@
     tools:context="com.example.fashionstoreapp.Activities.ForgotPasswordActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/forgotPasswordToolbarId"
+        android:id="@+id/otpPasswordToolbarId"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
         android:background="?attr/colorPrimary"
@@ -19,36 +19,44 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/send_email_button_id"
-        android:layout_marginTop="41dp"
+        android:layout_above="@id/otp_number_edittext"
+        android:layout_marginBottom="-200dp"
         android:gravity="center"
-        android:textAlignment="center"
-        android:layout_marginBottom="34dp"
-        android:text="An email will be sent to you with a code to reset yout passwpord" />
+        android:text="@string/please_enter_your_otp_click_resend_if_it_is_not_recieved"
+        android:textAlignment="center" />
 
     <EditText
-        android:id="@+id/forgot_password_email"
+        android:id="@+id/otp_number_edittext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginTop="279dp"
         android:layout_marginBottom="32dp"
-        android:drawableStart="@drawable/ic_email_black_24dp"
-        android:drawableLeft="@drawable/ic_email_black_24dp"
         android:ems="10"
-        android:hint="@string/user_email_com"
         android:importantForAutofill="no"
-        android:inputType="textEmailAddress"
+        android:inputType="number"
+        android:maxLength="6"
         android:padding="15dp" />
 
     <Button
-        android:id="@+id/send_email_button_id"
+        android:id="@+id/valid_otp_button_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/forgot_password_email"
+        android:layout_below="@+id/otp_number_edittext"
         android:layout_margin="10dp"
         android:background="@drawable/register_button_style_selector"
-        android:text="@string/send_email"
+        android:text="@string/validate"
         android:textColor="#FFF" />
+
+    <Button
+        android:id="@+id/resend_otp_button_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/otp_number_edittext"
+        android:layout_margin="10dp"
+        android:background="@drawable/register_button_style_selector"
+        android:text="@string/resend"
+        android:textColor="#FFF"
+        android:visibility="gone" />
 
 </RelativeLayout>

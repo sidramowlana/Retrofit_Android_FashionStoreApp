@@ -3,6 +3,7 @@ package com.example.fashionstoreapp.RetrofitAPIService;
 import com.example.fashionstoreapp.CallBacks.CustomizeCallback;
 import com.example.fashionstoreapp.CallBacks.ResponseCallback;
 import com.example.fashionstoreapp.DTO.Requests.AddressRequest;
+import com.example.fashionstoreapp.DTO.Responses.MessageResponse;
 import com.example.fashionstoreapp.Models.User;
 import com.example.fashionstoreapp.RetrofitClient.RetrofitClient;
 import com.example.fashionstoreapp.RetrofitInterface.UserApi;
@@ -31,4 +32,17 @@ public class UserService {
         Call<User> call = userApi.getUserDetail(userId, token);
         call.enqueue(new CustomizeCallback<User>(callback));
     }
+    public void onSendEmailResetPassword(Integer userId, String email, String token, ResponseCallback callback){
+        Call<MessageResponse> call = userApi.getOtp(userId, email, token);
+        call.enqueue(new CustomizeCallback<MessageResponse>(callback));
+    }
+    public void validateOTP(Integer userId,Integer otpNumber,String token, ResponseCallback callback){
+        Call<MessageResponse> call = userApi.validateOTP(userId,otpNumber,token);
+        call.enqueue(new CustomizeCallback<MessageResponse>(callback));
+    }
+    public void resetPassword(Integer userId,String newPassword,String token, ResponseCallback callback){
+        Call<MessageResponse> call = userApi.resetPassword(userId,newPassword,token);
+        call.enqueue(new CustomizeCallback<MessageResponse>(callback));
+    }
+
 }

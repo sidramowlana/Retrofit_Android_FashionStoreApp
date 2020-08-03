@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment;
 
 import com.example.fashionstoreapp.Activities.MainActivity;
 import com.example.fashionstoreapp.CallBacks.ResponseCallback;
-import com.example.fashionstoreapp.DTO.Requests.AddressRequest;
 import com.example.fashionstoreapp.DTO.Responses.LoginResponse;
 import com.example.fashionstoreapp.Models.Cart;
 import com.example.fashionstoreapp.Models.CartOrders;
@@ -72,12 +71,6 @@ public class PaymentDialogFragment extends DialogFragment implements ResponseCal
                 onCloseDialog();
             }
         });
-        fragmentPaymentDialogBinding.paymentDialogRememberAddressCheckboxId.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onSaveAddressSharedPref();
-            }
-        });
         fragmentPaymentDialogBinding.paymentDialogPayBtnId.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,27 +119,6 @@ public class PaymentDialogFragment extends DialogFragment implements ResponseCal
     public void setUserData(LoginResponse user) {
         fragmentPaymentDialogBinding.paymentDialogNameEditViewId.setText(user.getUsername());
         fragmentPaymentDialogBinding.paymentDialogEmailEditViewId.setText(user.getEmail());
-    }
-
-    public void onSaveAddressSharedPref() {
-        String postalCode = fragmentPaymentDialogBinding.paymentDialogPostalEditViewId.getText().toString();
-        String city = fragmentPaymentDialogBinding.paymentDialogCityEditViewId.getText().toString();
-        String address = fragmentPaymentDialogBinding.paymentDialogAddressEditViewId.getText().toString();
-        AddressRequest addressRequest = new AddressRequest(postalCode, city, address);
-        if (fragmentPaymentDialogBinding.paymentDialogRememberAddressCheckboxId.isChecked()) {
-            if (postalCode.isEmpty() || city.isEmpty() || address.isEmpty()) {
-                fragmentPaymentDialogBinding.paymentDialogRememberAddressCheckboxId.setChecked(false);
-                FancyToast.makeText(getContext(), "Shipping address is empty", FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
-            } else {
-                fragmentPaymentDialogBinding.paymentDialogRememberAddressCheckboxId.setChecked(true);
-//                        onSaveRemoveAddress();
-            }
-        } else if (fragmentPaymentDialogBinding.paymentDialogRememberAddressCheckboxId.isChecked() == false) {
-            System.out.println("not checked willl save to adress db");
-//                    onSaveRemoveAddress();
-        }
-
-
     }
 
     public void onPayment() {

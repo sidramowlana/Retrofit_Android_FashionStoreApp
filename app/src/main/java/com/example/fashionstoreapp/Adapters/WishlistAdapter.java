@@ -21,6 +21,7 @@ import com.example.fashionstoreapp.DTO.Responses.LoginResponse;
 import com.example.fashionstoreapp.Models.Product;
 import com.example.fashionstoreapp.Models.Wishlist;
 import com.example.fashionstoreapp.R;
+import com.example.fashionstoreapp.RetrofitAPIService.CartService;
 import com.example.fashionstoreapp.RetrofitAPIService.ProductService;
 import com.example.fashionstoreapp.Storage.SharedPreferenceManager;
 import com.example.fashionstoreapp.databinding.WishlistItemBinding;
@@ -39,6 +40,7 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
     private List<Wishlist> wishlists;
     private LoginResponse loginResponse;
     private ProductService productService;
+    private CartService cartService;
     private ItemClickCallback itemClickCallback;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -87,6 +89,7 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
         final Product product = wishlist.getProduct();
         loginResponse = SharedPreferenceManager.getSharedPreferenceInstance(context).getUser();
         productService = new ProductService();
+        cartService = new CartService();
 
         Picasso.get()
                 .load(product.getScaledImage())
@@ -127,11 +130,49 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
         holder.addToCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FancyToast.makeText(context, "Add to cart no code still", Toast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
+//                FancyToast.makeText(context, "Add to cart no code still", Toast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
+                        if (product.getQuantity() == 0) {
+                            FancyToast.makeText(context, "Out of stock", Toast.LENGTH_SHORT, FancyToast.ERROR, false);
+                        } else {
+                            int quantity = 1;
+                            String size = "S";
+                            double total = quantity * product.getPrice();
+                            onAddProductCart(product.getProductId(), quantity, size, total, loginResponse, productAddCartResponseCallback());
+                        }
             }
         });
     }
+    public void onAddProductCart(Integer productId, Integer quantity, String size, Double total, LoginResponse loginResponse, ResponseCallback responseCallback) {
+        if (size.equals("")) {
+            FancyToast.makeText(context, "Please select a size", Toast.LENGTH_SHORT, FancyToast.WARNING, false).show();
+        } else {
+            cartService.onAddProductCart(productId, quantity, size, total, "Bearer " + loginResponse.getToken(), responseCallback);
+            FancyToast.makeText(context, "Added to your cart", Toast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
+        }
+    }
 
+    public ResponseCallback productAddCartResponseCallback() {
+        final ResponseCallback productAddCartResponseCallback = new ResponseCallback() {
+            @Override
+            public void onSuccess(Response response) {
+                if(response!=null)
+                {
+                    FancyToast.makeText(context, "Successfully Added to cart", Toast.LENGTH_SHORT, FancyToast.SUCCESS, false);
+                }else{
+                    FancyToast.makeText(context, "Sorry couldnt add now", Toast.LENGTH_SHORT, FancyToast.ERROR, false);
+
+                }
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                if (errorMessage != null) {
+                    FancyToast.makeText(context, errorMessage, Toast.LENGTH_SHORT, FancyToast.ERROR, false);
+                }
+            }
+        };
+        return productAddCartResponseCallback;
+    }
     @Override
     public int getItemCount() {
         return wishlists.size();

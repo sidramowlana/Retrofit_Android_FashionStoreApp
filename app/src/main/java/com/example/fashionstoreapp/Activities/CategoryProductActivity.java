@@ -27,6 +27,7 @@ import com.example.fashionstoreapp.RetrofitAPIService.ProductService;
 import com.example.fashionstoreapp.Storage.SharedPreferenceManager;
 import com.example.fashionstoreapp.databinding.CommonlistviewBinding;
 import com.shashank.sony.fancytoastlib.FancyToast;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,12 +84,23 @@ public class CategoryProductActivity extends AppCompatActivity implements Respon
     @Override
     public void onSuccess(Response response) {
         List<ProductTag> productTagList = (List<ProductTag>) response.body();
-        for (ProductTag productTag : productTagList) {
-            productList.add(productTag.getProduct());
+        if(productTagList.isEmpty())
+        {
+            recyclerView.setVisibility(View.GONE);
+            commonlistviewBinding.emptyView.setVisibility(View.VISIBLE);
+            Picasso.get()
+                    .load(R.drawable.empty_home)
+                    .placeholder(R.drawable.loading)
+                    .error(R.drawable.error)
+                    .into(commonlistviewBinding.emptyView);
+        }else {
+            for (ProductTag productTag : productTagList) {
+                productList.add(productTag.getProduct());
+            }
+            homeAdapter.setAllProductData(productList);
+            recyclerView.setAdapter(homeAdapter);
+            homeAdapter.notifyDataSetChanged();
         }
-        homeAdapter.setAllProductData(productList);
-        recyclerView.setAdapter(homeAdapter);
-        homeAdapter.notifyDataSetChanged();
     }
 
     @Override
