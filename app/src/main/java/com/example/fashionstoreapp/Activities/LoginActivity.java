@@ -49,11 +49,6 @@ public class LoginActivity extends AppCompatActivity implements ResponseCallback
             }
         });
 
-        //checking in shared preference for the same user data
-//
-//        if (sharedPreferences.isLoggedIn()) {
-//            loadMain();
-//        }
     }
 
 

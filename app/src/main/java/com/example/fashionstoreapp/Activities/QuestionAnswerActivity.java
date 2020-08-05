@@ -81,7 +81,6 @@ public class QuestionAnswerActivity extends AppCompatActivity {
                         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
                         String date = sdf.format(new Date());
                         ProductInquiry productInquiry = new ProductInquiry(question, date);
-                        System.out.println(productInquiry+" poop");
                         productInquiryService.onAddProductInquiryByProductId(productId, productInquiry, "Bearer " + loginResponse.getToken(), askInquiry());
                         activityQuestionAnswerBinding.questionAnswerQuestionTextboxId.setText("");
                         FancyToast.makeText(getApplicationContext(), "Inquiry Submitted. We will reach you soon", FancyToast.LENGTH_LONG, FancyToast.SUCCESS, false).show();
@@ -97,7 +96,6 @@ public class QuestionAnswerActivity extends AppCompatActivity {
             @Override
             public void onSuccess(Response response) {
                 productInquiryList = (List<ProductInquiry>) response.body();
-                System.out.println("the response body: "+response.body());
                 onDisplayProductInquiries(productInquiryList);
             }
 

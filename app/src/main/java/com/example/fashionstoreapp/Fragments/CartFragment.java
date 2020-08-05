@@ -112,7 +112,7 @@ public class CartFragment extends Fragment implements CartInterface,
 
     @Override
     public void onError(String errorMessage) {
-        FancyToast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+        FancyToast.makeText(getContext(), "Something went wrong. Please try again", Toast.LENGTH_SHORT, FancyToast.ERROR, false).show();
     }
 
     @Override

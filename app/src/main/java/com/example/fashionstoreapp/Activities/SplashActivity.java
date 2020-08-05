@@ -26,6 +26,9 @@ boolean isLogged;
         loginResponse = SharedPreferenceManager.getSharedPreferenceInstance(getApplicationContext()).getUser();
         isLogged=SharedPreferenceManager.getSharedPreferenceInstance(getApplicationContext()).isLoggedIn();
         if (isLogged==true) {
+            if(loginResponse.getTokenExpireTime().equals(true)){
+                System.out.println("token expired");
+            }
             System.out.println("user is logged in");
             if (loginResponse.getRoles().equals("ROLE_ADMIN")) {
                 System.out.println("It is admin here");
@@ -52,12 +55,6 @@ boolean isLogged;
                 System.out.println("no user still loggedin");
             }
             if (loginResponse != null) {
-                System.out.println("loooooopo: " + loginResponse.getId());
-                System.out.println("loooooopo: " + loginResponse.getRoles());
-                System.out.println("loooooopo: " + loginResponse.getToken());
-                System.out.println("loooooopo: " + loginResponse.getEmail());
-                System.out.println("loooooopo: " + loginResponse.getUsername());
-//
                 FancyToast.makeText(getApplicationContext(), "Successfully Logged In", FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
             }
         }

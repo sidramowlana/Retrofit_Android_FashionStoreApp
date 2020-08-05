@@ -75,6 +75,6 @@ public class RegisterActivity extends AppCompatActivity implements ResponseCallb
     @Override
     public void onError(String errorMessage) {
         System.out.println(errorMessage);
-        FancyToast.makeText(this, "Network Error", FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+        FancyToast.makeText(this, "Sorry something went wrong", FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
     }
 }

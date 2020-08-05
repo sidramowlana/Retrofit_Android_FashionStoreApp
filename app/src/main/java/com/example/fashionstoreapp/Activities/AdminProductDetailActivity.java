@@ -39,10 +39,6 @@ public class AdminProductDetailActivity extends AppCompatActivity implements Res
     RateReviewService rateReviewService;
     CartService cartService;
     RecyclerView recyclerView;
-    String description;
-    int quantity;
-    double price;
-    String selectedSize;
     LoginResponse loginResponse;
     List<RateReview> rateReviewList = new ArrayList<>();
     int productId;

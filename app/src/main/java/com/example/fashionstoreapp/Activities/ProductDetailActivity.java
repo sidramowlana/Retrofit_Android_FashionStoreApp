@@ -95,7 +95,7 @@ public class ProductDetailActivity extends AppCompatActivity implements SharedSe
             activityProductDetailBinding.detailQACardId.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(getApplicationContext(), QuestionAnswerActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), QuestionAnswerActivity.class);
                     intent.putExtra("productQAId", product.getProductId());
                     startActivity(intent);
                 }
@@ -150,14 +150,13 @@ public class ProductDetailActivity extends AppCompatActivity implements SharedSe
                    FancyToast.makeText(getApplicationContext(), "Successfully Added to cart", Toast.LENGTH_SHORT, FancyToast.SUCCESS, false);
                }else{
                    FancyToast.makeText(getApplicationContext(), "Sorry couldnt add now", Toast.LENGTH_SHORT, FancyToast.ERROR, false);
-
                }
             }
 
             @Override
             public void onError(String errorMessage) {
                 if (errorMessage != null) {
-                    FancyToast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT, FancyToast.ERROR, false);
+                    FancyToast.makeText(getApplicationContext(), "Sorry something went wrong please try again later", Toast.LENGTH_SHORT, FancyToast.ERROR, false);
                 }
             }
         };
@@ -217,7 +216,7 @@ public class ProductDetailActivity extends AppCompatActivity implements SharedSe
             @Override
             public void onError(String errorMessage) {
                 if (errorMessage != null) {
-                    FancyToast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT, FancyToast.ERROR, false);
+                    FancyToast.makeText(getApplicationContext(), "Sorry something went wrong", Toast.LENGTH_SHORT, FancyToast.ERROR, false);
                 }
             }
         };
